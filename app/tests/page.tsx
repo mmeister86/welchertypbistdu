@@ -36,12 +36,13 @@ const availableTests = [
     color: "from-pink-500 to-red-600",
   },
   {
-    id: "dog-breeds",
+    id: "dog-personality",
     title: "Welche Hunderasse passt zu dir?",
     description:
-      "Finde heraus, welche Hunderasse am besten zu deinem Lebensstil und deiner Persönlichkeit passt.",
+      "Finde heraus, welche Hunderasse am besten zu deinem Lebensstil und deiner Persönlichkeit passt mit unserem unterhaltsamen Test.",
     icon: <Sparkles className="h-8 w-8 text-amber-600" />,
-    color: "from-amber-500 to-orange-600",
+    color: "from-amber-400 to-amber-600",
+    path: "/tests/dog-personality", // Expliziter Pfad zur Testseite
   },
   {
     id: "tv-characters",
