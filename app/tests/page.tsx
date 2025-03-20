@@ -12,6 +12,14 @@ const availableTests = [
     color: "from-yellow-400 to-orange-500",
   },
   {
+    id: "marvel",
+    title: "Welcher Marvel Charakter bist du?",
+    description:
+      "Entdecke, ob du mehr wie Iron Man, Captain America oder Spider-Man bist.",
+    icon: <Sparkles className="h-8 w-8 text-red-500" />,
+    color: "from-red-500 to-blue-500",
+  },
+  {
     id: "spongebob",
     title: "Welcher Spongebob Charakter bist du?",
     description:
