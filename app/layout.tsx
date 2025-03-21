@@ -3,6 +3,9 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/Footer";
+import { AdBlockerModal } from "@/components/ui/adblocker-modal";
+import { Toaster } from "@/components/ui/toaster";
+import { Footerdemo } from "@/components/footer2";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -10,7 +13,7 @@ export const metadata = {
   title: "WelcherTypBistDu - Entdecke deine Persönlichkeit",
   description:
     "Entdecke mehr über dich selbst mit unseren unterhaltsamen und aufschlussreichen Persönlichkeitstests!",
-  generator: "v0.dev",
+  metadataBase: new URL("https://welchertypbistdu.de"),
 };
 
 export default function RootLayout({
@@ -22,8 +25,10 @@ export default function RootLayout({
     <html lang="de">
       <body className={inter.className}>
         <Navbar />
+        <AdBlockerModal />
         <main>{children}</main>
-        <Footer />
+        <Footerdemo />
+        <Toaster />
       </body>
     </html>
   );

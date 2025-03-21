@@ -2,42 +2,82 @@ import Link from "next/link";
 import { ArrowRight, Brain, Palette, Sparkles, Star } from "lucide-react";
 import React from "react";
 import { TestimonialsSlider } from "@/components/ui/testimonials-slider";
+import { Badge } from "@/components/ui/badge";
+import { SideAd } from "@/components/ui/side-ad";
 
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-indigo-50 to-purple-50">
       {/* Hero Section */}
-      <section className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
-        <div className="absolute inset-0 z-0 opacity-20">
-          <div className="absolute top-20 left-1/4 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl"></div>
-          <div className="absolute bottom-20 right-1/4 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl"></div>
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-yellow-200 rounded-full mix-blend-multiply filter blur-xl"></div>
-        </div>
+      <div className="w-full py-20 lg:py-40">
+        <div className="container mx-auto relative">
+          <div className="grid grid-cols-1 gap-8 items-center md:grid-cols-2">
+            <div className="flex gap-4 flex-col">
+              <div>
+                <Badge variant="outline" className="bg-white">
+                  Neu und kostenlos!
+                </Badge>
+              </div>
+              <div className="flex gap-4 flex-col">
+                <h1 className="text-5xl md:text-7xl tracking-tighter font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">
+                  Welcher Typ bist Du?
+                </h1>
+                <p className="text-xl leading-relaxed tracking-tight text-muted-foreground max-w-md">
+                  Erfahre mehr über dich selbst mit unseren unterhaltsamen und
+                  aufschlussreichen Persönlichkeitstests!
+                </p>
+              </div>
+              <div className="flex flex-row mt-6 gap-4">
+                <Link
+                  href="/tests"
+                  className="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 text-white font-medium text-lg shadow-lg hover:shadow-xl transition-all duration-300"
+                >
+                  Tests entdecken <ArrowRight className="w-4 h-4" />
+                </Link>
+                <Link
+                  href="/popular"
+                  className="inline-flex items-center px-8 py-3 rounded-full bg-white text-purple-600 font-medium text-lg shadow-lg hover:shadow-xl transition-all duration-300 border border-purple-200"
+                >
+                  Beliebteste Tests
+                </Link>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-8">
+              <div className="rounded-2xl aspect-square shadow-lg overflow-hidden">
+                {/* Tyrion Bild für das erste Quadrat */}
+                <img
+                  src="/images/hero/tyrion.jpeg"
+                  alt="Tyrion Lannister"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="rounded-2xl row-span-2 shadow-lg overflow-hidden">
+                {/* Iron Man Bild für das größere Rechteck */}
+                <img
+                  src="/images/hero/ironman.png"
+                  alt="Iron Man"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="rounded-2xl aspect-square shadow-lg overflow-hidden">
+                {/* Spongebob Bild für das zweite Quadrat */}
+                <img
+                  src="/images/hero/spongebob.jpeg"
+                  alt="Spongebob"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+          </div>
 
-        <div className="max-w-4xl mx-auto text-center relative z-10">
-          <h1 className="text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 mb-6">
-            Welcher Typ Bist Du?
-          </h1>
-          <p className="text-xl md:text-2xl text-gray-700 mb-8">
-            Entdecke mehr über dich selbst mit unseren unterhaltsamen und
-            aufschlussreichen Persönlichkeitstests!
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Link
-              href="/tests"
-              className="px-8 py-3 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 text-white font-medium text-lg shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2"
-            >
-              Tests entdecken <ArrowRight size={18} />
-            </Link>
-            <Link
-              href="/popular"
-              className="px-8 py-3 rounded-full bg-white text-purple-600 font-medium text-lg shadow-lg hover:shadow-xl transition-all duration-300 border border-purple-200"
-            >
-              Beliebteste Tests
-            </Link>
+          {/* Background Blobs - now positioned relative to container */}
+          <div className="absolute inset-0 -z-10 opacity-20">
+            <div className="absolute top-20 left-1/4 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl"></div>
+            <div className="absolute bottom-20 right-1/4 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl"></div>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-yellow-200 rounded-full mix-blend-multiply filter blur-xl"></div>
           </div>
         </div>
-      </section>
+      </div>
 
       {/* Ad Banner */}
       <div className="w-full py-3 bg-white shadow-md">
@@ -149,30 +189,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Side Ad - Pullout */}
-      <div className="fixed right-0 top-1/3 transform -translate-y-1/2 z-10 hidden lg:block">
-        <div className="group w-32 hover:w-64 bg-gray-100 rounded-l-lg flex items-center justify-center text-gray-400 border border-gray-200 shadow-lg transition-all duration-300 ease-in-out overflow-hidden">
-          <div className="h-96 w-full flex items-center justify-center relative">
-            <div className="rotate-90 whitespace-nowrap absolute group-hover:opacity-0 transition-opacity duration-300">
-              Werbung - Advertisement
-            </div>
-            <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 text-center">
-              <p className="font-bold text-gray-600 mb-2">Sonderangebot!</p>
-              <p className="text-sm text-gray-500 mb-4">
-                Entdecke unsere Premium-Tests mit detaillierten Ergebnissen und
-                exklusiven Inhalten.
-              </p>
-              <button className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors">
-                Mehr erfahren
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* Side Ad */}
+      <SideAd />
 
       {/* Testimonials */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-purple-50 to-indigo-50">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">
             Was unsere Nutzer sagen
           </h2>

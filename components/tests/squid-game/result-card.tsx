@@ -1,87 +1,123 @@
 "use client";
 
+import { RotateCcw } from "lucide-react";
+import { CharacterResult } from "./types";
 import { motion } from "framer-motion";
-import { Share2, RotateCcw } from "lucide-react";
-import type { CharacterResult } from "./types";
+import Image from "next/image";
+import Link from "next/link";
+import { ShareButtons } from "@/components/ui/share-buttons";
 
-type ResultCardProps = {
+interface ResultCardProps {
   result: CharacterResult;
   onRestart: () => void;
-};
+}
 
-// Komponente für die Anzeige des Testergebnisses
 export function ResultCard({ result, onRestart }: ResultCardProps) {
-  const handleShare = () => {
-    if (navigator.share) {
-      navigator
-        .share({
-          title: "Mein Squid Game Persönlichkeitstest",
-          text: `Ich bin ${result.name}! Welcher Squid Game-Charakter bist du?`,
-          url: window.location.href,
-        })
-        .catch(console.error);
-    } else {
-      // Fallback für Browser ohne Web Share API
-      navigator.clipboard.writeText(
-        `Ich bin ${result.name}! Finde heraus, welcher Squid Game-Charakter du bist: ${window.location.href}`
-      );
-      alert("Link zum Teilen in die Zwischenablage kopiert!");
-    }
+  // Wir definieren die Traits für jeden Charakter, da sie nicht im ursprünglichen Typ enthalten sind
+  const characterTraits: Record<string, string[]> = {
+    "gi-hun": ["Mitfühlend", "Optimistisch", "Glücksspieler"],
+    "sae-byeok": ["Zäh", "Überlebenskünstler", "Fokussiert"],
+    "sang-woo": ["Intelligent", "Strategisch", "Ehrgeizig"],
+    "il-nam": ["Weise", "Rätselhaft", "Erfahren"],
+    "deok-su": ["Brutal", "Dominant", "Furchtlos"],
+    ali: ["Loyal", "Gutherzig", "Vertrauensvoll"],
+    "mi-nyeo": ["Unberechenbar", "Durchsetzungsfähig", "Anpassungsfähig"],
+    "ji-yeong": ["Pragmatisch", "Aufrichtig", "Selbstlos"],
+    "jun-ho": ["Entschlossen", "Hartnäckig", "Gerecht"],
+    "front-man": ["Diszipliniert", "Mysteriös", "Autoritär"],
   };
+
+  // Hole die Traits für den aktuellen Charakter
+  const traits = characterTraits[result.id] || [];
 
   return (
     <motion.div
-      className="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl shadow-xl border border-pink-300 border-opacity-30 max-w-2xl mx-auto overflow-hidden"
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.9, y: 20 }}
-      transition={{ duration: 0.3 }}
+      className="bg-black rounded-lg overflow-hidden shadow-lg max-w-3xl mx-auto border border-pink-500"
     >
-      {/* Ergebnisbereich mit Gradient-Hintergrund */}
-      <div className={`bg-gradient-to-br ${result.color} p-8`}>
-        <h2 className="text-3xl font-bold text-white text-center mb-4">
-          Du bist...
-        </h2>
+      <div className="p-6 text-center bg-pink-500 text-white">
+        <h2 className="text-2xl md:text-3xl font-bold mb-2">Dein Ergebnis</h2>
+        <p className="mb-6">Basierend auf deinen Antworten bist du...</p>
+      </div>
 
-        <div className="flex flex-col md:flex-row items-center">
-          {/* Charakterbild (Platzhalter) */}
-          <div className="w-40 h-40 md:w-48 md:h-48 rounded-full bg-black bg-opacity-30 mb-4 md:mb-0 md:mr-6 flex items-center justify-center overflow-hidden">
-            {/* Platzhalter für Charakterbild */}
-            <span className="text-6xl text-white">#</span>
+      <div className="px-6 pb-6">
+        <div className="flex flex-col md:flex-row items-center bg-gray-900 rounded-lg overflow-hidden -mt-6">
+          <div className="w-full md:w-1/3 relative h-64 md:h-full">
+            <Image
+              src={result.image || "/placeholder.svg"}
+              alt={result.name}
+              width={300}
+              height={300}
+              className="object-cover w-full h-full"
+              onError={(e) => {
+                // Fallback zur Platzhalter-Bild nur wenn kein Bild gefunden wurde
+                e.currentTarget.src = "/placeholder.svg";
+              }}
+            />
           </div>
 
-          <div>
-            <h3 className="text-2xl font-bold text-white mb-2">
+          <div className="w-full md:w-2/3 p-6">
+            <h3 className="text-2xl md:text-4xl font-bold text-white mb-4">
               {result.name}
             </h3>
-            <div className="h-1 w-20 bg-white mb-4"></div>
-            <p className="text-white text-opacity-90">{result.description}</p>
+            <p className="text-gray-300 mb-6">{result.description}</p>
+
+            <div className="flex flex-wrap gap-2 mb-6">
+              {traits.map((trait: string, index: number) => (
+                <span
+                  key={index}
+                  className="inline-block bg-gray-800 text-gray-200 text-xs px-2 py-1 rounded-full"
+                >
+                  {trait}
+                </span>
+              ))}
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex items-center">
+                <ShareButtons
+                  url={window.location.href}
+                  title={`Mein Squid Game Test: Ich bin ${result.name}! Finde heraus, welcher Squid Game Charakter du bist.`}
+                  className="mb-2 sm:mb-0"
+                  color="text-pink-500 hover:text-pink-400 hover:bg-gray-800"
+                />
+              </div>
+
+              <button
+                onClick={onRestart}
+                className="flex items-center justify-center gap-2 bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 rounded-lg transition-colors"
+              >
+                <RotateCcw size={16} />
+                Test wiederholen
+              </button>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Aktionsbereich */}
-      <div className="p-6">
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <motion.button
-            className="flex items-center justify-center gap-2 px-6 py-3 bg-pink-600 hover:bg-pink-700 text-white rounded-full font-medium shadow-lg transition-colors"
-            onClick={handleShare}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Share2 size={18} />
-            Ergebnis teilen
-          </motion.button>
+      <div className="bg-gray-900 p-6">
+        <h4 className="text-lg font-semibold text-white mb-4">
+          Über diesen Test
+        </h4>
+        <p className="text-gray-300 mb-4">
+          Dieser Persönlichkeitstest basiert auf den Charakteren aus der
+          beliebten Netflix-Serie Squid Game. Die Fragen wurden entwickelt, um
+          deine Persönlichkeit und Entscheidungsfindung mit denen der Charaktere
+          aus der Show zu vergleichen.
+        </p>
+        <p className="text-gray-300">
+          Möchtest du weitere Persönlichkeitstests ausprobieren? Entdecke unsere
+          anderen Tests!
+        </p>
 
-          <motion.button
-            className="flex items-center justify-center gap-2 px-6 py-3 bg-transparent border border-pink-500 text-pink-500 hover:bg-pink-500 hover:text-white rounded-full font-medium transition-colors"
-            onClick={onRestart}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+        <div className="mt-6">
+          <Link
+            href="/tests"
+            className="inline-block bg-pink-500 hover:bg-pink-600 text-white font-medium py-2 px-4 rounded-lg transition-colors"
           >
-            <RotateCcw size={18} />
-            Test wiederholen
-          </motion.button>
+            Weitere Tests entdecken
+          </Link>
         </div>
       </div>
     </motion.div>

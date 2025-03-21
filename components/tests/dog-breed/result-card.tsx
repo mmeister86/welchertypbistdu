@@ -3,8 +3,9 @@
 import type { DogBreedResult } from "./types";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { Share2, Activity, Scissors, Heart } from "lucide-react";
+import { Activity, Scissors, Heart } from "lucide-react";
 import Link from "next/link";
+import { ShareButtons } from "@/components/ui/share-buttons";
 
 interface ResultCardProps {
   result: DogBreedResult;
@@ -12,22 +13,6 @@ interface ResultCardProps {
 }
 
 export function ResultCard({ result, onRestart }: ResultCardProps) {
-  const handleShare = () => {
-    if (navigator.share) {
-      navigator.share({
-        title: "Mein Hunderassen-Test Ergebnis",
-        text: `Laut dem Test passt ein ${result.name} am besten zu mir! Finde heraus, welche Hunderasse zu dir passt.`,
-        url: window.location.href,
-      });
-    } else {
-      // Fallback for browsers that don't support the Web Share API
-      navigator.clipboard.writeText(
-        `Laut dem Test passt ein ${result.name} am besten zu mir! Finde heraus, welche Hunderasse zu dir passt: ${window.location.href}`
-      );
-      alert("Link in die Zwischenablage kopiert!");
-    }
-  };
-
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.9 }}
@@ -45,12 +30,17 @@ export function ResultCard({ result, onRestart }: ResultCardProps) {
 
       <div className="px-6 pb-6">
         <div className="flex flex-col md:flex-row items-center bg-amber-50 rounded-lg overflow-hidden -mt-6 border-2 border-amber-200">
-          <div className="w-full md:w-1/3 relative h-64 md:h-auto">
+          <div className="w-full md:w-1/3 relative h-64 md:h-full">
             <Image
-              src={result.image || "/placeholder.svg?height=300&width=300"}
+              src={result.image || "/placeholder.svg"}
               alt={result.name}
-              fill
-              className="object-cover p-2"
+              width={300}
+              height={300}
+              className="object-cover p-2 w-full h-full"
+              onError={(e) => {
+                // Fallback zur Platzhalter-Bild nur wenn kein Bild gefunden wurde
+                e.currentTarget.src = "/placeholder.svg";
+              }}
             />
           </div>
 
@@ -100,13 +90,13 @@ export function ResultCard({ result, onRestart }: ResultCardProps) {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <button
-                onClick={handleShare}
-                className="flex items-center justify-center gap-2 bg-amber-600 hover:bg-amber-700 text-white py-2 px-4 rounded-lg transition-colors"
-              >
-                <Share2 size={18} />
-                Teilen
-              </button>
+              <div className="flex items-center">
+                <ShareButtons
+                  url={window.location.href}
+                  title={`Laut dem Test passt ein ${result.name} am besten zu mir! Finde heraus, welche Hunderasse zu dir passt.`}
+                  className="mb-2 sm:mb-0"
+                />
+              </div>
 
               <button
                 onClick={onRestart}

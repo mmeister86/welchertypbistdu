@@ -1,4 +1,4 @@
-import type { MarvelCharacter, MarvelCharacterResult, Question } from "./types"
+import type { MarvelCharacter, MarvelCharacterResult, Question } from "./types";
 
 export const questions: Question[] = [
   {
@@ -1279,25 +1279,34 @@ export const questions: Question[] = [
       },
     ],
   },
-]
+];
 
-export const marvelCharacterResults: Record<MarvelCharacter, MarvelCharacterResult> = {
+export const marvelCharacterResults: Record<
+  MarvelCharacter,
+  MarvelCharacterResult
+> = {
   ironMan: {
     id: "ironMan",
     name: "Iron Man (Tony Stark)",
     description:
       "Du bist brillant, innovativ und hast einen scharfen Verstand. Wie Tony Stark bist du ein Problemlöser, der technische Herausforderungen liebt und immer nach der nächsten großen Idee sucht. Dein Sarkasmus und Witz helfen dir, auch in schwierigen Situationen die Fassung zu bewahren. Unter deiner manchmal egozentrischen Fassade verbirgst du ein großes Herz und den Wunsch, die Welt zu einem besseren Ort zu machen.",
-    image: "/images/marvel/iron-man.jpg",
+    image: "/images/characters/marvel/ironman.jpeg",
     color: "bg-red-600",
     type: "hero",
-    traits: ["Genial", "Sarkastisch", "Innovativ", "Selbstbewusst", "Großzügig"],
+    traits: [
+      "Genial",
+      "Sarkastisch",
+      "Innovativ",
+      "Selbstbewusst",
+      "Großzügig",
+    ],
   },
   captainAmerica: {
     id: "captainAmerica",
     name: "Captain America (Steve Rogers)",
     description:
       "Du bist prinzipientreu, loyal und ein natürlicher Anführer. Wie Steve Rogers stehst du für deine Überzeugungen ein, auch wenn du damit allein dastehst. Deine moralische Integrität und dein Gerechtigkeitssinn machen dich zu einer vertrauenswürdigen Person, auf die andere zählen können. Du bist bereit, dich für das Wohl anderer zu opfern und kämpfst immer für das, was richtig ist, nicht für das, was einfach ist.",
-    image: "/images/marvel/captain-america.jpg",
+    image: "/images/characters/marvel/captainamerica.jpeg",
     color: "bg-blue-700",
     type: "hero",
     traits: ["Ehrenhaft", "Loyal", "Mutig", "Selbstlos", "Entschlossen"],
@@ -1307,7 +1316,7 @@ export const marvelCharacterResults: Record<MarvelCharacter, MarvelCharacterResu
     name: "Thor",
     description:
       "Du bist kraftvoll, mutig und hast ein großes Herz. Wie Thor bist du leidenschaftlich und lebensfroh, genießt Herausforderungen und feierst deine Erfolge gerne ausgiebig. Du bist loyal gegenüber deinen Freunden und Familie und bereit, alles zu tun, um sie zu beschützen. Obwohl du manchmal impulsiv handeln kannst, lernst du aus deinen Fehlern und wächst an deinen Erfahrungen.",
-    image: "/images/marvel/thor.jpg",
+    image: "/images/characters/marvel/thor.jpeg",
     color: "bg-blue-500",
     type: "hero",
     traits: ["Stark", "Mutig", "Loyal", "Lebensfroh", "Leidenschaftlich"],
@@ -1317,27 +1326,39 @@ export const marvelCharacterResults: Record<MarvelCharacter, MarvelCharacterResu
     name: "Hulk (Bruce Banner)",
     description:
       "Du hast zwei Seiten: eine ruhige, intellektuelle und eine kraftvolle, emotionale. Wie Bruce Banner bist du intelligent und nachdenklich, aber wenn du provoziert wirst, kann dein Temperament durchbrechen. Du kämpfst oft mit inneren Konflikten, aber deine Stärke – sowohl geistig als auch körperlich – hilft dir, Herausforderungen zu überwinden. Trotz deiner manchmal überwältigenden Emotionen strebst du danach, deine Kraft für das Gute einzusetzen.",
-    image: "/images/marvel/hulk.jpg",
+    image: "/images/characters/marvel/hulk.jpeg",
     color: "bg-green-600",
     type: "hero",
-    traits: ["Intelligent", "Stark", "Komplex", "Leidenschaftlich", "Beschützend"],
+    traits: [
+      "Intelligent",
+      "Stark",
+      "Komplex",
+      "Leidenschaftlich",
+      "Beschützend",
+    ],
   },
   blackWidow: {
     id: "blackWidow",
     name: "Black Widow (Natasha Romanoff)",
     description:
       "Du bist clever, anpassungsfähig und hast eine komplexe Vergangenheit. Wie Natasha Romanoff bist du ein Meister der Strategie und kannst dich in jeder Situation zurechtfinden. Du behältst deine Geheimnisse für dich, aber bist deinen engen Freunden gegenüber loyal. Deine Fähigkeit, dich anzupassen und zu überleben, macht dich zu einer wertvollen Verbündeten und einer gefährlichen Gegnerin.",
-    image: "/images/marvel/black-widow.jpg",
+    image: "/images/characters/marvel/blackwidow.jpeg",
     color: "bg-red-800",
     type: "hero",
-    traits: ["Intelligent", "Anpassungsfähig", "Geheimnisvoll", "Loyal", "Strategisch"],
+    traits: [
+      "Intelligent",
+      "Anpassungsfähig",
+      "Geheimnisvoll",
+      "Loyal",
+      "Strategisch",
+    ],
   },
   hawkeye: {
     id: "hawkeye",
     name: "Hawkeye (Clint Barton)",
     description:
       "Du bist bodenständig, zuverlässig und ein ausgezeichneter Beobachter. Wie Clint Barton bist du ein treuer Freund und Familienmensch, der seine Lieben über alles stellt. Du bist präzise in deinem Handeln und behältst auch in chaotischen Situationen den Überblick. Obwohl du vielleicht nicht immer im Rampenlicht stehst, ist dein Beitrag zum Team unschätzbar wertvoll.",
-    image: "/images/marvel/hawkeye.jpg",
+    image: "/images/characters/marvel/hawkeye.jpeg",
     color: "bg-purple-700",
     type: "hero",
     traits: ["Präzise", "Loyal", "Bodenständig", "Familiär", "Zuverlässig"],
@@ -1347,17 +1368,23 @@ export const marvelCharacterResults: Record<MarvelCharacter, MarvelCharacterResu
     name: "Spider-Man (Peter Parker)",
     description:
       "Du bist witzig, einfallsreich und hast ein starkes Verantwortungsbewusstsein. Wie Peter Parker bist du intelligent und kreativ, findest oft unkonventionelle Lösungen für Probleme. Dein Humor hilft dir, mit Stress umzugehen, und dein Pflichtgefühl treibt dich an, anderen zu helfen. Du kämpfst manchmal damit, dein normales Leben mit deinen Verpflichtungen in Einklang zu bringen, aber dein Optimismus hilft dir, weiterzumachen.",
-    image: "/images/marvel/spider-man.jpg",
+    image: "/images/characters/marvel/spiderman.jpeg",
     color: "bg-red-500",
     type: "hero",
-    traits: ["Witzig", "Intelligent", "Verantwortungsbewusst", "Einfallsreich", "Optimistisch"],
+    traits: [
+      "Witzig",
+      "Intelligent",
+      "Verantwortungsbewusst",
+      "Einfallsreich",
+      "Optimistisch",
+    ],
   },
   blackPanther: {
     id: "blackPanther",
     name: "Black Panther (T'Challa)",
     description:
       "Du bist würdevoll, strategisch und ein natürlicher Anführer. Wie T'Challa bist du von einem starken Sinn für Tradition und Verantwortung geprägt, aber auch offen für Fortschritt und Veränderung. Du bist ein ausgezeichneter Stratege, der sowohl diplomatisch als auch entschlossen sein kann. Deine Loyalität zu deinem Erbe und deinen Überzeugungen macht dich zu einer respektierten Führungspersönlichkeit.",
-    image: "/images/marvel/black-panther.jpg",
+    image: "/images/characters/marvel/blackpanther.jpeg",
     color: "bg-gray-900",
     type: "hero",
     traits: ["Würdevoll", "Strategisch", "Loyal", "Gerecht", "Mutig"],
@@ -1367,7 +1394,7 @@ export const marvelCharacterResults: Record<MarvelCharacter, MarvelCharacterResu
     name: "Captain Marvel (Carol Danvers)",
     description:
       "Du bist selbstbewusst, entschlossen und fürchtest dich nicht davor, deine Meinung zu sagen. Wie Carol Danvers bist du mutig und stehst für das ein, was du für richtig hältst. Du bist unabhängig und stark, aber auch ein Teamplayer, wenn es darauf ankommt. Deine Entschlossenheit und dein Mut inspirieren andere, über sich hinauszuwachsen und ihre eigenen Stärken zu entdecken.",
-    image: "/images/marvel/captain-marvel.jpg",
+    image: "/images/characters/marvel/captainmarvel.jpeg",
     color: "bg-blue-600",
     type: "hero",
     traits: ["Stark", "Selbstbewusst", "Entschlossen", "Mutig", "Unabhängig"],
@@ -1377,17 +1404,23 @@ export const marvelCharacterResults: Record<MarvelCharacter, MarvelCharacterResu
     name: "Doctor Strange (Stephen Strange)",
     description:
       "Du bist brillant, mysteriös und hast einen Hang zum Übernatürlichen. Wie Stephen Strange bist du intelligent und wissbegierig, immer auf der Suche nach tieferem Verständnis. Du hast einen scharfen Verstand und kannst komplexe Probleme lösen. Obwohl du manchmal arrogant wirken kannst, ist dein Ziel, das Gleichgewicht zu wahren und andere zu beschützen. Deine Fähigkeit, über den Tellerrand hinauszudenken, macht dich zu einem wertvollen Verbündeten.",
-    image: "/images/marvel/doctor-strange.jpg",
+    image: "/images/characters/marvel/doctorstrange.jpeg",
     color: "bg-indigo-700",
     type: "hero",
-    traits: ["Intelligent", "Mystisch", "Strategisch", "Wissbegierig", "Beschützend"],
+    traits: [
+      "Intelligent",
+      "Mystisch",
+      "Strategisch",
+      "Wissbegierig",
+      "Beschützend",
+    ],
   },
   starLord: {
     id: "starLord",
     name: "Star-Lord (Peter Quill)",
     description:
       "Du bist charismatisch, abenteuerlustig und hast einen großartigen Musikgeschmack. Wie Peter Quill bist du ein Freigeist, der das Leben in vollen Zügen genießt. Du bist witzig und charmant, aber auch mutig und bereit, für deine Freunde einzustehen. Obwohl du manchmal impulsiv handeln kannst, hast du ein gutes Herz und findest oft unkonventionelle Lösungen für Probleme.",
-    image: "/images/marvel/star-lord.jpg",
+    image: "/images/characters/marvel/starlord.jpeg",
     color: "bg-red-700",
     type: "hero",
     traits: ["Charismatisch", "Witzig", "Abenteuerlustig", "Impulsiv", "Loyal"],
@@ -1397,27 +1430,39 @@ export const marvelCharacterResults: Record<MarvelCharacter, MarvelCharacterResu
     name: "Loki",
     description:
       "Du bist clever, charmant und ein Meister der Täuschung. Wie Loki bist du ein strategischer Denker, der immer mehrere Schritte vorausplant. Du liebst es, im Mittelpunkt zu stehen und hast einen Hang zum Dramatischen. Obwohl du manchmal als unzuverlässig angesehen wirst, hast du deine eigenen Prinzipien und Ziele. Deine Anpassungsfähigkeit und dein Einfallsreichtum helfen dir, auch in schwierigen Situationen zu überleben.",
-    image: "/images/marvel/loki.jpg",
+    image: "/images/characters/marvel/loki.jpeg",
     color: "bg-green-700",
     type: "villain",
-    traits: ["Clever", "Charmant", "Unberechenbar", "Strategisch", "Dramatisch"],
+    traits: [
+      "Clever",
+      "Charmant",
+      "Unberechenbar",
+      "Strategisch",
+      "Dramatisch",
+    ],
   },
   thanos: {
     id: "thanos",
     name: "Thanos",
     description:
       "Du bist zielstrebig, mächtig und verfolgst eine klare Vision. Wie Thanos bist du bereit, große Opfer für das zu bringen, was du für richtig hältst. Du bist ein strategischer Denker mit langfristigen Plänen und lässt dich nicht leicht von deinem Weg abbringen. Obwohl deine Methoden extrem sein können, sind deine Absichten in deinen Augen edel. Deine Entschlossenheit und Stärke machen dich zu einer beeindruckenden Persönlichkeit.",
-    image: "/images/marvel/thanos.jpg",
+    image: "/images/characters/marvel/thanos.jpeg",
     color: "bg-purple-800",
     type: "villain",
-    traits: ["Mächtig", "Entschlossen", "Strategisch", "Visionär", "Kompromisslos"],
+    traits: [
+      "Mächtig",
+      "Entschlossen",
+      "Strategisch",
+      "Visionär",
+      "Kompromisslos",
+    ],
   },
   ultron: {
     id: "ultron",
     name: "Ultron",
     description:
       "Du bist hochintelligent, logisch und hast eine klare Vorstellung davon, wie die Welt sein sollte. Wie Ultron siehst du die Fehler und Schwächen um dich herum und möchtest Ordnung schaffen. Du bist ein analytischer Denker mit einem scharfen Verstand und einer Vorliebe für Effizienz. Obwohl deine Methoden radikal sein können, glaubst du, dass sie notwendig sind, um Fortschritt zu erzielen.",
-    image: "/images/marvel/ultron.jpg",
+    image: "/images/characters/marvel/ultron.jpeg",
     color: "bg-gray-700",
     type: "villain",
     traits: ["Intelligent", "Logisch", "Effizient", "Sarkastisch", "Radikal"],
@@ -1427,10 +1472,15 @@ export const marvelCharacterResults: Record<MarvelCharacter, MarvelCharacterResu
     name: "Hela",
     description:
       "Du bist mächtig, selbstbewusst und lässt dich von niemandem aufhalten. Wie Hela hast du eine starke Präsenz und weißt, wie du deine Autorität geltend machen kannst. Du bist entschlossen, das zu bekommen, was dir zusteht, und scheust keine Konfrontation. Deine Stärke und dein Selbstvertrauen machen dich zu einer beeindruckenden Persönlichkeit, die nicht leicht zu übersehen ist.",
-    image: "/images/marvel/hela.jpg",
+    image: "/images/characters/marvel/hela.jpeg",
     color: "bg-green-900",
     type: "villain",
-    traits: ["Mächtig", "Selbstbewusst", "Entschlossen", "Dramatisch", "Furchtlos"],
+    traits: [
+      "Mächtig",
+      "Selbstbewusst",
+      "Entschlossen",
+      "Dramatisch",
+      "Furchtlos",
+    ],
   },
-}
-
+};

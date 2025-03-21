@@ -1,16 +1,17 @@
-"use client"
+"use client";
 
-import { useReducer } from "react"
-import { AnimatePresence } from "framer-motion"
-import type { Character, TestState } from "./types"
-import { questions, characterResults } from "./test-data"
-import { QuestionCard } from "./question-card"
-import { ResultCard } from "./result-card"
-import { IntroCard } from "./intro-card"
-import { AdBanner } from "./ad-banner"
-import { BubbleBackground } from "./bubble-background"
+import { useReducer } from "react";
+import { useRouter } from "next/navigation";
+import { AnimatePresence } from "framer-motion";
+import type { Character, TestState } from "./types";
+import { questions, characterResults } from "./test-data";
+import { QuestionCard } from "./question-card";
+import { ResultCard } from "./result-card";
+import { IntroCard } from "./intro-card";
+import { AdBanner } from "./ad-banner";
+import { BubbleBackground } from "./bubble-background";
 
-// Reducer for managing test state
+// Reducer für die Verwaltung des Testzustands
 function testReducer(state: TestState, action: any): TestState {
   switch (action.type) {
     case "START_TEST":
@@ -20,37 +21,38 @@ function testReducer(state: TestState, action: any): TestState {
         answers: {},
         result: null,
         showResult: false,
-      }
+      };
     case "ANSWER_QUESTION":
       const newAnswers = {
         ...state.answers,
         [questions[state.currentQuestionIndex].id]: action.character,
-      }
+      };
 
-      // If this was the last question, calculate the result
+      // Wenn dies die letzte Frage war, berechne das Ergebnis
       if (state.currentQuestionIndex === questions.length - 1) {
+        const result = calculateResult(newAnswers);
         return {
           ...state,
           answers: newAnswers,
-          result: calculateResult(newAnswers),
+          result: result,
           showResult: true,
-        }
+        };
       }
 
-      // Otherwise, move to the next question
+      // Ansonsten zur nächsten Frage wechseln
       return {
         ...state,
         currentQuestionIndex: state.currentQuestionIndex + 1,
         answers: newAnswers,
-      }
+      };
     default:
-      return state
+      return state;
   }
 }
 
-// Function to calculate the result based on answers
+// Funktion zur Berechnung des Ergebnisses basierend auf den Antworten
 function calculateResult(answers: Record<string, Character>): Character {
-  // Count occurrences of each character
+  // Zähle das Vorkommen jedes Charakters
   const characterCounts: Record<Character, number> = {
     spongebob: 0,
     patrick: 0,
@@ -62,51 +64,79 @@ function calculateResult(answers: Record<string, Character>): Character {
     pearl: 0,
     gary: 0,
     karen: 0,
-  }
+  };
 
-  // Count each character occurrence
+  // Zähle jedes Charaktervorkommen
   Object.values(answers).forEach((character) => {
-    characterCounts[character]++
-  })
+    characterCounts[character]++;
+  });
 
-  // Find the character with the highest count
-  let maxCount = 0
-  let result: Character = "spongebob" // Default
+  // Finde den Charakter mit der höchsten Anzahl
+  let maxCount = 0;
+  let result: Character = "spongebob"; // Standard
 
   Object.entries(characterCounts).forEach(([character, count]) => {
     if (count > maxCount) {
-      maxCount = count
-      result = character as Character
+      maxCount = count;
+      result = character as Character;
     }
-  })
+  });
 
-  return result
+  return result;
 }
 
 export function SpongebobTest() {
-  // Initialize test state
+  const router = useRouter();
+
+  // Initialisiere den Testzustand
   const [state, dispatch] = useReducer(testReducer, {
-    currentQuestionIndex: -1, // -1 means we're at the intro screen
+    currentQuestionIndex: -1, // -1 bedeutet, dass wir auf dem Intro-Bildschirm sind
     answers: {},
     result: null,
     showResult: false,
-  })
+  });
 
   const handleStart = () => {
-    dispatch({ type: "START_TEST" })
-  }
+    dispatch({ type: "START_TEST" });
+  };
 
   const handleAnswer = (character: string) => {
     dispatch({
       type: "ANSWER_QUESTION",
-      character,
-    })
-  }
+      character: character as Character,
+    });
+
+    // Prüfe, ob dies die letzte Frage ist
+    if (state.currentQuestionIndex === questions.length - 1) {
+      // Berechne das Ergebnis vor der Weiterleitung
+      const newAnswers = {
+        ...state.answers,
+        [questions[state.currentQuestionIndex].id]: character as Character,
+      };
+      const result = calculateResult(newAnswers);
+
+      // Verfolge das Ergebnis vor der Weiterleitung
+      try {
+        // Verfolge den Testabschluss mit dem Ergebnis
+        if (typeof window !== "undefined" && "gtag" in window) {
+          // @ts-ignore - gtag ist nicht typisiert
+          window.gtag("event", "test_completed", {
+            test_type: "spongebob",
+            result_character: result,
+          });
+        }
+      } catch (e) {
+        console.error("Analytics error:", e);
+      }
+      // Weiterleitung zur Ergebnisseite mit dem Charakter
+      router.push(`/tests/spongebob/ergebnis?character=${result}`);
+    }
+  };
 
   const handleRestart = () => {
-    window.scrollTo(0, 0)
-    dispatch({ type: "START_TEST" })
-  }
+    window.scrollTo(0, 0);
+    dispatch({ type: "START_TEST" });
+  };
 
   return (
     <div className="min-h-screen py-12 px-4 bg-gradient-to-b from-blue-500 to-blue-700 relative">
@@ -115,7 +145,7 @@ export function SpongebobTest() {
       <div className="max-w-6xl mx-auto relative z-10">
         {/* Spongebob Logo */}
         <div className="flex justify-center mb-8">
-          <div className="w-64 h-32 bg-[url('/images/spongebob-logo.png')] bg-contain bg-center bg-no-repeat"></div>
+          <div className="w-[512px] h-[256px] bg-[url('/images/spongebob-logo.png')] bg-contain bg-center bg-no-repeat z-20"></div>
         </div>
 
         {/* Ad Banner at the top */}
@@ -124,7 +154,9 @@ export function SpongebobTest() {
         {/* Main Content */}
         <div className="my-8">
           <AnimatePresence mode="wait">
-            {state.currentQuestionIndex === -1 && <IntroCard onStart={handleStart} />}
+            {state.currentQuestionIndex === -1 && (
+              <IntroCard onStart={handleStart} />
+            )}
 
             {state.currentQuestionIndex >= 0 && !state.showResult && (
               <QuestionCard
@@ -134,10 +166,6 @@ export function SpongebobTest() {
                 totalQuestions={questions.length}
               />
             )}
-
-            {state.showResult && state.result && (
-              <ResultCard result={characterResults[state.result]} onRestart={handleRestart} />
-            )}
           </AnimatePresence>
         </div>
 
@@ -145,6 +173,5 @@ export function SpongebobTest() {
         <AdBanner />
       </div>
     </div>
-  )
+  );
 }
-

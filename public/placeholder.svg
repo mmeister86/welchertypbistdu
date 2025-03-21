@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="300" height="300" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+  <!-- Hintergrund -->
+  <rect width="300" height="300" fill="#f0f0f0"/>
+
+  <!-- Bild-Icon -->
+  <rect x="75" y="75" width="150" height="100" rx="8" fill="#d1d5db"/>
+
+  <!-- Berg-Symbol -->
+  <polygon points="75,175 125,125 150,150 200,100 225,125 225,175" fill="#9ca3af"/>
+
+  <!-- Sonnen-Symbol -->
+  <circle cx="190" cy="110" r="15" fill="#fbbf24"/>
+
+  <!-- Text "Kein Bild verfügbar" -->
+  <text x="150" y="210" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#6b7280">Kein Bild verfügbar</text>
+
+  <!-- Parameter-Unterstützung (werden ignoriert, aber für die URL-Parameter) -->
+  <desc>Placeholder-Bild für fehlende Bilder. Unterstützt height und width Parameter in der URL.</desc>
+</svg>

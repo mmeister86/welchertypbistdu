@@ -1,14 +1,15 @@
-"use client"
+"use client";
 
-import { useReducer } from "react"
-import { AnimatePresence } from "framer-motion"
-import type { Character, TestState } from "./types"
-import { questions, characterResults } from "./test-data"
-import { QuestionCard } from "./question-card"
-import { ResultCard } from "./result-card"
-import { IntroCard } from "./intro-card"
-import { AdBanner } from "./ad-banner"
-import { SnowBackground } from "./snow-background"
+import { useReducer } from "react";
+import { useRouter } from "next/navigation";
+import { AnimatePresence } from "framer-motion";
+import type { Character, TestState } from "./types";
+import { questions, characterResults } from "./test-data";
+import { QuestionCard } from "./question-card";
+import { ResultCard } from "./result-card";
+import { IntroCard } from "./intro-card";
+import { AdBanner } from "./ad-banner";
+import { SnowBackground } from "./snow-background";
 
 // Reducer for managing test state
 function testReducer(state: TestState, action: any): TestState {
@@ -20,12 +21,12 @@ function testReducer(state: TestState, action: any): TestState {
         answers: {},
         result: null,
         showResult: false,
-      }
+      };
     case "ANSWER_QUESTION":
       const newAnswers = {
         ...state.answers,
         [questions[state.currentQuestionIndex].id]: action.character,
-      }
+      };
 
       // If this was the last question, calculate the result
       if (state.currentQuestionIndex === questions.length - 1) {
@@ -34,7 +35,7 @@ function testReducer(state: TestState, action: any): TestState {
           answers: newAnswers,
           result: calculateResult(newAnswers),
           showResult: true,
-        }
+        };
       }
 
       // Otherwise, move to the next question
@@ -42,9 +43,9 @@ function testReducer(state: TestState, action: any): TestState {
         ...state,
         currentQuestionIndex: state.currentQuestionIndex + 1,
         answers: newAnswers,
-      }
+      };
     default:
-      return state
+      return state;
   }
 }
 
@@ -60,51 +61,80 @@ function calculateResult(answers: Record<string, Character>): Character {
     arya: 0,
     jaime: 0,
     sansa: 0,
-  }
+  };
 
   // Count each character occurrence
   Object.values(answers).forEach((character) => {
-    characterCounts[character]++
-  })
+    characterCounts[character]++;
+  });
 
   // Find the character with the highest count
-  let maxCount = 0
-  let result: Character = "jon" // Default
+  let maxCount = 0;
+  let result: Character = "jon"; // Default
 
   Object.entries(characterCounts).forEach(([character, count]) => {
     if (count > maxCount) {
-      maxCount = count
-      result = character as Character
+      maxCount = count;
+      result = character as Character;
     }
-  })
+  });
 
-  return result
+  return result;
 }
 
 export function GameOfThronesTest() {
+  const router = useRouter();
+
   // Initialize test state
   const [state, dispatch] = useReducer(testReducer, {
     currentQuestionIndex: -1, // -1 means we're at the intro screen
     answers: {},
     result: null,
     showResult: false,
-  })
+  });
 
   const handleStart = () => {
-    dispatch({ type: "START_TEST" })
-  }
+    dispatch({ type: "START_TEST" });
+  };
 
   const handleAnswer = (character: string) => {
     dispatch({
       type: "ANSWER_QUESTION",
       character,
-    })
-  }
+    });
+
+    // Prüfe, ob dies die letzte Frage ist
+    if (state.currentQuestionIndex === questions.length - 1) {
+      // Berechne das Ergebnis vor der Weiterleitung
+      const newAnswers = {
+        ...state.answers,
+        [questions[state.currentQuestionIndex].id]: character as Character,
+      };
+      const result = calculateResult(newAnswers);
+
+      // Verfolge das Ergebnis vor der Weiterleitung
+      try {
+        // Verfolge den Testabschluss mit dem Ergebnis
+        if (typeof window !== "undefined" && "gtag" in window) {
+          // @ts-ignore - gtag ist nicht typisiert
+          window.gtag("event", "test_completed", {
+            test_type: "got",
+            result_character: result,
+          });
+        }
+      } catch (e) {
+        console.error("Analytics error:", e);
+      }
+
+      // Weiterleitung zur Ergebnisseite mit dem Charakter
+      router.push(`/tests/game-of-thrones/ergebnis?character=${result}`);
+    }
+  };
 
   const handleRestart = () => {
-    window.scrollTo(0, 0)
-    dispatch({ type: "START_TEST" })
-  }
+    window.scrollTo(0, 0);
+    dispatch({ type: "START_TEST" });
+  };
 
   return (
     <div className="min-h-screen py-12 px-4 bg-gradient-to-b from-gray-900 to-gray-800 relative">
@@ -122,7 +152,9 @@ export function GameOfThronesTest() {
         {/* Main Content */}
         <div className="my-8">
           <AnimatePresence mode="wait">
-            {state.currentQuestionIndex === -1 && <IntroCard onStart={handleStart} />}
+            {state.currentQuestionIndex === -1 && (
+              <IntroCard onStart={handleStart} />
+            )}
 
             {state.currentQuestionIndex >= 0 && !state.showResult && (
               <QuestionCard
@@ -132,10 +164,6 @@ export function GameOfThronesTest() {
                 totalQuestions={questions.length}
               />
             )}
-
-            {state.showResult && state.result && (
-              <ResultCard result={characterResults[state.result]} onRestart={handleRestart} />
-            )}
           </AnimatePresence>
         </div>
 
@@ -143,6 +171,5 @@ export function GameOfThronesTest() {
         <AdBanner />
       </div>
     </div>
-  )
+  );
 }
-

@@ -1,14 +1,14 @@
-"use client"
+"use client";
 
-import { useReducer } from "react"
-import { AnimatePresence } from "framer-motion"
-import type { Character, TestState } from "./types"
-import { questions, characterResults } from "./test-data"
-import { QuestionCard } from "./question-card"
-import { ResultCard } from "./result-card"
-import { IntroCard } from "./intro-card"
-import { AdBanner } from "./ad-banner"
-import { StarfieldBackground } from "./starfield-background"
+import { useReducer } from "react";
+import { AnimatePresence } from "framer-motion";
+import type { Character, TestState } from "./types";
+import { questions, characterResults } from "./test-data";
+import { QuestionCard } from "./question-card";
+import { ResultCard } from "./result-card";
+import { IntroCard } from "./intro-card";
+import { AdBanner } from "./ad-banner";
+import { StarfieldBackground } from "./starfield-background";
 
 // Reducer for managing test state
 function testReducer(state: TestState, action: any): TestState {
@@ -20,12 +20,12 @@ function testReducer(state: TestState, action: any): TestState {
         answers: {},
         result: null,
         showResult: false,
-      }
+      };
     case "ANSWER_QUESTION":
       const newAnswers = {
         ...state.answers,
         [action.questionId]: action.answerId,
-      }
+      };
 
       // If this was the last question, calculate the result
       if (state.currentQuestionIndex === questions.length - 1) {
@@ -34,7 +34,7 @@ function testReducer(state: TestState, action: any): TestState {
           answers: newAnswers,
           result: calculateResult(newAnswers),
           showResult: true,
-        }
+        };
       }
 
       // Otherwise, move to the next question
@@ -42,9 +42,9 @@ function testReducer(state: TestState, action: any): TestState {
         ...state,
         currentQuestionIndex: state.currentQuestionIndex + 1,
         answers: newAnswers,
-      }
+      };
     default:
-      return state
+      return state;
   }
 }
 
@@ -66,34 +66,34 @@ function calculateResult(answers: Record<string, string>): Character {
     obiwan: 0,
     padme: 0,
     rey: 0,
-  }
+  };
 
   // Calculate scores based on answers
   Object.entries(answers).forEach(([questionId, answerId]) => {
-    const question = questions.find((q) => q.id === questionId)
-    if (!question) return
+    const question = questions.find((q) => q.id === questionId);
+    if (!question) return;
 
-    const answer = question.answers.find((a) => a.id === answerId)
-    if (!answer) return
+    const answer = question.answers.find((a) => a.id === answerId);
+    if (!answer) return;
 
     // Add character points from this answer
     Object.entries(answer.characterPoints).forEach(([character, points]) => {
-      scores[character as Character] += points
-    })
-  })
+      scores[character as Character] += points;
+    });
+  });
 
   // Find the character with the highest score
-  let highestScore = 0
-  let result: Character = "luke" // Default
+  let highestScore = 0;
+  let result: Character = "luke"; // Default
 
   Object.entries(scores).forEach(([character, score]) => {
     if (score > highestScore) {
-      highestScore = score
-      result = character as Character
+      highestScore = score;
+      result = character as Character;
     }
-  })
+  });
 
-  return result
+  return result;
 }
 
 export function StarWarsTest() {
@@ -103,25 +103,25 @@ export function StarWarsTest() {
     answers: {},
     result: null,
     showResult: false,
-  })
+  });
 
   const handleStart = () => {
-    dispatch({ type: "START_TEST" })
-  }
+    dispatch({ type: "START_TEST" });
+  };
 
   const handleAnswer = (answerId: string) => {
-    const currentQuestion = questions[state.currentQuestionIndex]
+    const currentQuestion = questions[state.currentQuestionIndex];
     dispatch({
       type: "ANSWER_QUESTION",
       questionId: currentQuestion.id,
       answerId,
-    })
-  }
+    });
+  };
 
   const handleRestart = () => {
-    window.scrollTo(0, 0)
-    dispatch({ type: "START_TEST" })
-  }
+    window.scrollTo(0, 0);
+    dispatch({ type: "START_TEST" });
+  };
 
   return (
     <div className="min-h-screen py-12 px-4 bg-black relative">
@@ -129,7 +129,7 @@ export function StarWarsTest() {
       <div className="max-w-6xl mx-auto">
         {/* Star Wars Logo */}
         <div className="flex justify-center mb-8">
-          <div className="w-64 h-32 bg-[url('/images/star-wars-logo.png')] bg-contain bg-center bg-no-repeat"></div>
+          <div className="w-64 h-32 bg-[url('/images/star-wars-logo.png')] bg-contain bg-center bg-no-repeat z-20"></div>
         </div>
 
         {/* Ad Banner at the top */}
@@ -138,7 +138,9 @@ export function StarWarsTest() {
         {/* Main Content */}
         <div className="my-8">
           <AnimatePresence mode="wait">
-            {state.currentQuestionIndex === -1 && <IntroCard onStart={handleStart} />}
+            {state.currentQuestionIndex === -1 && (
+              <IntroCard onStart={handleStart} />
+            )}
 
             {state.currentQuestionIndex >= 0 && !state.showResult && (
               <QuestionCard
@@ -150,7 +152,10 @@ export function StarWarsTest() {
             )}
 
             {state.showResult && state.result && (
-              <ResultCard result={characterResults[state.result]} onRestart={handleRestart} />
+              <ResultCard
+                result={characterResults[state.result]}
+                onRestart={handleRestart}
+              />
             )}
           </AnimatePresence>
         </div>
@@ -159,6 +164,5 @@ export function StarWarsTest() {
         <AdBanner />
       </div>
     </div>
-  )
+  );
 }
-

@@ -1,4 +1,4 @@
-import type { Character, CharacterResult, Question } from "./types"
+import type { Character, CharacterResult, Question } from "./types";
 
 export const questions: Question[] = [
   {
@@ -316,7 +316,7 @@ export const questions: Question[] = [
       },
     ],
   },
-]
+];
 
 export const characterResults: Record<Character, CharacterResult> = {
   spongebob: {
@@ -324,7 +324,7 @@ export const characterResults: Record<Character, CharacterResult> = {
     name: "SpongeBob Schwammkopf",
     description:
       "Du bist optimistisch, enthusiastisch und siehst in allem das Positive! Wie SpongeBob liebst du deinen Job, deine Freunde und das Leben im Allgemeinen. Du bist manchmal etwas naiv, aber deine Fröhlichkeit und dein Enthusiasmus sind ansteckend. Du findest Freude in den kleinen Dingen und bist immer bereit, anderen zu helfen.",
-    image: "/images/characters/spongebob.jpg",
+    image: "/images/characters/spongebob/spongebob.jpg",
     color: "bg-yellow-400",
   },
   patrick: {
@@ -332,7 +332,7 @@ export const characterResults: Record<Character, CharacterResult> = {
     name: "Patrick Star",
     description:
       "Du bist entspannt, sorglos und nimmst das Leben, wie es kommt. Wie Patrick bist du manchmal etwas vergesslich und nicht der Hellste, aber deine Loyalität zu deinen Freunden ist unerschütterlich. Du liebst es, zu entspannen und machst dir nicht zu viele Gedanken über die Zukunft.",
-    image: "/images/characters/patrick.jpg",
+    image: "/images/characters/spongebob/patrick.jpg",
     color: "bg-pink-400",
   },
   squidward: {
@@ -340,7 +340,7 @@ export const characterResults: Record<Character, CharacterResult> = {
     name: "Thaddäus Tentakel",
     description:
       "Du bist künstlerisch, nachdenklich und manchmal etwas zynisch. Wie Thaddäus schätzt du Ruhe und Frieden und hast einen ausgeprägten Sinn für Ästhetik. Du fühlst dich oft missverstanden und sehnst dich nach Anerkennung für deine Talente. Trotz deiner manchmal grummeligen Art hast du ein gutes Herz.",
-    image: "/images/characters/squidward.jpg",
+    image: "/images/characters/spongebob/squidward.jpg",
     color: "bg-teal-400",
   },
   krabs: {
@@ -348,7 +348,7 @@ export const characterResults: Record<Character, CharacterResult> = {
     name: "Mr. Krabs",
     description:
       "Du bist geschäftstüchtig, sparsam und hast ein Auge für Gelegenheiten. Wie Mr. Krabs liebst du Geld und bist bereit, hart dafür zu arbeiten. Du bist pragmatisch und lässt dich nicht leicht von deinen Zielen abbringen. Trotz deiner Liebe zum Geld, gibt es Menschen in deinem Leben, die dir noch wichtiger sind.",
-    image: "/images/characters/krabs.jpg",
+    image: "/images/characters/spongebob/krabs.jpg",
     color: "bg-red-500",
   },
   sandy: {
@@ -356,7 +356,7 @@ export const characterResults: Record<Character, CharacterResult> = {
     name: "Sandy Cheeks",
     description:
       "Du bist intelligent, sportlich und abenteuerlustig. Wie Sandy bist du immer bereit, neue Herausforderungen anzunehmen und liebst es, dein Wissen zu erweitern. Du bist zielstrebig und gibst nicht auf, bis du deine Ziele erreicht hast. Deine Freunde schätzen dich für deine Klugheit und deinen Mut.",
-    image: "/images/characters/sandy.jpg",
+    image: "/images/characters/spongebob/sandy.jpg",
     color: "bg-brown-400",
   },
   plankton: {
@@ -364,7 +364,7 @@ export const characterResults: Record<Character, CharacterResult> = {
     name: "Sheldon J. Plankton",
     description:
       "Du bist ehrgeizig, clever und lässt dich nicht unterkriegen. Wie Plankton hast du große Pläne und bist bereit, alles zu tun, um sie zu verwirklichen. Du bist ein strategischer Denker und gibst nicht auf, auch wenn du Rückschläge erlebst. Manchmal neigst du dazu, die Grenzen zu überschreiten, um deine Ziele zu erreichen.",
-    image: "/images/characters/plankton.jpg",
+    image: "/images/characters/spongebob/plankton.jpg",
     color: "bg-green-500",
   },
   puff: {
@@ -372,7 +372,7 @@ export const characterResults: Record<Character, CharacterResult> = {
     name: "Mrs. Puff",
     description:
       "Du bist geduldig, pflichtbewusst und manchmal etwas ängstlich. Wie Mrs. Puff nimmst du deine Verantwortung ernst und versuchst, dein Bestes zu geben, auch wenn die Umstände schwierig sind. Du sehnst dich nach einem ruhigen, stressfreien Leben, wirst aber oft in chaotische Situationen hineingezogen.",
-    image: "/images/characters/puff.jpg",
+    image: "/images/characters/spongebob/puff.jpg",
     color: "bg-blue-300",
   },
   pearl: {
@@ -380,7 +380,7 @@ export const characterResults: Record<Character, CharacterResult> = {
     name: "Pearl Krabs",
     description:
       "Du bist trendbewusst, sozial und emotional. Wie Pearl ist dir die Meinung deiner Freunde wichtig und du liebst es, im Mittelpunkt zu stehen. Du hast einen ausgeprägten Sinn für Mode und aktuelle Trends. Manchmal bist du etwas dramatisch, aber deine Leidenschaft und Energie sind ansteckend.",
-    image: "/images/characters/pearl.jpg",
+    image: "/images/characters/spongebob/pearl.jpg",
     color: "bg-gray-300",
   },
   gary: {
@@ -388,7 +388,7 @@ export const characterResults: Record<Character, CharacterResult> = {
     name: "Gary die Schnecke",
     description:
       "Du bist ruhig, besonnen und oft klüger, als die Leute denken. Wie Gary bist du ein guter Zuhörer und ein loyaler Freund. Du bist unkompliziert und zufrieden mit den einfachen Dingen im Leben. Obwohl du nicht viel sagst, sind deine Einsichten oft überraschend tiefgründig.",
-    image: "/images/characters/gary.jpg",
+    image: "/images/characters/spongebob/gary.jpg",
     color: "bg-blue-500",
   },
   karen: {
@@ -396,8 +396,7 @@ export const characterResults: Record<Character, CharacterResult> = {
     name: "Karen Plankton",
     description:
       "Du bist intelligent, pragmatisch und direkt. Wie Karen bist du oft die Stimme der Vernunft und scheust dich nicht, deine ehrliche Meinung zu sagen. Du bist technisch versiert und analytisch, aber hast auch eine fürsorgliche Seite. Dein sarkastischer Humor und deine Fähigkeit, Situationen nüchtern zu betrachten, machen dich zu einer wertvollen Beraterin.",
-    image: "/images/characters/karen.jpg",
+    image: "/images/characters/spongebob/karen.jpg",
     color: "bg-teal-600",
   },
-}
-
+};

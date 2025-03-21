@@ -1,7 +1,6 @@
 "use client";
 import { Star } from "lucide-react";
 import { InfiniteSlider } from "./infinite-slider";
-import { ProgressiveBlur } from "./progressive-blur";
 
 // Testimonial data with 5 testimonials
 const testimonials = [
@@ -59,26 +58,16 @@ const testimonials = [
 
 export function TestimonialsSlider() {
   return (
-    <div className="relative w-full overflow-hidden py-8">
+    <div className="relative w-full mx-auto overflow-hidden py-8">
       <InfiniteSlider
-        className="flex items-center gap-8 py-4"
+        className="flex items-center gap-12 py-4"
         duration={60}
-        gap={32}
+        gap={48}
       >
         {testimonials.map((testimonial) => (
           <TestimonialCard key={testimonial.id} testimonial={testimonial} />
         ))}
       </InfiniteSlider>
-      <ProgressiveBlur
-        className="pointer-events-none absolute top-0 left-0 h-full w-[100px]"
-        direction="left"
-        blurIntensity={1}
-      />
-      <ProgressiveBlur
-        className="pointer-events-none absolute top-0 right-0 h-full w-[100px]"
-        direction="right"
-        blurIntensity={1}
-      />
     </div>
   );
 }
@@ -89,22 +78,22 @@ function TestimonialCard({
   testimonial: (typeof testimonials)[0];
 }) {
   return (
-    <div className="bg-white p-6 rounded-xl shadow-md w-80 shrink-0">
-      <div className="flex items-center mb-4">
+    <div className="bg-white p-8 rounded-xl shadow-md w-[800px] shrink-0">
+      <div className="flex items-center mb-6">
         <div
-          className={`w-12 h-12 ${testimonial.avatarBg} rounded-full flex items-center justify-center mr-4`}
+          className={`w-14 h-14 ${testimonial.avatarBg} rounded-full flex items-center justify-center mr-4`}
         >
-          <span className={`${testimonial.avatarText} font-bold`}>
+          <span className={`${testimonial.avatarText} font-bold text-lg`}>
             {testimonial.initials}
           </span>
         </div>
         <div>
-          <h4 className="font-semibold">{testimonial.name}</h4>
+          <h4 className="font-semibold text-lg">{testimonial.name}</h4>
           <div className="flex text-yellow-400">
             {Array.from({ length: 5 }).map((_, i) => (
               <Star
                 key={i}
-                className={`h-4 w-4 ${
+                className={`h-5 w-5 ${
                   i < testimonial.rating ? "fill-current" : ""
                 }`}
               />
@@ -112,7 +101,9 @@ function TestimonialCard({
           </div>
         </div>
       </div>
-      <p className="text-gray-600">"{testimonial.testimonial}"</p>
+      <p className="text-gray-600 text-lg leading-relaxed">
+        "{testimonial.testimonial}"
+      </p>
     </div>
   );
 }

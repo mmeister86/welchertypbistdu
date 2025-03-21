@@ -1,167 +1,139 @@
-"use client"
+"use client";
 
-import { useEffect, useRef } from "react"
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import Image from "next/image";
 
 interface ComicBackgroundProps {
-  density?: number
+  density?: number;
+}
+
+interface ComicElement {
+  id: number;
+  x: number;
+  y: number;
+  size: number;
+  type: string;
+  src: string;
+  rotation: number;
+  opacity: number;
+  zIndex: number;
 }
 
 export function ComicBackground({ density = 30 }: ComicBackgroundProps) {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-  const animationRef = useRef<number>(0)
+  const [elements, setElements] = useState<ComicElement[]>([]);
+  const [dimensions, setDimensions] = useState({
+    width: 0,
+    height: 0,
+  });
 
   useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
+    // Set initial dimensions
+    setDimensions({
+      width: window.innerWidth,
+      height: window.innerHeight,
+    });
 
-    const ctx = canvas.getContext("2d")
-    if (!ctx) return
+    // Handle resize
+    const handleResize = () => {
+      setDimensions({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
 
-    // Set canvas dimensions
-    const resizeCanvas = () => {
-      canvas.width = window.innerWidth
-      canvas.height = window.innerHeight
-    }
+    window.addEventListener("resize", handleResize);
 
-    resizeCanvas()
-    window.addEventListener("resize", resizeCanvas)
-
-    // Comic elements
+    // Comic elements using SVG files
     const comicElements = [
-      { type: "circle", color: "rgba(255, 0, 0, 0.1)" },
-      { type: "star", color: "rgba(255, 255, 0, 0.1)" },
-      { type: "pow", color: "rgba(0, 0, 255, 0.1)" },
-      { type: "boom", color: "rgba(255, 0, 255, 0.1)" },
-    ]
+      { type: "marvel", src: "/images/svg/marvel.svg" },
+      { type: "marvel1", src: "/images/svg/marvel(1).svg" },
+      { type: "thanos", src: "/images/svg/thanos-hand.svg" },
+      { type: "avatar", src: "/images/svg/avatar.svg" },
+      { type: "people", src: "/images/svg/people.svg" },
+      { type: "people1", src: "/images/svg/people(1).svg" },
+      { type: "people2", src: "/images/svg/people(2).svg" },
+      { type: "people3", src: "/images/svg/people(3).svg" },
+      { type: "people4", src: "/images/svg/people(4).svg" },
+      { type: "people5", src: "/images/svg/people(5).svg" },
+      { type: "cinema", src: "/images/svg/cinema.svg" },
+    ];
 
-    // Generate random elements
-    const elements = []
+    // Generate initial elements
+    const initialElements: ComicElement[] = [];
     for (let i = 0; i < density; i++) {
-      const element = comicElements[Math.floor(Math.random() * comicElements.length)]
-      elements.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
+      const element =
+        comicElements[Math.floor(Math.random() * comicElements.length)];
+      initialElements.push({
+        id: i,
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
         size: Math.random() * 100 + 50,
         type: element.type,
-        color: element.color,
-        rotation: Math.random() * Math.PI * 2,
-      })
+        src: element.src,
+        rotation: Math.random() * 360, // Use degrees for framer-motion
+        opacity: 0.1 + Math.random() * 0.2,
+        zIndex: Math.floor(Math.random() * 10), // Random z-index between 0-9
+      });
     }
 
-    // Draw star shape
-    const drawStar = (x: number, y: number, size: number, color: string, rotation: number) => {
-      ctx.save()
-      ctx.translate(x, y)
-      ctx.rotate(rotation)
-      ctx.beginPath()
-      for (let i = 0; i < 5; i++) {
-        const angle = (i * 2 * Math.PI) / 5 - Math.PI / 2
-        const outerX = Math.cos(angle) * size
-        const outerY = Math.sin(angle) * size
-        const innerAngle = angle + Math.PI / 5
-        const innerX = Math.cos(innerAngle) * (size / 2.5)
-        const innerY = Math.sin(innerAngle) * (size / 2.5)
-
-        if (i === 0) {
-          ctx.moveTo(outerX, outerY)
-        } else {
-          ctx.lineTo(outerX, outerY)
-        }
-        ctx.lineTo(innerX, innerY)
-      }
-      ctx.closePath()
-      ctx.fillStyle = color
-      ctx.fill()
-      ctx.restore()
-    }
-
-    // Draw pow shape
-    const drawPow = (x: number, y: number, size: number, color: string, rotation: number) => {
-      ctx.save()
-      ctx.translate(x, y)
-      ctx.rotate(rotation)
-      ctx.beginPath()
-      for (let i = 0; i < 8; i++) {
-        const angle = (i * Math.PI) / 4
-        const outerX = Math.cos(angle) * size
-        const outerY = Math.sin(angle) * size
-        const innerAngle = angle + Math.PI / 8
-        const innerX = Math.cos(innerAngle) * (size / 2)
-        const innerY = Math.sin(innerAngle) * (size / 2)
-
-        if (i === 0) {
-          ctx.moveTo(outerX, outerY)
-        } else {
-          ctx.lineTo(outerX, outerY)
-        }
-        ctx.lineTo(innerX, innerY)
-      }
-      ctx.closePath()
-      ctx.fillStyle = color
-      ctx.fill()
-      ctx.restore()
-    }
-
-    // Draw boom shape
-    const drawBoom = (x: number, y: number, size: number, color: string, rotation: number) => {
-      ctx.save()
-      ctx.translate(x, y)
-      ctx.rotate(rotation)
-      ctx.beginPath()
-      for (let i = 0; i < 12; i++) {
-        const angle = (i * Math.PI) / 6
-        const outerX = Math.cos(angle) * size
-        const outerY = Math.sin(angle) * size
-        const innerAngle = angle + Math.PI / 12
-        const innerX = Math.cos(innerAngle) * (size / 3)
-        const innerY = Math.sin(innerAngle) * (size / 3)
-
-        if (i === 0) {
-          ctx.moveTo(outerX, outerY)
-        } else {
-          ctx.lineTo(outerX, outerY)
-        }
-        ctx.lineTo(innerX, innerY)
-      }
-      ctx.closePath()
-      ctx.fillStyle = color
-      ctx.fill()
-      ctx.restore()
-    }
-
-    // Draw all elements
-    const drawElements = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
-
-      elements.forEach((element) => {
-        switch (element.type) {
-          case "circle":
-            ctx.beginPath()
-            ctx.arc(element.x, element.y, element.size, 0, Math.PI * 2)
-            ctx.fillStyle = element.color
-            ctx.fill()
-            break
-          case "star":
-            drawStar(element.x, element.y, element.size, element.color, element.rotation)
-            break
-          case "pow":
-            drawPow(element.x, element.y, element.size, element.color, element.rotation)
-            break
-          case "boom":
-            drawBoom(element.x, element.y, element.size, element.color, element.rotation)
-            break
-        }
-      })
-    }
-
-    drawElements()
+    setElements(initialElements);
 
     return () => {
-      window.removeEventListener("resize", resizeCanvas)
-      cancelAnimationFrame(animationRef.current)
-    }
-  }, [density])
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [density]);
 
-  return <canvas ref={canvasRef} className="fixed top-0 left-0 w-full h-full pointer-events-none z-0" />
+  return (
+    <div className="fixed top-0 left-0 w-full h-full pointer-events-none z-0 overflow-hidden">
+      {elements.map((element) => {
+        // Generate random animation parameters for each element
+        const xOffset = Math.random() * 30 - 15; // -15 to 15px
+        const yOffset = Math.random() * 30 - 15; // -15 to 15px
+        const duration = 10 + Math.random() * 20; // 10-30s
+        const delay = Math.random() * 5; // 0-5s delay
+
+        return (
+          <motion.div
+            key={element.id}
+            className="absolute"
+            style={{
+              top: element.y,
+              left: element.x,
+              width: element.size,
+              height: element.size,
+              opacity: element.opacity,
+              zIndex: element.zIndex,
+            }}
+            initial={{ rotate: element.rotation }}
+            animate={{
+              x: [0, xOffset, 0, -xOffset, 0],
+              y: [0, yOffset, -yOffset, 0, yOffset],
+              rotate: [
+                element.rotation,
+                element.rotation + 5,
+                element.rotation - 5,
+                element.rotation,
+              ],
+            }}
+            transition={{
+              duration: duration,
+              delay: delay,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "easeInOut",
+            }}
+          >
+            <Image
+              src={element.src}
+              alt={element.type}
+              width={element.size}
+              height={element.size}
+              className="w-full h-full"
+            />
+          </motion.div>
+        );
+      })}
+    </div>
+  );
 }
-
