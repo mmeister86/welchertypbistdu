@@ -4,7 +4,7 @@ import { Inter } from "next/font/google";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/Footer";
 import { AdBlockerModal } from "@/components/ui/adblocker-modal";
-import { Toaster } from "@/components/ui/toaster";
+import { Toaster } from "@/components/ui/sonner";
 import { Footerdemo } from "@/components/footer2";
 
 const inter = Inter({ subsets: ["latin"] });

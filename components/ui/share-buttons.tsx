@@ -9,7 +9,7 @@ import {
   Mail,
   Copy,
 } from "lucide-react";
-import { toast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 
 interface ShareButtonsProps {
   url: string;
@@ -42,16 +42,14 @@ export function ShareButtons({
   const copyToClipboard = async () => {
     try {
       await navigator.clipboard.writeText(url);
-      toast({
-        title: "Link kopiert",
+      toast("Link kopiert", {
         description: "Der Link wurde in die Zwischenablage kopiert.",
         duration: 3000,
       });
     } catch (err) {
-      toast({
-        title: "Fehler",
+      toast("Fehler", {
         description: "Der Link konnte nicht kopiert werden.",
-        variant: "destructive",
+        style: { backgroundColor: 'red', color: 'white' },
         duration: 3000,
       });
       console.error("Failed to copy:", err);
