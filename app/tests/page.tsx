@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Sparkles, Star } from "lucide-react";
-import Pagination from "../components/Pagination";
+import Pagination from "@/components/Pagination";
 
 // Define all available tests with their metadata
 const availableTests = [
