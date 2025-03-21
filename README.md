@@ -1,36 +1,68 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Welcher Typ bist Du? (What Type Are You?)
 
-## Getting Started
+![Personality Tests Banner](/public/images/banner.png)
 
-First, run the development server:
+## Entdecke mehr über dich selbst
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+"Welcher Typ bist Du?" ist deine Anlaufstelle für unterhaltsame und aufschlussreiche Persönlichkeitstests. Von Film- und Serienhelden bis hin zu Farben und Berufen - wir bieten eine Vielzahl an Tests, die dir helfen, dich selbst besser kennenzulernen und Spaß dabei zu haben!
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Was uns besonders macht
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Vielfältige Testauswahl**: Von "Welcher Star Wars Charakter bist du?" bis "Welche Farbe passt zu dir?" - für jeden ist etwas dabei
+- **Schnell und unterhaltsam**: Unsere Tests sind kurzweilig gestaltet und liefern sofortige Ergebnisse
+- **Teilen mit Freunden**: Teile deine Ergebnisse einfach in sozialen Medien und vergleiche mit deinen Freunden
+- **Komplett kostenlos**: Alle Tests sind vollständig kostenlos nutzbar
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Unsere beliebtesten Tests
 
-## Learn More
+### 🌟 Welcher Star Wars Charakter bist du?
 
-To learn more about Next.js, take a look at the following resources:
+Finde heraus, ob du mehr wie Luke Skywalker, Darth Vader oder Yoda bist.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 🎨 Welche Farbe passt zu dir?
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Entdecke, welche Farbe am besten zu deiner Persönlichkeit und deinem Stil passt.
 
-## Deploy on Vercel
+### 🧠 Welcher Persönlichkeitstyp bist du?
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Basierend auf psychologischen Prinzipien - erfahre mehr über deine Stärken und Schwächen.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### ✨ Welcher Filmheld bist du?
+
+Von Action bis Drama - finde heraus, welchem Filmhelden du am ähnlichsten bist.
+
+### 🐾 Welches Tier repräsentiert dich?
+
+Löwe, Adler oder vielleicht ein Delfin? Entdecke dein Tier-Alter-Ego.
+
+### 💼 Welcher Beruf passt zu dir?
+
+Basierend auf deinen Interessen und Stärken - welcher Karriereweg könnte der richtige sein?
+
+## So funktioniert's
+
+1. **Test auswählen**: Wähle aus unserer Vielzahl an unterhaltsamen Tests den aus, der dich am meisten interessiert.
+2. **Fragen beantworten**: Beantworte eine Reihe von Fragen, die speziell entwickelt wurden, um deine Persönlichkeit zu enthüllen.
+3. **Ergebnis erhalten**: Erhalte dein personalisiertes Ergebnis und teile es mit Freunden in sozialen Medien.
+
+## Nutzerstimmen
+
+> "Die Tests sind super unterhaltsam und erstaunlich zutreffend! Ich habe alle meinen Freunden empfohlen." — Lisa K.
+
+> "Ich war überrascht, wie gut mich der Persönlichkeitstest beschrieben hat. Definitiv einen Besuch wert!" — Thomas M.
+
+> "Eine tolle Möglichkeit, um sich selbst besser kennenzulernen und gleichzeitig Spaß zu haben." — Sarah W.
+
+## Kontakt
+
+Hast du Fragen, Feedback oder Vorschläge für neue Tests?
+Schreib uns: info@welchertypbistdu.de
+
+Folge uns auf:
+
+- Instagram: [@welchertypbistdu](https://instagram.com/welchertypbistdu)
+- TikTok: [@welchertypbistdu](https://tiktok.com/@welchertypbistdu)
+
+---
+
+**Welcher Typ bist Du?** — Entdecke dich selbst durch unsere Tests.
