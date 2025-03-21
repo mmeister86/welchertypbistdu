@@ -1,4 +1,4 @@
-import type { DCCharacter, DCCharacterResult, Question } from "./types"
+import type { DCCharacter, DCCharacterResult, Question } from "./types";
 
 export const questions: Question[] = [
   {
@@ -750,7 +750,7 @@ export const questions: Question[] = [
       },
     ],
   },
-]
+];
 
 export const dcCharacterResults: Record<DCCharacter, DCCharacterResult> = {
   superman: {
@@ -758,7 +758,7 @@ export const dcCharacterResults: Record<DCCharacter, DCCharacterResult> = {
     name: "Superman",
     description:
       "Du bist mutig, moralisch und ein natürlicher Anführer. Wie Superman stehst du für Wahrheit, Gerechtigkeit und Hoffnung. Du bist bereit, dich für andere zu opfern und das Richtige zu tun, auch wenn es schwierig ist. Deine Stärke liegt nicht nur in deinen Fähigkeiten, sondern auch in deinem Charakter und deiner Integrität.",
-    image: "/images/dc/superman.jpg",
+    image: "/images/characters/dc/superman.jpeg",
     color: "bg-blue-700",
     type: "hero",
     traits: {
@@ -776,7 +776,7 @@ export const dcCharacterResults: Record<DCCharacter, DCCharacterResult> = {
     name: "Batman",
     description:
       "Du bist intelligent, strategisch und entschlossen. Wie Batman nutzt du deinen Verstand und deine Ressourcen, um Probleme zu lösen und Gerechtigkeit zu bringen. Du bist diszipliniert und arbeitest hart, um deine Ziele zu erreichen. Obwohl du manchmal düster und zurückgezogen sein kannst, treibt dich ein starker Sinn für Gerechtigkeit an.",
-    image: "/images/dc/batman.jpg",
+    image: "/images/characters/dc/batman.jpeg",
     color: "bg-gray-900",
     type: "hero",
     traits: {
@@ -794,7 +794,7 @@ export const dcCharacterResults: Record<DCCharacter, DCCharacterResult> = {
     name: "Wonder Woman",
     description:
       "Du bist mutig, mitfühlend und eine starke Führungspersönlichkeit. Wie Wonder Woman kämpfst du für Wahrheit und Gerechtigkeit mit Weisheit und Mitgefühl. Du bist ein Vorbild für andere und inspirierst sie, ihr Bestes zu geben. Deine Stärke liegt in deiner Fähigkeit, sowohl kraftvoll als auch einfühlsam zu sein.",
-    image: "/images/dc/wonder-woman.jpg",
+    image: "/images/characters/dc/wonderwoman.jpeg",
     color: "bg-red-700",
     type: "hero",
     traits: {
@@ -812,7 +812,7 @@ export const dcCharacterResults: Record<DCCharacter, DCCharacterResult> = {
     name: "The Flash",
     description:
       "Du bist schnell, witzig und optimistisch. Wie The Flash bist du immer bereit zu helfen und findest oft kreative Lösungen für Probleme. Du bist loyal gegenüber deinen Freunden und Familie und bringst Leichtigkeit in schwierige Situationen. Deine Geschwindigkeit spiegelt sich in deiner schnellen Auffassungsgabe und deinem schnellen Humor wider.",
-    image: "/images/dc/flash.jpg",
+    image: "/images/characters/dc/flash.jpeg",
     color: "bg-red-600",
     type: "hero",
     traits: {
@@ -830,7 +830,7 @@ export const dcCharacterResults: Record<DCCharacter, DCCharacterResult> = {
     name: "Aquaman",
     description:
       "Du bist stark, entschlossen und hast eine natürliche Autorität. Wie Aquaman bist du zwischen zwei Welten zu Hause und verstehst verschiedene Perspektiven. Du nimmst deine Verantwortung ernst, bist aber auch für Spaß zu haben. Deine Stärke liegt in deiner Fähigkeit, verschiedene Gruppen zu vereinen und für das einzustehen, was richtig ist.",
-    image: "/images/dc/aquaman.jpg",
+    image: "/images/characters/dc/aquaman.jpeg",
     color: "bg-yellow-600",
     type: "hero",
     traits: {
@@ -848,7 +848,7 @@ export const dcCharacterResults: Record<DCCharacter, DCCharacterResult> = {
     name: "Cyborg",
     description:
       "Du bist intelligent, anpassungsfähig und resilient. Wie Cyborg nutzt du Technologie und Logik, um Probleme zu lösen. Du hast Herausforderungen überwunden und bist dadurch stärker geworden. Obwohl du manchmal mit deiner Identität kämpfst, nutzt du deine einzigartigen Fähigkeiten, um anderen zu helfen und die Welt zu einem besseren Ort zu machen.",
-    image: "/images/dc/cyborg.jpg",
+    image: "/images/characters/dc/cyborg.jpeg",
     color: "bg-gray-700",
     type: "hero",
     traits: {
@@ -866,7 +866,7 @@ export const dcCharacterResults: Record<DCCharacter, DCCharacterResult> = {
     name: "Shazam",
     description:
       "Du bist enthusiastisch, optimistisch und hast ein großes Herz. Wie Shazam behältst du dir eine kindliche Begeisterung und Freude, auch wenn du erwachsene Verantwortung trägst. Du bist loyal gegenüber deinen Freunden und Familie und nutzt deine Fähigkeiten, um anderen zu helfen. Deine Stärke liegt in deiner Fähigkeit, das Beste in anderen zu sehen und sie zu inspirieren.",
-    image: "/images/dc/shazam.jpg",
+    image: "/images/characters/dc/shazam.jpeg",
     color: "bg-red-600",
     type: "hero",
     traits: {
@@ -884,7 +884,7 @@ export const dcCharacterResults: Record<DCCharacter, DCCharacterResult> = {
     name: "Supergirl",
     description:
       "Du bist mutig, optimistisch und entschlossen. Wie Supergirl bist du bereit, für das einzustehen, was richtig ist, und anderen zu helfen. Du bist loyal gegenüber deinen Freunden und Familie und lässt dich von Rückschlägen nicht unterkriegen. Deine Stärke liegt in deiner Fähigkeit, Hoffnung zu bewahren und andere zu inspirieren, auch in schwierigen Zeiten.",
-    image: "/images/dc/supergirl.jpg",
+    image: "/images/characters/dc/supergirl.jpeg",
     color: "bg-blue-600",
     type: "hero",
     traits: {
@@ -902,7 +902,7 @@ export const dcCharacterResults: Record<DCCharacter, DCCharacterResult> = {
     name: "Green Lantern",
     description:
       "Du bist mutig, kreativ und willenstark. Wie Green Lantern nutzt du deine Vorstellungskraft und deinen Willen, um Herausforderungen zu meistern. Du bist entschlossen, das Richtige zu tun, und lässt dich von Angst nicht aufhalten. Deine Stärke liegt in deiner Fähigkeit, kreative Lösungen zu finden und für deine Überzeugungen einzustehen.",
-    image: "/images/dc/green-lantern.jpg",
+    image: "/images/characters/dc/greenlantern.jpeg",
     color: "bg-green-700",
     type: "hero",
     traits: {
@@ -920,7 +920,7 @@ export const dcCharacterResults: Record<DCCharacter, DCCharacterResult> = {
     name: "Martian Manhunter",
     description:
       "Du bist weise, einfühlsam und tiefgründig. Wie Martian Manhunter verstehst du die Gedanken und Gefühle anderer und nutzt dieses Verständnis, um zu helfen. Du bist ein ruhiger, aber effektiver Anführer, der andere durch Weisheit und Beispiel führt. Deine Stärke liegt in deiner Fähigkeit, verschiedene Perspektiven zu verstehen und als Brücke zwischen verschiedenen Gruppen zu dienen.",
-    image: "/images/dc/martian-manhunter.jpg",
+    image: "/images/characters/dc/martianmanhunter.jpeg",
     color: "bg-green-800",
     type: "hero",
     traits: {
@@ -938,7 +938,7 @@ export const dcCharacterResults: Record<DCCharacter, DCCharacterResult> = {
     name: "Blue Beetle",
     description:
       "Du bist anpassungsfähig, einfallsreich und optimistisch. Wie Blue Beetle findest du dich in neuen Situationen zurecht und nutzt deine Ressourcen kreativ. Du bist loyal gegenüber deinen Freunden und Familie und behältst deinen Humor auch in schwierigen Situationen. Deine Stärke liegt in deiner Fähigkeit, zu wachsen und zu lernen, während du Herausforderungen meisterst.",
-    image: "/images/dc/blue-beetle.jpg",
+    image: "/images/characters/dc/bluebeetle.jpeg",
     color: "bg-blue-600",
     type: "hero",
     traits: {
@@ -956,7 +956,7 @@ export const dcCharacterResults: Record<DCCharacter, DCCharacterResult> = {
     name: "Joker",
     description:
       "Du bist chaotisch, unberechenbar und hast einen dunklen Sinn für Humor. Wie der Joker siehst du die Absurdität des Lebens und spielst nach deinen eigenen Regeln. Du bist kreativ und intelligent, nutzt diese Fähigkeiten aber oft für Chaos und Zerstörung. Deine Stärke liegt in deiner Fähigkeit, Konventionen zu durchbrechen und das Unerwartete zu tun.",
-    image: "/images/dc/joker.jpg",
+    image: "/images/characters/dc/joker.jpeg",
     color: "bg-purple-700",
     type: "villain",
     traits: {
@@ -974,7 +974,7 @@ export const dcCharacterResults: Record<DCCharacter, DCCharacterResult> = {
     name: "Harley Quinn",
     description:
       "Du bist verspielt, unberechenbar und hast einen wilden Sinn für Humor. Wie Harley Quinn lebst du im Moment und folgst deinen Impulsen. Du bist loyal gegenüber denen, die du liebst, auch wenn diese Loyalität manchmal fehlgeleitet ist. Deine Stärke liegt in deiner Fähigkeit, dich anzupassen und weiterzumachen, egal wie schwierig die Umstände sind.",
-    image: "/images/dc/harley-quinn.jpg",
+    image: "/images/characters/dc/harleyquinn.jpeg",
     color: "bg-red-500",
     type: "villain",
     traits: {
@@ -992,7 +992,7 @@ export const dcCharacterResults: Record<DCCharacter, DCCharacterResult> = {
     name: "Lex Luthor",
     description:
       "Du bist brillant, ehrgeizig und strategisch. Wie Lex Luthor nutzt du deinen Intellekt und deine Ressourcen, um deine Ziele zu erreichen. Du bist ein natürlicher Anführer mit einer klaren Vision, auch wenn diese Vision manchmal von Egoismus und Machtstreben geprägt ist. Deine Stärke liegt in deiner Fähigkeit, langfristig zu planen und Schwächen in anderen zu erkennen.",
-    image: "/images/dc/lex-luthor.jpg",
+    image: "/images/characters/dc/lexluthor.jpeg",
     color: "bg-green-600",
     type: "villain",
     traits: {
@@ -1010,7 +1010,7 @@ export const dcCharacterResults: Record<DCCharacter, DCCharacterResult> = {
     name: "Black Adam",
     description:
       "Du bist mächtig, entschlossen und folgst deinem eigenen moralischen Kompass. Wie Black Adam bist du bereit, extreme Maßnahmen zu ergreifen, um das zu schützen, was du für wichtig hältst. Du bist ein starker Anführer mit klaren Überzeugungen, auch wenn diese manchmal im Konflikt mit konventioneller Moral stehen. Deine Stärke liegt in deiner Entschlossenheit und deinem unbeugsamen Willen.",
-    image: "/images/dc/black-adam.jpg",
+    image: "/images/characters/dc/blackadam.jpeg",
     color: "bg-yellow-800",
     type: "villain",
     traits: {
@@ -1023,4 +1023,4 @@ export const dcCharacterResults: Record<DCCharacter, DCCharacterResult> = {
       justice: 6,
     },
   },
-}
+};

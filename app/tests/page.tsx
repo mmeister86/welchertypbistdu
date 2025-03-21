@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Sparkles, Star } from "lucide-react";
+import Pagination from "../components/Pagination";
 
 // Define all available tests with their metadata
 const availableTests = [
@@ -18,6 +19,14 @@ const availableTests = [
       "Entdecke, ob du mehr wie Iron Man, Captain America oder Spider-Man bist.",
     image: "/images/landscape/marvel-landscape.jpeg", // Bildpfad für Marvel
     color: "from-red-500 to-blue-500",
+  },
+  {
+    id: "dceu",
+    title: "Welcher DC Superheld bist du?",
+    description:
+      "Finde heraus, ob du mehr wie Batman, Superman oder Wonder Woman bist.",
+    image: "/images/landscape/dceu-landscape.jpeg", // Bildpfad für DC Extended Universe
+    color: "from-blue-600 to-red-600",
   },
   {
     id: "spongebob",
@@ -70,7 +79,22 @@ const availableTests = [
   },
 ];
 
-export default function TestsOverviewPage() {
+// Server Component
+export default function TestsOverviewPage({
+  searchParams,
+}: {
+  searchParams: { page?: string };
+}) {
+  // Get current page from URL or default to 1
+  const currentPage = Number(searchParams.page) || 1;
+  const testsPerPage = 9;
+  const totalPages = Math.ceil(availableTests.length / testsPerPage);
+
+  // Calculate which tests to show on current page
+  const startIndex = (currentPage - 1) * testsPerPage;
+  const endIndex = startIndex + testsPerPage;
+  const currentTests = availableTests.slice(startIndex, endIndex);
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-indigo-50 to-purple-50 py-16 px-4">
       <div className="max-w-7xl mx-auto">
@@ -95,7 +119,7 @@ export default function TestsOverviewPage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {availableTests.map((test) => (
+          {currentTests.map((test) => (
             <TestCard
               key={test.id}
               title={test.title}
@@ -106,6 +130,9 @@ export default function TestsOverviewPage() {
             />
           ))}
         </div>
+
+        {/* Pagination Controls */}
+        <Pagination currentPage={currentPage} totalPages={totalPages} />
 
         {/* Bottom Ad Banner */}
         <div className="w-full py-3 bg-white shadow-md mt-16">
@@ -147,7 +174,9 @@ function TestCard({
               className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
             />
           </div>
-          <p className="text-gray-700 mb-4 flex-grow px-3 pt-4">{description}</p>
+          <p className="text-gray-700 mb-4 flex-grow px-3 pt-4">
+            {description}
+          </p>
           <div className="flex items-center  text-purple-600 font-medium group-hover:text-purple-700 px-3 pb-4 mb-2">
             Test starten{" "}
             <svg
