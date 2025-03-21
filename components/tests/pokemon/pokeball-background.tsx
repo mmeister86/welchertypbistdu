@@ -25,7 +25,7 @@ export function PokeballBackground() {
 
     // Load pokeball image
     const pokeballImage = new Image()
-    pokeballImage.src = "/images/pokemon/pokeball.png"
+    pokeballImage.src = "/images/pokeball.png"
     pokeballImage.crossOrigin = "anonymous"
 
     const handleResize = () => {
@@ -98,4 +98,3 @@ export function PokeballBackground() {
 
   return <canvas ref={canvasRef} className="fixed top-0 left-0 w-full h-full pointer-events-none z-0" />
 }
-
