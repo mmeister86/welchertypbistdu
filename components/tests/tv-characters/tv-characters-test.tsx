@@ -1,6 +1,7 @@
 "use client"
 
 import { useReducer } from "react"
+import { useRouter } from "next/navigation"
 import { AnimatePresence } from "framer-motion"
 import type { Character, TestState } from "./types"
 import { questions, characterResults } from "./test-data"
@@ -9,6 +10,7 @@ import { ResultCard } from "./result-card"
 import { IntroCard } from "./intro-card"
 import { AdBanner } from "./ad-banner"
 import { TVStaticBackground } from "./tv-static-background"
+import { trackTestStarted, trackTestCompleted } from "./analytics"
 
 // Reducer for managing test state
 function testReducer(state: TestState, action: any): TestState {
@@ -92,6 +94,8 @@ function calculateResult(answers: Record<string, Character>): Character {
 }
 
 export function TVCharactersTest() {
+  const router = useRouter()
+
   // Initialize test state
   const [state, dispatch] = useReducer(testReducer, {
     currentQuestionIndex: -1, // -1 means we're at the intro screen
@@ -101,6 +105,7 @@ export function TVCharactersTest() {
   })
 
   const handleStart = () => {
+    trackTestStarted()
     dispatch({ type: "START_TEST" })
   }
 
@@ -109,6 +114,35 @@ export function TVCharactersTest() {
       type: "ANSWER_QUESTION",
       character,
     })
+
+    // Prüfe, ob dies die letzte Frage ist
+    if (state.currentQuestionIndex === questions.length - 1) {
+      // Berechne das Ergebnis vor der Weiterleitung
+      const newAnswers = {
+        ...state.answers,
+        [questions[state.currentQuestionIndex].id]: character as Character,
+      }
+      const result = calculateResult(newAnswers)
+
+      // Verfolge das Ergebnis vor der Weiterleitung
+      trackTestCompleted(result)
+
+      try {
+        // Verfolge den Testabschluss mit dem Ergebnis
+        if (typeof window !== "undefined" && "gtag" in window) {
+          // @ts-ignore - gtag ist nicht typisiert
+          window.gtag("event", "test_completed", {
+            test_type: "tv-characters",
+            result_character: result,
+          })
+        }
+      } catch (e) {
+        console.error("Analytics error:", e)
+      }
+
+      // Weiterleitung zur Ergebnisseite mit dem Charakter
+      router.push(`/tests/tv-characters/ergebnis?character=${result}`)
+    }
   }
 
   const handleRestart = () => {
@@ -161,4 +195,3 @@ export function TVCharactersTest() {
     </div>
   )
 }
-

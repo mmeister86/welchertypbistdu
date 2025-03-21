@@ -149,17 +149,15 @@ export function ResultCard({ result, onRestart }: ResultCardProps) {
               ))}
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row gap-4 mt-6">
               <div className="flex items-center">
                 <ShareButtons
-                  url={window.location.href}
-                  title={`Ich bin ${result.name} aus Star Wars! Finde heraus, welcher Star Wars Charakter du bist.`}
+                  url={`${
+                    typeof window !== "undefined" ? window.location.origin : ""
+                  }/tests/star-wars/ergebnis?character=${result.id}`}
+                  title={`Ich bin ${result.name} aus Star Wars! Finde heraus, welcher Star Wars-Charakter du bist.`}
                   className="mb-2 sm:mb-0"
-                  color={
-                    characterInfo.side.includes("helle")
-                      ? "text-blue-400 hover:text-blue-300 hover:bg-gray-800"
-                      : "text-red-400 hover:text-red-300 hover:bg-gray-800"
-                  }
+                  color="text-blue-600 hover:text-blue-800 hover:bg-blue-50"
                 />
               </div>
 

@@ -2,9 +2,9 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { ResultCard } from "@/components/tests/spongebob/result-card";
-import { characterResults } from "@/components/tests/spongebob/test-data";
-import type { Character } from "@/components/tests/spongebob/types";
+import { ResultCard } from "@/components/tests/star-wars/result-card";
+import { characterResults } from "@/components/tests/star-wars/test-data";
+import type { Character } from "@/components/tests/star-wars/types";
 
 interface ResultContentProps {
   character?: string;
@@ -24,13 +24,13 @@ export function ResultContent({
       setCharacter(characterParam as Character);
     } else {
       // Redirect to test page if no valid character
-      router.push("/tests/spongebob");
+      router.push("/tests/star-wars");
     }
   }, [characterParam, router]);
 
   // Handle restart button click
   const handleRestart = () => {
-    router.push("/tests/spongebob");
+    router.push("/tests/star-wars");
   };
 
   // Show loading while checking character or redirect

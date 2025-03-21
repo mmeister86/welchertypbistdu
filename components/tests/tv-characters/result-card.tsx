@@ -82,14 +82,15 @@ export function ResultCard({ result, onRestart }: ResultCardProps) {
               ))}
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row gap-4 mt-6">
               <div className="flex items-center">
-                {/* Neue ShareButtons-Komponente */}
                 <ShareButtons
-                  url={window.location.href}
+                  url={`${
+                    typeof window !== "undefined" ? window.location.origin : ""
+                  }/tests/tv-characters/ergebnis?character=${result.id}`}
                   title={`Ich bin ${result.name} aus ${result.show}! Finde heraus, welcher TV-Serien Charakter du bist.`}
                   className="mb-2 sm:mb-0"
-                  color="text-indigo-600 hover:text-indigo-800 hover:bg-indigo-50"
+                  color={`${result.color.replace('bg-', 'text-')} hover:bg-gray-50`}
                 />
               </div>
 

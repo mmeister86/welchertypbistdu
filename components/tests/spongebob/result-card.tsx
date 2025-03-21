@@ -59,7 +59,7 @@ export function ResultCard({ result, onRestart }: ResultCardProps) {
           </div>
 
           <div className="w-full md:w-2/3 p-6">
-            <h3 className="text-2xl md:text-4xl font-bold text-blue-900 mb-4 text-foreground">
+            <h3 className="text-2xl md:text-4xl font-bold text-blue-900 mb-4">
               {result.name}
             </h3>
             <p className="text-gray-700 mb-6">{result.description}</p>

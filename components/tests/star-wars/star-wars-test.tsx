@@ -1,6 +1,7 @@
 "use client";
 
 import { useReducer } from "react";
+import { useRouter } from "next/navigation";
 import { AnimatePresence } from "framer-motion";
 import type { Character, TestState } from "./types";
 import { questions, characterResults } from "./test-data";
@@ -97,6 +98,8 @@ function calculateResult(answers: Record<string, string>): Character {
 }
 
 export function StarWarsTest() {
+  const router = useRouter();
+
   // Initialize test state
   const [state, dispatch] = useReducer(testReducer, {
     currentQuestionIndex: -1, // -1 means we're at the intro screen
@@ -116,6 +119,32 @@ export function StarWarsTest() {
       questionId: currentQuestion.id,
       answerId,
     });
+
+    // Prüfe, ob dies die letzte Frage ist
+    if (state.currentQuestionIndex === questions.length - 1) {
+      // Berechne das Ergebnis vor der Weiterleitung
+      const newAnswers = {
+        ...state.answers,
+        [currentQuestion.id]: answerId,
+      };
+      const result = calculateResult(newAnswers);
+
+      // Verfolge das Ergebnis vor der Weiterleitung
+      try {
+        // Verfolge den Testabschluss mit dem Ergebnis
+        if (typeof window !== "undefined" && "gtag" in window) {
+          // @ts-ignore - gtag ist nicht typisiert
+          window.gtag("event", "test_completed", {
+            test_type: "star-wars",
+            result_character: result,
+          });
+        }
+      } catch (e) {
+        console.error("Analytics error:", e);
+      }
+      // Weiterleitung zur Ergebnisseite mit dem Charakter
+      router.push(`/tests/star-wars/ergebnis?character=${result}`);
+    }
   };
 
   const handleRestart = () => {
@@ -129,7 +158,7 @@ export function StarWarsTest() {
       <div className="max-w-6xl mx-auto">
         {/* Star Wars Logo */}
         <div className="flex justify-center mb-8">
-          <div className="w-64 h-32 bg-[url('/images/star-wars-logo.png')] bg-contain bg-center bg-no-repeat z-20"></div>
+          <div className="w-[512px] h-[256px] bg-[url('/images/star-wars-logo.png')] bg-contain bg-center bg-no-repeat z-20"></div>
         </div>
 
         {/* Ad Banner at the top */}

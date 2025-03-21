@@ -8,7 +8,7 @@ const availableTests = [
     title: "Welcher Star Wars Charakter bist du?",
     description:
       "Finde heraus, ob du mehr wie Luke Skywalker, Darth Vader oder Yoda bist.",
-    icon: <Star className="h-8 w-8 text-yellow-500" />,
+    image: "/images/landscape/star-wars-landscape.jpeg", // Bildpfad für Star Wars
     color: "from-yellow-400 to-orange-500",
   },
   {
@@ -16,7 +16,7 @@ const availableTests = [
     title: "Welcher Marvel Charakter bist du?",
     description:
       "Entdecke, ob du mehr wie Iron Man, Captain America oder Spider-Man bist.",
-    icon: <Sparkles className="h-8 w-8 text-red-500" />,
+    image: "/images/landscape/marvel-landscape.jpeg", // Bildpfad für Marvel
     color: "from-red-500 to-blue-500",
   },
   {
@@ -24,7 +24,7 @@ const availableTests = [
     title: "Welcher Spongebob Charakter bist du?",
     description:
       "Entdecke, ob du mehr wie Spongebob, Patrick oder Thaddäus bist.",
-    icon: <Sparkles className="h-8 w-8 text-yellow-500" />,
+    image: "/images/landscape/spongebob-landscape.jpeg", // Bildpfad für SpongeBob
     color: "from-blue-400 to-yellow-400",
   },
   {
@@ -32,7 +32,7 @@ const availableTests = [
     title: "Welcher Game of Thrones Charakter bist du?",
     description:
       "Finde heraus, ob du mehr wie Jon Snow, Daenerys Targaryen oder Tyrion Lannister bist.",
-    icon: <Sparkles className="h-8 w-8 text-gray-700" />,
+    image: "/images/landscape/got-landscape.jpeg", // Bildpfad für Game of Thrones
     color: "from-gray-700 to-gray-900",
   },
   {
@@ -40,7 +40,7 @@ const availableTests = [
     title: "Welcher Squid Game Charakter bist du?",
     description:
       "Entdecke, ob du mehr wie Seong Gi-hun, Kang Sae-byeok oder Cho Sang-woo bist.",
-    icon: <Sparkles className="h-8 w-8 text-pink-500" />,
+    image: "/images/landscape/squid-game-landscape.jpeg", // Bildpfad für Squid Game
     color: "from-pink-500 to-red-600",
   },
   {
@@ -48,7 +48,7 @@ const availableTests = [
     title: "Welche Hunderasse passt zu dir?",
     description:
       "Finde heraus, welche Hunderasse am besten zu deinem Lebensstil und deiner Persönlichkeit passt mit unserem unterhaltsamen Test.",
-    icon: <Sparkles className="h-8 w-8 text-amber-600" />,
+    image: "/images/landscape/dog-landscape.jpeg", // Bildpfad für Hunderassen
     color: "from-amber-400 to-amber-600",
     path: "/tests/dog-personality", // Expliziter Pfad zur Testseite
   },
@@ -57,7 +57,7 @@ const availableTests = [
     title: "Welcher TV-Serienfigur ähnelst du?",
     description:
       "Entdecke, welcher beliebten TV-Serienfigur du am meisten ähnelst.",
-    icon: <Sparkles className="h-8 w-8 text-purple-500" />,
+    image: "/images/landscape/tv-landscape.jpeg", // Bildpfad für TV-Serien
     color: "from-purple-600 to-blue-600",
   },
   {
@@ -65,7 +65,7 @@ const availableTests = [
     title: "Welches Pokémon bist du?",
     description:
       "Finde heraus, welches Pokémon am besten zu deiner Persönlichkeit passt.",
-    icon: <Sparkles className="h-8 w-8 text-red-500" />,
+    image: "/images/landscape/pokemon-landscape.jpeg", // Bildpfad für Pokémon
     color: "from-blue-500 to-green-500",
   },
 ];
@@ -100,7 +100,7 @@ export default function TestsOverviewPage() {
               key={test.id}
               title={test.title}
               description={test.description}
-              icon={test.icon}
+              image={test.image}
               color={test.color}
               href={`/tests/${test.id}`}
             />
@@ -124,13 +124,13 @@ export default function TestsOverviewPage() {
 function TestCard({
   title,
   description,
-  icon,
+  image,
   color,
   href,
 }: {
   title: string;
   description: string;
-  icon: React.ReactNode;
+  image: string;
   color: string;
   href: string;
 }) {
@@ -138,13 +138,17 @@ function TestCard({
     <Link href={href} className="block group">
       <div className="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-1 h-full">
         <div className={`h-2 bg-gradient-to-r ${color}`}></div>
-        <div className="p-6 flex flex-col h-full">
-          <div className="flex items-center mb-4">
-            {icon}
-            <h3 className="text-xl font-semibold ml-3">{title}</h3>
+        <div className="flex flex-col h-full w-full">
+          {/* Landschaftsbild über der Beschreibung */}
+          <div className="mb-2 h-40 overflow-hidden">
+            <img
+              src={image}
+              alt={title}
+              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+            />
           </div>
-          <p className="text-gray-600 mb-4 flex-grow">{description}</p>
-          <div className="flex items-center text-purple-600 font-medium group-hover:text-purple-700 mt-auto">
+          <p className="text-gray-700 mb-4 flex-grow px-3 pt-4">{description}</p>
+          <div className="flex items-center  text-purple-600 font-medium group-hover:text-purple-700 px-3 pb-4 mb-2">
             Test starten{" "}
             <svg
               xmlns="http://www.w3.org/2000/svg"
