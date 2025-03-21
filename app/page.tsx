@@ -15,7 +15,7 @@ export default function HomePage() {
             <div className="flex gap-4 flex-col">
               <div>
                 <Badge variant="outline" className="bg-white">
-                  Neu und kostenlos!
+                  Probiere es kostenlos aus!
                 </Badge>
               </div>
               <div className="flex gap-4 flex-col">
