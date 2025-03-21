@@ -10,6 +10,7 @@ import { ResultCard } from "./result-card";
 import { IntroCard } from "./intro-card";
 import { AdBanner } from "./ad-banner";
 import { ComicBackground } from "./comic-background";
+import Image from "next/image";
 
 // Reducer for managing test state
 function testReducer(state: TestState, action: any): TestState {
@@ -168,9 +169,7 @@ export function MarvelTest() {
         <div className="flex justify-center mb-8">
           <div className="w-64 h-32 relative">
             <div className="absolute inset-0 flex items-center justify-center">
-              <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-blue-500">
-                MARVEL TEST
-              </h1>
+              <div className="w-[512px] h-[256px] bg-[url('/images/marvel.png')] bg-contain bg-center bg-no-repeat z-20"></div>
             </div>
           </div>
         </div>

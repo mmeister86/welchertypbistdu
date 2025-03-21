@@ -20,7 +20,7 @@ import {
   Twitter,
 } from "lucide-react";
 
-function Footerdemo() {
+function Footer() {
   const [isChatOpen, setIsChatOpen] = React.useState(false);
 
   return (
@@ -32,12 +32,12 @@ function Footerdemo() {
               Stay Connected
             </h2>
             <p className="mb-6 text-muted-foreground">
-              Join our newsletter for the latest updates and exclusive offers.
+              Hast du Feedback oder Ideen für neue Tests? Dann schreib uns einfach eine E-Mail.
             </p>
             <form className="relative">
               <Input
                 type="email"
-                placeholder="Enter your email"
+                placeholder="Deine E-Mail"
                 className="pr-12 backdrop-blur-sm"
               />
               <Button
@@ -46,13 +46,13 @@ function Footerdemo() {
                 className="absolute right-1 top-1 h-8 w-8 rounded-full bg-primary text-primary-foreground transition-transform hover:scale-105"
               >
                 <Send className="h-4 w-4" />
-                <span className="sr-only">Subscribe</span>
+                <span className="sr-only">Senden</span>
               </Button>
             </form>
             <div className="absolute -right-4 top-0 h-24 w-24 rounded-full bg-primary/10 blur-2xl" />
           </div>
           <div>
-            <h3 className="mb-4 text-lg font-semibold">Quick Links</h3>
+            <h3 className="mb-4 text-lg font-semibold">Links, Rechts, Links</h3>
             <nav className="space-y-2 text-sm">
               <a
                 href="#"
@@ -64,39 +64,32 @@ function Footerdemo() {
                 href="#"
                 className="block transition-colors hover:text-primary"
               >
-                About Us
+                Über uns
               </a>
               <a
                 href="#"
                 className="block transition-colors hover:text-primary"
               >
-                Services
+                Tests
               </a>
               <a
                 href="#"
                 className="block transition-colors hover:text-primary"
               >
-                Products
-              </a>
-              <a
-                href="#"
-                className="block transition-colors hover:text-primary"
-              >
-                Contact
+                Über uns
               </a>
             </nav>
           </div>
           <div>
             <h3 className="mb-4 text-lg font-semibold">Contact Us</h3>
             <address className="space-y-2 text-sm not-italic">
-              <p>123 Innovation Street</p>
-              <p>Tech City, TC 12345</p>
-              <p>Phone: (123) 456-7890</p>
-              <p>Email: hello@example.com</p>
+              <p>Matthias Meister</p>
+              <p>Mayener Str. 15, 56753 Welling</p>
+              <p>Email: welchertypbistdu@matthias.lol</p>
             </address>
           </div>
           <div className="relative">
-            <h3 className="mb-4 text-lg font-semibold">Follow Us</h3>
+            <h3 className="mb-4 text-lg font-semibold">Sharing is Caring</h3>
             <div className="mb-6 flex space-x-4">
               <TooltipProvider>
                 <Tooltip>
@@ -171,17 +164,14 @@ function Footerdemo() {
         </div>
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t pt-8 text-center md:flex-row">
           <p className="text-sm text-muted-foreground">
-            © 2024 Your Company. All rights reserved.
+            © 2025 WelcherTypbistDu.de
           </p>
           <nav className="flex gap-4 text-sm">
             <a href="#" className="transition-colors hover:text-primary">
-              Privacy Policy
+              Datenschutz
             </a>
             <a href="#" className="transition-colors hover:text-primary">
-              Terms of Service
-            </a>
-            <a href="#" className="transition-colors hover:text-primary">
-              Cookie Settings
+              Impressum
             </a>
           </nav>
         </div>
@@ -190,4 +180,4 @@ function Footerdemo() {
   );
 }
 
-export { Footerdemo };
+export { Footer };

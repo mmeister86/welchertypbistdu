@@ -143,7 +143,7 @@ export function GameOfThronesTest() {
       <div className="max-w-6xl mx-auto relative z-10">
         {/* Game of Thrones Logo */}
         <div className="flex justify-center mb-8">
-          <div className="w-64 h-32 bg-[url('/images/got-logo.png')] bg-contain bg-center bg-no-repeat"></div>
+          <div className="w-[512px] h-[180px] bg-[url('/images/got-logo.png')] bg-contain bg-center bg-no-repeat"></div>
         </div>
 
         {/* Ad Banner at the top */}

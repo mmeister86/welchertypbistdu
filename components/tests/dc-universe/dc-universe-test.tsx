@@ -157,9 +157,7 @@ export function DCUniverseTest() {
         <div className="flex justify-center mb-8">
           <div className="w-64 h-32 relative">
             <div className="absolute inset-0 flex items-center justify-center">
-              <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-red-500">
-                DC UNIVERSE TEST
-              </h1>
+              <div className="w-[512px] h-[256px] bg-[url('/images/dc.png')] mx-4 p-10 bg-contain bg-center bg-no-repeat z-20"></div>
             </div>
           </div>
         </div>

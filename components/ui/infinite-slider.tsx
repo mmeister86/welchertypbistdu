@@ -44,7 +44,12 @@ export function InfiniteSlider({
   const x = useTransform(baseX, (value) => {
     if (!containerRef.current) return 0;
     const containerWidth = containerRef.current.offsetWidth;
-    return wrap(-containerWidth, 0, value);
+
+    // Verwende eine erweiterte Wrap-Funktion für absolut nahtlose Übergänge
+    // Größerer Bereich für sanftere Übergänge zwischen den Elementen
+    const wrappedValue = wrap(-containerWidth * 2, containerWidth, value);
+
+    return wrappedValue;
   });
 
   return (
@@ -52,9 +57,16 @@ export function InfiniteSlider({
       className={cn("flex w-full overflow-hidden", className)}
       ref={containerRef}
     >
-      <motion.div style={{ x, gap }} className="flex" {...props}>
+      <motion.div
+        style={{ x, gap }}
+        className="flex"
+        transition={{ type: "tween", ease: "linear" }}
+        {...props}
+      >
         {children}
         {children}
+        {children}
+        {children} {/* Ein viertes Set für noch nahtlosere Übergänge */}
       </motion.div>
     </div>
   );

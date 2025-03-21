@@ -177,7 +177,7 @@ export function PokemonTest() {
       <div className="max-w-6xl mx-auto relative z-10">
         {/* Pokémon Logo */}
         <div className="flex justify-center mb-8">
-          <div className="w-64 h-32 bg-[url('/images/pokemon/logo.png')] bg-contain bg-center bg-no-repeat"></div>
+          <div className="w-[512px] h-[256px] bg-[url('/images/pokemon.png')] mx-4 p-10 bg-contain bg-center bg-no-repeat"></div>
         </div>
 
         {/* Ad Banner at the top */}

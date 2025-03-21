@@ -21,7 +21,7 @@ const availableTests = [
     color: "from-red-500 to-blue-500",
   },
   {
-    id: "dceu",
+    id: "dc-universe",
     title: "Welcher DC Superheld bist du?",
     description:
       "Finde heraus, ob du mehr wie Batman, Superman oder Wonder Woman bist.",

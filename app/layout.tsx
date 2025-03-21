@@ -2,10 +2,9 @@ import type React from "react";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import Navbar from "@/components/navbar";
-import Footer from "@/components/Footer";
 import { AdBlockerModal } from "@/components/ui/adblocker-modal";
 import { Toaster } from "@/components/ui/sonner";
-import { Footerdemo } from "@/components/footer2";
+import { Footer } from "@/components/footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,7 +26,7 @@ export default function RootLayout({
         <Navbar />
         <AdBlockerModal />
         <main>{children}</main>
-        <Footerdemo />
+        <Footer />
         <Toaster />
       </body>
     </html>

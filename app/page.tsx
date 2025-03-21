@@ -43,7 +43,7 @@ export default function HomePage() {
               </div>
             </div>
             <div className="grid grid-cols-2 gap-8">
-              <div className="rounded-2xl aspect-square shadow-lg overflow-hidden">
+              <div className="rounded-xl aspect-square shadow-lg overflow-hidden">
                 {/* Tyrion Bild für das erste Quadrat */}
                 <img
                   src="/images/hero/tyrion.jpeg"
@@ -51,7 +51,7 @@ export default function HomePage() {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="rounded-2xl row-span-2 shadow-lg overflow-hidden">
+              <div className="rounded-xl row-span-2 shadow-lg overflow-hidden">
                 {/* Iron Man Bild für das größere Rechteck */}
                 <img
                   src="/images/hero/ironman.png"
@@ -59,7 +59,7 @@ export default function HomePage() {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="rounded-2xl aspect-square shadow-lg overflow-hidden">
+              <div className="rounded-xl aspect-square shadow-lg overflow-hidden">
                 {/* Spongebob Bild für das zweite Quadrat */}
                 <img
                   src="/images/hero/spongebob.jpeg"

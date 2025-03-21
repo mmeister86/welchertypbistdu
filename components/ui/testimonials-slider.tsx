@@ -59,10 +59,26 @@ const testimonials = [
 export function TestimonialsSlider() {
   return (
     <div className="relative w-full mx-auto overflow-hidden py-8">
+      {/* Linker Schatten für den Tunneleffekt */}
+      <div className="absolute inset-y-0 left-0 w-40 z-10 pointer-events-none"
+        style={{
+          background: "linear-gradient(to right, hsl(var(--background)) 0%, hsla(var(--background), 0.8) 40%, transparent 100%)",
+          boxShadow: "inset 20px 0 20px -20px rgba(125,70,0,0.2)"
+        }}
+      />
+
+      {/* Rechter Schatten für den Tunneleffekt */}
+      <div className="absolute inset-y-0 right-0 w-40 z-10 pointer-events-none"
+        style={{
+          background: "linear-gradient(to left, hsl(var(--background)) 0%, hsla(var(--background), 0.8) 40%, transparent 100%)",
+          boxShadow: "inset -20px 0 20px -20px rgba(125,70,0,0.2)"
+        }}
+      />
+
       <InfiniteSlider
         className="flex items-center gap-12 py-4"
-        duration={60}
-        gap={48}
+        duration={110} /* Noch langsamere Geschwindigkeit für bessere nahtlose Übergänge */
+        gap={36} /* Etwas kleinerer Abstand für mehr Karten im Sichtbereich */
       >
         {testimonials.map((testimonial) => (
           <TestimonialCard key={testimonial.id} testimonial={testimonial} />
@@ -78,10 +94,10 @@ function TestimonialCard({
   testimonial: (typeof testimonials)[0];
 }) {
   return (
-    <div className="bg-white p-8 rounded-xl shadow-md w-[800px] shrink-0">
-      <div className="flex items-center mb-6">
+    <div className="bg-white p-6 rounded-xl shadow-md w-[600px] shrink-0">
+      <div className="flex items-center mb-4">
         <div
-          className={`w-14 h-14 ${testimonial.avatarBg} rounded-full flex items-center justify-center mr-4`}
+          className={`w-12 h-12 ${testimonial.avatarBg} rounded-full flex items-center justify-center mr-4`}
         >
           <span className={`${testimonial.avatarText} font-bold text-lg`}>
             {testimonial.initials}
