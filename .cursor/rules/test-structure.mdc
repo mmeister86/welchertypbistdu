@@ -1,3 +1,8 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
 # Datei- und Ordnerstruktur für Tests
 
 Am Beispiel des SpongeBob-Persönlichkeitstests:
