@@ -57,28 +57,35 @@ const testimonials = [
 ];
 
 export function TestimonialsSlider() {
+  // Berechne den optimalen Gap basierend auf der Anzahl der Testimonials
+  const cardGap = 36; // Abstand zwischen den Karten
+
   return (
     <div className="relative w-full mx-auto overflow-hidden py-8">
       {/* Linker Schatten für den Tunneleffekt */}
-      <div className="absolute inset-y-0 left-0 w-40 z-10 pointer-events-none"
+      <div
+        className="absolute inset-y-0 left-0 w-40 z-10 pointer-events-none"
         style={{
-          background: "linear-gradient(to right, hsl(var(--background)) 0%, hsla(var(--background), 0.8) 40%, transparent 100%)",
-          boxShadow: "inset 20px 0 20px -20px rgba(125,70,0,0.2)"
+          background:
+            "linear-gradient(to right, hsl(var(--background)) 0%, hsla(var(--background), 0.8) 40%, transparent 100%)",
+          boxShadow: "inset 20px 0 20px -20px rgba(125,70,0,0.2)",
         }}
       />
 
       {/* Rechter Schatten für den Tunneleffekt */}
-      <div className="absolute inset-y-0 right-0 w-40 z-10 pointer-events-none"
+      <div
+        className="absolute inset-y-0 right-0 w-40 z-10 pointer-events-none"
         style={{
-          background: "linear-gradient(to left, hsl(var(--background)) 0%, hsla(var(--background), 0.8) 40%, transparent 100%)",
-          boxShadow: "inset -20px 0 20px -20px rgba(125,70,0,0.2)"
+          background:
+            "linear-gradient(to left, hsl(var(--background)) 0%, hsla(var(--background), 0.8) 40%, transparent 100%)",
+          boxShadow: "inset -20px 0 20px -20px rgba(125,70,0,0.2)",
         }}
       />
 
       <InfiniteSlider
-        className="flex items-center gap-12 py-4"
-        duration={110} /* Noch langsamere Geschwindigkeit für bessere nahtlose Übergänge */
-        gap={36} /* Etwas kleinerer Abstand für mehr Karten im Sichtbereich */
+        className="flex items-center py-4"
+        duration={110} /* Langsamere Geschwindigkeit für bessere Übergänge */
+        gap={cardGap} /* Konsistenter Abstand zwischen den Karten */
       >
         {testimonials.map((testimonial) => (
           <TestimonialCard key={testimonial.id} testimonial={testimonial} />

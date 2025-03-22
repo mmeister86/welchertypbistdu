@@ -29,6 +29,14 @@ const availableTests = [
     color: "from-blue-600 to-red-600",
   },
   {
+    id: "berufe",
+    title: "Welcher Beruf passt zu dir?",
+    description:
+      "Finde heraus, welcher der beliebtesten Berufe in Deutschland wirklich zu deiner Persönlichkeit passt.",
+    image: "/images/landscape/job-landscape.jpeg", // Bildpfad für Berufe
+    color: "from-blue-400 to-blue-600",
+  },
+  {
     id: "spongebob",
     title: "Welcher Spongebob Charakter bist du?",
     description:

@@ -1,0 +1,842 @@
+import type { Career, CareerResult, Question } from "./types";
+
+export const questions: Question[] = [
+  {
+    id: "q1",
+    text: "Was machst du, wenn es brennt?",
+    answers: [
+      {
+        id: "q1a",
+        text: "Ich greife zum Feuerlöscher.",
+        careers: ["FW", "POL", "SHK"],
+      },
+      {
+        id: "q1b",
+        text: "Ich rufe die Feuerwehr und warte draußen.",
+        careers: ["KB", "IK"],
+      },
+      {
+        id: "q1c",
+        text: "Ich schreibe einen Bericht darüber.",
+        careers: ["LEH", "KB"],
+      },
+      {
+        id: "q1d",
+        text: "Ich programmiere eine App zur Brandprävention.",
+        careers: ["FI"],
+      },
+      {
+        id: "q1e",
+        text: "Ich reiche Pflaster, Wasser und Trost.",
+        careers: ["PF", "MFA"],
+      },
+    ],
+  },
+  {
+    id: "q2",
+    text: "Dein Arbeitsplatz soll...",
+    answers: [
+      {
+        id: "q2a",
+        text: "Laut, schnell und voller Action sein.",
+        careers: ["FW", "POL"],
+      },
+      {
+        id: "q2b",
+        text: "Geordnet, strukturiert und im Sitzen funktionieren.",
+        careers: ["KB", "IK"],
+      },
+      {
+        id: "q2c",
+        text: "Sauber, medizinisch und mit Handschuhen sein.",
+        careers: ["MFA", "ZFA"],
+      },
+      {
+        id: "q2d",
+        text: "Einen Werkzeugkasten beinhalten.",
+        careers: ["SHK", "KZ"],
+      },
+      {
+        id: "q2e",
+        text: "Digital, logisch und von Zuhause aus steuerbar sein.",
+        careers: ["FI"],
+      },
+    ],
+  },
+  {
+    id: "q3",
+    text: "Wenn du ein Werkzeug wärst, wärst du...",
+    answers: [
+      {
+        id: "q3a",
+        text: "Ein Schraubenzieher – immer bereit.",
+        careers: ["SHK", "KZ"],
+      },
+      {
+        id: "q3b",
+        text: "Ein Stethoskop – für feine Diagnosen.",
+        careers: ["MFA", "ARZT"],
+      },
+      {
+        id: "q3c",
+        text: "Eine Tastatur – voller Ideen.",
+        careers: ["FI", "IK"],
+      },
+      {
+        id: "q3d",
+        text: "Ein Whiteboard – für Ordnung und Planung.",
+        careers: ["LEH", "KB"],
+      },
+      {
+        id: "q3e",
+        text: "Ein Blaulicht – immer im Einsatz.",
+        careers: ["POL", "FW"],
+      },
+    ],
+  },
+  {
+    id: "q4",
+    text: "Du bekommst ein Problem auf den Tisch. Was tust du?",
+    answers: [
+      {
+        id: "q4a",
+        text: "Ich löse es praktisch und mit meinen Händen.",
+        careers: ["SHK", "KZ"],
+      },
+      {
+        id: "q4b",
+        text: "Ich analysiere und schreibe einen Report.",
+        careers: ["IK", "KB"],
+      },
+      {
+        id: "q4c",
+        text: "Ich programmiere die Lösung.",
+        careers: ["FI"],
+      },
+      {
+        id: "q4d",
+        text: "Ich frage erstmal: „Geht's dir gut?“",
+        careers: ["PF", "MFA"],
+      },
+      {
+        id: "q4e",
+        text: "Ich jage den Täter oder lösche das Feuer.",
+        careers: ["POL", "FW"],
+      },
+    ],
+  },
+  {
+    id: "q5",
+    text: "Du musst um 5 Uhr morgens aufstehen. Deine Reaktion?",
+    answers: [
+      {
+        id: "q5a",
+        text: "Kein Problem – ich bin dann schon wach.",
+        careers: ["KZ", "FW"],
+      },
+      {
+        id: "q5b",
+        text: "Nur wenn's für was Wichtiges ist.",
+        careers: ["ARZT", "POL"],
+      },
+      {
+        id: "q5c",
+        text: "Kann ich auch remote arbeiten?",
+        careers: ["FI"],
+      },
+      {
+        id: "q5d",
+        text: "Frühschicht? Klar, gehört dazu.",
+        careers: ["SHK", "ZFA"],
+      },
+      {
+        id: "q5e",
+        text: "Ich schlaf lieber aus – bin mehr der Nachtschichttyp.",
+        careers: ["LEH", "KB"],
+      },
+    ],
+  },
+  {
+    id: "q6",
+    text: "Du arbeitest am liebsten mit...",
+    answers: [
+      {
+        id: "q6a",
+        text: "Menschen",
+        careers: ["PF", "MFA", "LEH"],
+      },
+      {
+        id: "q6b",
+        text: "Maschinen",
+        careers: ["SHK", "KZ", "EL"],
+      },
+      {
+        id: "q6c",
+        text: "Zahlen und Abläufen",
+        careers: ["KB", "IK"],
+      },
+      {
+        id: "q6d",
+        text: "Kindern und Jugendlichen",
+        careers: ["LEH", "POL"],
+      },
+      {
+        id: "q6e",
+        text: "Patienten",
+        careers: ["ARZT", "ZFA"],
+      },
+    ],
+  },
+  {
+    id: "q7",
+    text: "Was ist dir bei der Arbeit am wichtigsten?",
+    answers: [
+      {
+        id: "q7a",
+        text: "Teamwork und Abwechslung",
+        careers: ["FW", "LEH"],
+      },
+      {
+        id: "q7b",
+        text: "Sicherheit und Ordnung",
+        careers: ["KB", "POL"],
+      },
+      {
+        id: "q7c",
+        text: "Kreativität und Problemlösung",
+        careers: ["FI", "IK"],
+      },
+      {
+        id: "q7d",
+        text: "Gesellschaftliche Relevanz",
+        careers: ["PF", "ARZT"],
+      },
+      {
+        id: "q7e",
+        text: "Technisches Tüfteln",
+        careers: ["KZ", "EL"],
+      },
+    ],
+  },
+  {
+    id: "q8",
+    text: "Wie fühlst du dich in Uniform?",
+    answers: [
+      {
+        id: "q8a",
+        text: "Stark – das gibt mir Power!",
+        careers: ["POL", "FW"],
+      },
+      {
+        id: "q8b",
+        text: "Naja... nur zu Fasching.",
+        careers: ["FI", "KB"],
+      },
+      {
+        id: "q8c",
+        text: "Super – solange ich sie selbst anpassen darf.",
+        careers: ["FI", "LEH"],
+      },
+      {
+        id: "q8d",
+        text: "Gehört zum Job – passt schon.",
+        careers: ["MFA", "ZFA"],
+      },
+      {
+        id: "q8e",
+        text: "Ich zieh lieber Kittel oder gar nichts Offizielles an.",
+        careers: ["PF", "KZ"],
+      },
+    ],
+  },
+  {
+    id: "q9",
+    text: "Deine Freunde sagen über dich:",
+    answers: [
+      {
+        id: "q9a",
+        text: "Du hast immer eine Lösung.",
+        careers: ["SHK", "KZ", "EL"],
+      },
+      {
+        id: "q9b",
+        text: "Du kümmerst dich um alle.",
+        careers: ["PF", "MFA"],
+      },
+      {
+        id: "q9c",
+        text: "Du bist ein bisschen nerdy – im besten Sinne.",
+        careers: ["FI", "ARZT"],
+      },
+      {
+        id: "q9d",
+        text: "Du erklärst alles so gut.",
+        careers: ["LEH", "KB"],
+      },
+      {
+        id: "q9e",
+        text: "Du bist wie ein wandelndes Werkzeug.",
+        careers: ["POL", "FW"],
+      },
+    ],
+  },
+  {
+    id: "q10",
+    text: "Du findest einen Geldbeutel auf der Straße. Was tust du?",
+    answers: [
+      {
+        id: "q10a",
+        text: "Ich bring ihn zur Polizei – sofort.",
+        careers: ["POL"],
+      },
+      {
+        id: "q10b",
+        text: "Ich analysiere, wem er gehört – mit System.",
+        careers: ["IK", "LEH"],
+      },
+      {
+        id: "q10c",
+        text: "Ich bau eine App, um ihn online zu melden.",
+        careers: ["FI"],
+      },
+      {
+        id: "q10d",
+        text: "Ich bring ihn vorbei und frage, ob alles okay ist.",
+        careers: ["PF", "MFA"],
+      },
+      {
+        id: "q10e",
+        text: "Ich laufe dem Besitzer direkt hinterher – im Sprint.",
+        careers: ["FW", "KZ"],
+      },
+    ],
+  },
+];
+
+export const careerResults: Record<Career, CareerResult> = {
+  PF: {
+    id: "PF",
+    name: "Pflegefachkraft",
+    fullName: "Pflegefachmann/-frau",
+    description:
+      "Du bist einfühlsam, geduldig und hast ein großes Herz für Menschen. Als Pflegefachkraft kannst du deine soziale Ader und dein Organisationstalent perfekt einsetzen. Du arbeitest gerne im Team und scheust dich nicht vor Verantwortung. Deine Fähigkeit, auch in stressigen Situationen ruhig zu bleiben, macht dich perfekt für diesen anspruchsvollen, aber erfüllenden Beruf.",
+    image: "/images/characters/berufe/pflegefachkraft.jpeg",
+    color: "bg-blue-700",
+    traits: [
+      "Einfühlsam",
+      "Belastbar",
+      "Teamfähig",
+      "Verantwortungsbewusst",
+      "Organisiert",
+    ],
+    dailyTasks: [
+      "Patienten pflegen und betreuen",
+      "Medikamente verabreichen",
+      "Vitalwerte kontrollieren",
+      "Pflegedokumentation führen",
+      "Mit Ärzten und Angehörigen kommunizieren",
+    ],
+    pros: [
+      "Sinnstiftende Tätigkeit",
+      "Vielseitiger Arbeitsalltag",
+      "Gute Jobaussichten",
+      "Aufstiegsmöglichkeiten durch Spezialisierung",
+    ],
+    cons: [
+      "Körperlich anstrengend",
+      "Schichtdienst",
+      "Emotionale Belastung",
+      "Hohe Verantwortung",
+    ],
+  },
+  KZ: {
+    id: "KZ",
+    name: "Kfz-Mechatroniker/in",
+    fullName: "Kraftfahrzeugmechatroniker/in",
+    description:
+      "Du bist technisch begabt, hast ein gutes räumliches Vorstellungsvermögen und arbeitest gerne mit den Händen. Als Kfz-Mechatroniker/in verbindest du handwerkliches Geschick mit technischem Verständnis. Du liebst es, Probleme zu lösen und komplexe Systeme zu verstehen. Deine Genauigkeit und dein Interesse an modernen Technologien machen dich zum perfekten Kandidaten für diesen vielseitigen Beruf.",
+    image: "/images/characters/berufe/mechatroniker.jpeg",
+    color: "bg-red-600",
+    traits: [
+      "Technisch begabt",
+      "Präzise",
+      "Problemlöser",
+      "Praktisch veranlagt",
+      "Lernbereit",
+    ],
+    dailyTasks: [
+      "Fahrzeuge warten und reparieren",
+      "Fehlerdiagnose durchführen",
+      "Elektronische Systeme prüfen",
+      "Kundenberatung",
+      "Ersatzteile bestellen und verwalten",
+    ],
+    pros: [
+      "Abwechslungsreiche Tätigkeit",
+      "Kombination aus Handwerk und Technik",
+      "Gute Verdienstmöglichkeiten",
+      "Zukunftssicherer Beruf",
+    ],
+    cons: [
+      "Körperlich anstrengend",
+      "Ständige Weiterbildung nötig",
+      "Manchmal Zeitdruck",
+      "Umgang mit Schmutz und Öl",
+    ],
+  },
+  KB: {
+    id: "KB",
+    name: "Kaufmann/-frau für Büromanagement",
+    fullName: "Kaufmann/-frau für Büromanagement",
+    description:
+      "Du bist organisiert, kommunikativ und hast ein Auge für Details. Als Kaufmann/-frau für Büromanagement bist du das Herzstück eines Unternehmens und sorgst dafür, dass alle Abläufe reibungslos funktionieren. Deine Fähigkeit, strukturiert zu arbeiten und den Überblick zu behalten, macht dich zum perfekten Organisationstalent im Büro.",
+    image: "/images/characters/berufe/buero.jpeg",
+    color: "bg-gray-700",
+    traits: [
+      "Organisiert",
+      "Kommunikativ",
+      "Detailorientiert",
+      "Zuverlässig",
+      "Vielseitig",
+    ],
+    dailyTasks: [
+      "Korrespondenz erledigen",
+      "Termine koordinieren",
+      "Rechnungen bearbeiten",
+      "Dokumente verwalten",
+      "Projekte organisatorisch begleiten",
+    ],
+    pros: [
+      "Vielseitige Aufgaben",
+      "Geregelte Arbeitszeiten",
+      "Gute Work-Life-Balance",
+      "In fast allen Branchen einsetzbar",
+    ],
+    cons: [
+      "Viel Bildschirmarbeit",
+      "Manchmal Routineaufgaben",
+      "Wenig Bewegung",
+      "Abhängigkeit von technischen Systemen",
+    ],
+  },
+  VK: {
+    id: "VK",
+    name: "Verkäufer/in",
+    fullName: "Verkäufer/in",
+    description:
+      "Du bist kommunikativ, freundlich und hast Freude am Umgang mit Menschen. Als Verkäufer/in kannst du deine Überzeugungskraft und dein Verkaufstalent täglich unter Beweis stellen. Du verstehst es, auf Kundenwünsche einzugehen und findest für jedes Problem die passende Lösung. Deine positive Ausstrahlung und dein Servicegedanke machen dich zum idealen Verkaufstalent.",
+    image: "/images/characters/berufe/verkaeufer.jpeg",
+    color: "bg-green-600",
+    traits: [
+      "Kommunikativ",
+      "Kundenorientiert",
+      "Freundlich",
+      "Überzeugend",
+      "Belastbar",
+    ],
+    dailyTasks: [
+      "Kunden beraten",
+      "Waren präsentieren",
+      "Kasse bedienen",
+      "Warenbestand kontrollieren",
+      "Reklamationen bearbeiten",
+    ],
+    pros: [
+      "Direkter Kundenkontakt",
+      "Abwechslungsreicher Alltag",
+      "Teamarbeit",
+      "Flexible Einsatzmöglichkeiten",
+    ],
+    cons: [
+      "Lange Stehzeiten",
+      "Manchmal Wochenendarbeit",
+      "Saisonale Hochphasen",
+      "Umgang mit schwierigen Kunden",
+    ],
+  },
+  EH: {
+    id: "EH",
+    name: "Kaufmann/-frau im Einzelhandel",
+    fullName: "Kaufmann/-frau im Einzelhandel",
+    description:
+      "Du bist kommunikationsstark, serviceorientiert und hast ein gutes Zahlenverständnis. Als Kaufmann/-frau im Einzelhandel verbindest du Verkaufstalent mit betriebswirtschaftlichem Denken. Du verstehst es, Kunden zu beraten und gleichzeitig den wirtschaftlichen Erfolg im Blick zu behalten. Deine Vielseitigkeit und dein Organisationstalent machen dich zum perfekten Allrounder im Handel.",
+    image: "/images/characters/berufe/einzelhandel.jpeg",
+    color: "bg-yellow-600",
+    traits: [
+      "Kundenorientiert",
+      "Organisiert",
+      "Zahlenaffin",
+      "Kommunikativ",
+      "Verantwortungsbewusst",
+    ],
+    dailyTasks: [
+      "Kunden beraten und verkaufen",
+      "Waren bestellen und kontrollieren",
+      "Verkaufsfläche gestalten",
+      "Preiskalkulation",
+      "Personalplanung",
+    ],
+    pros: [
+      "Kombination aus Verkauf und Management",
+      "Aufstiegsmöglichkeiten",
+      "Abwechslungsreiche Tätigkeit",
+      "Kontakt zu verschiedenen Menschen",
+    ],
+    cons: [
+      "Unregelmäßige Arbeitszeiten",
+      "Hoher Wettbewerbsdruck",
+      "Körperliche Belastung",
+      "Saisonale Schwankungen",
+    ],
+  },
+  FI: {
+    id: "FI",
+    name: "Fachinformatiker/in",
+    fullName: "Fachinformatiker/in",
+    description:
+      "Du bist analytisch, lösungsorientiert und hast ein tiefes Interesse an Technologie. Als Fachinformatiker/in kannst du deine Leidenschaft für IT und dein logisches Denkvermögen perfekt einsetzen. Du liebst es, komplexe Probleme zu lösen und neue Technologien zu entdecken. Deine Fähigkeit, dich schnell in neue Themen einzuarbeiten, macht dich zum idealen IT-Experten in einer sich ständig wandelnden digitalen Welt.",
+    image: "/images/characters/berufe/fachinformatiker.jpeg",
+    color: "bg-indigo-600",
+    traits: [
+      "Analytisch",
+      "Technisch begabt",
+      "Lernbereit",
+      "Problemlöser",
+      "Geduldig",
+    ],
+    dailyTasks: [
+      "Software entwickeln oder anpassen",
+      "IT-Systeme betreuen",
+      "Fehler analysieren und beheben",
+      "Benutzer schulen und unterstützen",
+      "Neue Technologien evaluieren",
+    ],
+    pros: [
+      "Zukunftssicherer Beruf",
+      "Gute Verdienstmöglichkeiten",
+      "Oft Homeoffice-Möglichkeiten",
+      "Ständig neue Herausforderungen",
+    ],
+    cons: [
+      "Hoher Lern- und Weiterbildungsdruck",
+      "Viel Bildschirmarbeit",
+      "Manchmal Bereitschaftsdienste",
+      "Komplexe Problemstellungen",
+    ],
+  },
+  MFA: {
+    id: "MFA",
+    name: "Medizinische/r Fachangestellte/r",
+    fullName: "Medizinische/r Fachangestellte/r",
+    description:
+      "Du bist einfühlsam, organisiert und behältst auch in stressigen Situationen einen kühlen Kopf. Als Medizinische/r Fachangestellte/r verbindest du administrative Fähigkeiten mit medizinischem Wissen. Du bist das Bindeglied zwischen Arzt und Patient und sorgst für einen reibungslosen Praxisablauf. Deine Kommunikationsstärke und dein Verantwortungsbewusstsein machen dich zur idealen Unterstützung im medizinischen Bereich.",
+    image: "/images/characters/berufe/mfa.jpeg",
+    color: "bg-pink-600",
+    traits: [
+      "Einfühlsam",
+      "Organisiert",
+      "Belastbar",
+      "Kommunikativ",
+      "Verantwortungsbewusst",
+    ],
+    dailyTasks: [
+      "Patienten empfangen und betreuen",
+      "Termine koordinieren",
+      "Ärzte bei Untersuchungen assistieren",
+      "Blut abnehmen und Laborarbeiten durchführen",
+      "Verwaltungsaufgaben erledigen",
+    ],
+    pros: [
+      "Vielseitige Tätigkeit",
+      "Kombination aus Medizin und Organisation",
+      "Direkter Patientenkontakt",
+      "Sinnstiftende Arbeit",
+    ],
+    cons: [
+      "Hohe emotionale Belastung",
+      "Umgang mit Krankheiten",
+      "Manchmal Wochenendarbeit",
+      "Hoher Zeitdruck",
+    ],
+  },
+  IK: {
+    id: "IK",
+    name: "Industriekaufmann/-frau",
+    fullName: "Industriekaufmann/-frau",
+    description:
+      "Du bist strukturiert, zahlenaffin und hast ein gutes Verständnis für wirtschaftliche Zusammenhänge. Als Industriekaufmann/-frau bist du in verschiedenen kaufmännischen Bereichen eines Industrieunternehmens tätig. Du behältst den Überblick über komplexe Prozesse und trägst mit deinem betriebswirtschaftlichen Know-how zum Unternehmenserfolg bei. Deine analytischen Fähigkeiten und deine Kommunikationsstärke machen dich zum perfekten Allrounder in der Wirtschaft.",
+    image: "/images/characters/berufe/industriekaufmann.jpeg",
+    color: "bg-blue-600",
+    traits: [
+      "Organisiert",
+      "Zahlenaffin",
+      "Kommunikativ",
+      "Analytisch",
+      "Teamfähig",
+    ],
+    dailyTasks: [
+      "Angebote und Aufträge bearbeiten",
+      "Einkauf und Logistik koordinieren",
+      "Personalverwaltung unterstützen",
+      "Controlling-Aufgaben übernehmen",
+      "Marketing- und Vertriebsaktivitäten planen",
+    ],
+    pros: [
+      "Vielseitige Einsatzmöglichkeiten",
+      "Gute Aufstiegschancen",
+      "Geregelte Arbeitszeiten",
+      "Internationale Tätigkeiten möglich",
+    ],
+    cons: [
+      "Viel Bildschirmarbeit",
+      "Hohe Genauigkeitsanforderungen",
+      "Manchmal Termindruck",
+      "Komplexe Prozesse",
+    ],
+  },
+  EL: {
+    id: "EL",
+    name: "Elektroniker/in",
+    fullName: "Elektroniker/in",
+    description:
+      "Du bist technisch begabt, hast ein gutes Verständnis für physikalische Zusammenhänge und arbeitest präzise. Als Elektroniker/in verbindest du handwerkliches Geschick mit technischem Know-how. Du liebst es, komplexe Systeme zu verstehen und zum Laufen zu bringen. Deine Genauigkeit und dein Sicherheitsbewusstsein machen dich zum idealen Experten für alle elektrischen Anlagen.",
+    image: "/images/characters/berufe/elektroniker.jpeg",
+    color: "bg-yellow-500",
+    traits: [
+      "Technisch begabt",
+      "Präzise",
+      "Sicherheitsbewusst",
+      "Lösungsorientiert",
+      "Lernbereit",
+    ],
+    dailyTasks: [
+      "Elektrische Anlagen installieren und warten",
+      "Schaltpläne lesen und erstellen",
+      "Fehler suchen und beheben",
+      "Kunden beraten",
+      "Sicherheitsprüfungen durchführen",
+    ],
+    pros: [
+      "Zukunftssicherer Beruf",
+      "Gute Verdienstmöglichkeiten",
+      "Abwechslungsreiche Tätigkeit",
+      "Viele Spezialisierungsmöglichkeiten",
+    ],
+    cons: [
+      "Körperlich anstrengend",
+      "Manchmal Arbeit bei jedem Wetter",
+      "Hohe Verantwortung",
+      "Ständige Weiterbildung nötig",
+    ],
+  },
+  SHK: {
+    id: "SHK",
+    name: "Anlagenmechaniker/in SHK",
+    fullName: "Anlagenmechaniker/in für Sanitär-, Heizungs- und Klimatechnik",
+    description:
+      "Du bist handwerklich geschickt, technisch interessiert und arbeitest gerne selbstständig. Als Anlagenmechaniker/in für Sanitär-, Heizungs- und Klimatechnik verbindest du praktisches Handwerk mit modernen Technologien. Du sorgst dafür, dass Wasser fließt, Heizungen wärmen und Klimaanlagen kühlen. Deine Vielseitigkeit und dein Verständnis für komplexe Systeme machen dich zum gefragten Experten in einer zukunftssicheren Branche.",
+    image: "/images/characters/berufe/anlagenmechaniker.jpeg",
+    color: "bg-red-700",
+    traits: [
+      "Handwerklich geschickt",
+      "Technisch begabt",
+      "Lösungsorientiert",
+      "Selbstständig",
+      "Kundenorientiert",
+    ],
+    dailyTasks: [
+      "Sanitäranlagen installieren und warten",
+      "Heizungssysteme einbauen und reparieren",
+      "Klimaanlagen montieren und warten",
+      "Energieeffiziente Systeme planen",
+      "Kunden beraten",
+    ],
+    pros: [
+      "Krisensicherer Beruf",
+      "Gute Verdienstmöglichkeiten",
+      "Abwechslungsreiche Tätigkeit",
+      "Zukunftsthema Energieeffizienz",
+    ],
+    cons: [
+      "Körperlich anstrengend",
+      "Manchmal unbequeme Arbeitspositionen",
+      "Arbeit bei jedem Wetter",
+      "Bereitschaftsdienste möglich",
+    ],
+  },
+  ZFA: {
+    id: "ZFA",
+    name: "Zahnmedizinische/r Fachangestellte/r",
+    fullName: "Zahnmedizinische/r Fachangestellte/r",
+    description:
+      "Du bist einfühlsam, hast ein gutes Auge für Details und arbeitest gerne im Team. Als Zahnmedizinische/r Fachangestellte/r unterstützt du Zahnärzte bei der Behandlung und sorgst für einen reibungslosen Praxisablauf. Du bist das freundliche Gesicht der Praxis und hilfst Patienten, ihre Angst zu überwinden. Deine Genauigkeit und dein Organisationstalent machen dich zur perfekten Unterstützung in der Zahnmedizin.",
+    image: "/images/characters/berufe/zfa.jpeg",
+    color: "bg-cyan-600",
+    traits: [
+      "Einfühlsam",
+      "Präzise",
+      "Teamfähig",
+      "Organisiert",
+      "Hygienebewusst",
+    ],
+    dailyTasks: [
+      "Zahnärzte bei Behandlungen assistieren",
+      "Instrumente vorbereiten und sterilisieren",
+      "Patienten betreuen",
+      "Prophylaxemaßnahmen durchführen",
+      "Verwaltungsaufgaben erledigen",
+    ],
+    pros: [
+      "Abwechslungsreiche Tätigkeit",
+      "Direkter Patientenkontakt",
+      "Gute Arbeitsmarktchancen",
+      "Spezialisierungsmöglichkeiten",
+    ],
+    cons: [
+      "Lange Stehzeiten",
+      "Umgang mit Angstpatienten",
+      "Hohe Hygieneanforderungen",
+      "Manchmal unregelmäßige Arbeitszeiten",
+    ],
+  },
+  ARZT: {
+    id: "ARZT",
+    name: "Arzt/Ärztin",
+    fullName: "Arzt/Ärztin",
+    description:
+      "Du bist verantwortungsbewusst, hast ein ausgeprägtes naturwissenschaftliches Verständnis und eine hohe soziale Kompetenz. Als Arzt/Ärztin verbindest du medizinisches Fachwissen mit Einfühlungsvermögen. Du hilfst Menschen in schwierigen Situationen und trägst maßgeblich zu ihrer Gesundheit bei. Deine Lernbereitschaft und dein analytisches Denken machen dich zum idealen Mediziner in einem anspruchsvollen, aber erfüllenden Beruf.",
+    image: "/images/characters/berufe/arzt.jpeg",
+    color: "bg-green-700",
+    traits: [
+      "Verantwortungsbewusst",
+      "Einfühlsam",
+      "Analytisch",
+      "Belastbar",
+      "Lernbereit",
+    ],
+    dailyTasks: [
+      "Patienten untersuchen und diagnostizieren",
+      "Therapien planen und durchführen",
+      "Aufklärungsgespräche führen",
+      "Dokumentation erstellen",
+      "Mit anderen Fachbereichen zusammenarbeiten",
+    ],
+    pros: [
+      "Sinnstiftende Tätigkeit",
+      "Hohe gesellschaftliche Anerkennung",
+      "Gute Verdienstmöglichkeiten",
+      "Vielfältige Spezialisierungsmöglichkeiten",
+    ],
+    cons: [
+      "Langes, anspruchsvolles Studium",
+      "Hohe Arbeitsbelastung",
+      "Emotionaler Stress",
+      "Oft Schicht- und Bereitschaftsdienste",
+    ],
+  },
+  POL: {
+    id: "POL",
+    name: "Polizist/in",
+    fullName: "Polizist/in",
+    description:
+      "Du bist pflichtbewusst, hast ein ausgeprägtes Gerechtigkeitsempfinden und bleibst auch in schwierigen Situationen ruhig. Als Polizist/in sorgst du für Sicherheit und Ordnung und hilfst Menschen in Notlagen. Du bist körperlich fit und mental stark. Deine Kommunikationsfähigkeit und dein Durchsetzungsvermögen machen dich zur idealen Respektsperson in einem verantwortungsvollen Beruf mit hoher gesellschaftlicher Relevanz.",
+    image: "/images/characters/berufe/polizist.jpeg",
+    color: "bg-blue-800",
+    traits: [
+      "Pflichtbewusst",
+      "Belastbar",
+      "Kommunikativ",
+      "Teamfähig",
+      "Durchsetzungsstark",
+    ],
+    dailyTasks: [
+      "Streife fahren und Präsenz zeigen",
+      "Notrufe entgegennehmen und bearbeiten",
+      "Verkehrskontrollen durchführen",
+      "Ermittlungen führen",
+      "Berichte verfassen",
+    ],
+    pros: [
+      "Abwechslungsreiche Tätigkeit",
+      "Sicherer Arbeitsplatz",
+      "Gute Sozialleistungen",
+      "Viele Spezialisierungsmöglichkeiten",
+    ],
+    cons: [
+      "Schichtdienst",
+      "Psychische Belastung",
+      "Konfrontation mit Gewalt",
+      "Hohe körperliche Anforderungen",
+    ],
+  },
+  FW: {
+    id: "FW",
+    name: "Feuerwehrmann/-frau",
+    fullName: "Feuerwehrmann/-frau",
+    description:
+      "Du bist mutig, belastbar und hast ein ausgeprägtes Verantwortungsbewusstsein. Als Feuerwehrmann/-frau rettest du Menschen aus Gefahrensituationen und bekämpfst Brände. Du arbeitest im Team und bist technisch versiert. Deine körperliche Fitness und deine Fähigkeit, auch unter Stress klare Entscheidungen zu treffen, machen dich zum idealen Retter in der Not.",
+    image: "/images/characters/berufe/feuerwehr.jpeg",
+    color: "bg-red-800",
+    traits: [
+      "Mutig",
+      "Teamfähig",
+      "Belastbar",
+      "Technisch begabt",
+      "Entscheidungsfreudig",
+    ],
+    dailyTasks: [
+      "Brände bekämpfen",
+      "Menschen und Tiere retten",
+      "Technische Hilfeleistungen erbringen",
+      "Präventionsarbeit leisten",
+      "Ausrüstung warten und prüfen",
+    ],
+    pros: [
+      "Sinnstiftende Tätigkeit",
+      "Starker Teamzusammenhalt",
+      "Abwechslungsreiche Aufgaben",
+      "Gesellschaftliche Anerkennung",
+    ],
+    cons: [
+      "24-Stunden-Schichten",
+      "Hohe körperliche Belastung",
+      "Psychisch fordernde Situationen",
+      "Gefährliche Einsätze",
+    ],
+  },
+  LEH: {
+    id: "LEH",
+    name: "Lehrer/in",
+    fullName: "Lehrer/in",
+    description:
+      "Du bist geduldig, kommunikativ und hast Freude daran, Wissen zu vermitteln. Als Lehrer/in formst du die nächste Generation und begleitest junge Menschen auf ihrem Bildungsweg. Du bist kreativ in der Wissensvermittlung und hast ein gutes Gespür für die Bedürfnisse deiner Schüler. Deine Begeisterungsfähigkeit und dein Organisationstalent machen dich zur idealen Lehrkraft in einem anspruchsvollen, aber erfüllenden Beruf.",
+    image: "/images/characters/berufe/lehrer.jpeg",
+    color: "bg-purple-700",
+    traits: [
+      "Geduldig",
+      "Kommunikativ",
+      "Organisiert",
+      "Einfühlsam",
+      "Begeisterungsfähig",
+    ],
+    dailyTasks: [
+      "Unterricht vorbereiten und durchführen",
+      "Schüler individuell fördern",
+      "Leistungen bewerten",
+      "Elterngespräche führen",
+      "An Konferenzen teilnehmen",
+    ],
+    pros: [
+      "Abwechslungsreicher Beruf",
+      "Ferien und flexible Arbeitszeiteinteilung",
+      "Sinnstiftende Tätigkeit",
+      "Sicherer Arbeitsplatz",
+    ],
+    cons: [
+      "Hohe emotionale Belastung",
+      "Viel Vor- und Nachbereitung",
+      "Herausfordernde Elterngespräche",
+      "Große Verantwortung",
+    ],
+  },
+};

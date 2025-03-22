@@ -1,4 +1,5 @@
 "use client";
+import React, { ReactNode, useRef, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import {
   HTMLMotionProps,
@@ -8,7 +9,6 @@ import {
   useTransform,
   wrap,
 } from "framer-motion";
-import { ReactNode, useRef } from "react";
 
 type InfiniteSliderProps = {
   children: ReactNode;
@@ -30,7 +30,32 @@ export function InfiniteSlider({
 }: InfiniteSliderProps) {
   const baseX = useMotionValue(0);
   const containerRef = useRef<HTMLDivElement>(null);
+  const sliderRef = useRef<HTMLDivElement>(null);
+  const [sliderWidth, setSliderWidth] = useState(0);
   const adjustedVelocity = (reverse ? -1 : 1) * baseVelocity;
+
+  // Erfasse die Breite des Sliders (eine Gruppe von Elementen)
+  useEffect(() => {
+    if (sliderRef.current) {
+      // Wir brauchen die Breite eines Satzes von Kindern
+      const childrenElements = Array.from(sliderRef.current.children);
+      const childrenCount = React.Children.count(children);
+
+      // Berechne die Breite der ersten childrenCount Elemente
+      let firstGroupWidth = 0;
+      for (let i = 0; i < childrenCount && i < childrenElements.length; i++) {
+        const child = childrenElements[i] as HTMLElement;
+        firstGroupWidth += child.offsetWidth + gap;
+      }
+
+      // Ziehe den letzten Gap ab, da dieser am Ende nicht benötigt wird
+      if (childrenCount > 0) {
+        firstGroupWidth -= gap;
+      }
+
+      setSliderWidth(firstGroupWidth);
+    }
+  }, [children, gap]);
 
   useAnimationFrame((time, delta) => {
     let moveBy = adjustedVelocity * (delta / 1000);
@@ -42,14 +67,11 @@ export function InfiniteSlider({
   });
 
   const x = useTransform(baseX, (value) => {
-    if (!containerRef.current) return 0;
-    const containerWidth = containerRef.current.offsetWidth;
+    if (sliderWidth <= 0) return 0;
 
-    // Verwende eine erweiterte Wrap-Funktion für absolut nahtlose Übergänge
-    // Größerer Bereich für sanftere Übergänge zwischen den Elementen
-    const wrappedValue = wrap(-containerWidth * 2, containerWidth, value);
-
-    return wrappedValue;
+    // Verwende die exakte Breite eines Satzes von Kindern für den Wrap
+    // Das sorgt dafür, dass die Elemente nahtlos wiederholt werden
+    return wrap(-sliderWidth, 0, value % sliderWidth);
   });
 
   return (
@@ -58,6 +80,7 @@ export function InfiniteSlider({
       ref={containerRef}
     >
       <motion.div
+        ref={sliderRef}
         style={{ x, gap }}
         className="flex"
         transition={{ type: "tween", ease: "linear" }}
@@ -66,7 +89,6 @@ export function InfiniteSlider({
         {children}
         {children}
         {children}
-        {children} {/* Ein viertes Set für noch nahtlosere Übergänge */}
       </motion.div>
     </div>
   );
