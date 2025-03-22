@@ -85,16 +85,25 @@ const availableTests = [
     image: "/images/landscape/pokemon-landscape.jpeg", // Bildpfad für Pokémon
     color: "from-blue-500 to-green-500",
   },
+  {
+    id: "youtube",
+    title: "Welcher YouTuber bist du?",
+    description:
+      "Entdecke, welchem berühmten YouTuber du am meisten ähnelst, basierend auf deiner Persönlichkeit und deinen Interessen.",
+    image: "/images/landscape/youtube-landscape.jpeg", // Bildpfad für YouTuber
+    color: "from-red-600 to-red-400", // YouTube-typische Farbgebung
+  },
 ];
 
 // Server Component
-export default function TestsOverviewPage({
+export default async function TestsOverviewPage({
   searchParams,
 }: {
   searchParams: { page?: string };
 }) {
   // Get current page from URL or default to 1
-  const currentPage = Number(searchParams.page) || 1;
+  const params = await searchParams;
+  const currentPage = Number(params.page) || 1;
   const testsPerPage = 9;
   const totalPages = Math.ceil(availableTests.length / testsPerPage);
 
