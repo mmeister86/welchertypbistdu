@@ -3,22 +3,13 @@
 import * as React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
-import { Textarea } from "@/components/ui/textarea";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import {
-  Facebook,
-  Instagram,
-  Linkedin,
-  Send,
-  Twitter,
-} from "lucide-react";
+import { Facebook, Instagram, Linkedin, Send, Twitter } from "lucide-react";
 
 function Footer() {
   const [isChatOpen, setIsChatOpen] = React.useState(false);
@@ -32,7 +23,8 @@ function Footer() {
               Stay Connected
             </h2>
             <p className="mb-6 text-muted-foreground">
-              Hast du Feedback oder Ideen für neue Tests? Dann schreib uns einfach eine E-Mail.
+              Hast du Feedback oder Ideen für neue Tests? Dann schreib uns
+              einfach eine E-Mail.
             </p>
             <form className="relative">
               <Input
@@ -67,10 +59,10 @@ function Footer() {
                 Über uns
               </a>
               <a
-                href="#"
+                href="/faq"
                 className="block transition-colors hover:text-primary"
               >
-                Tests
+                Häufig gestellte Fragen
               </a>
               <a
                 href="#"

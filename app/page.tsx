@@ -4,6 +4,7 @@ import React from "react";
 import { TestimonialsSlider } from "@/components/ui/testimonials-slider";
 import { Badge } from "@/components/ui/badge";
 import { SideAd } from "@/components/ui/side-ad";
+import { FeaturedTests } from "@/components/ui/featured-tests";
 
 export default function HomePage() {
   return (
@@ -89,61 +90,7 @@ export default function HomePage() {
       </div>
 
       {/* Featured Tests */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">
-          Unsere beliebtesten Tests
-        </h2>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <TestCard
-            title="Welcher Star Wars Charakter bist du?"
-            description="Finde heraus, ob du mehr wie Luke Skywalker, Darth Vader oder Yoda bist."
-            icon={<Star className="h-8 w-8 text-yellow-500" />}
-            color="from-yellow-400 to-orange-500"
-            href="/tests/star-wars"
-          />
-
-          <TestCard
-            title="Welche Farbe passt zu dir?"
-            description="Entdecke, welche Farbe am besten zu deiner Persönlichkeit und deinem Stil passt."
-            icon={<Palette className="h-8 w-8 text-blue-500" />}
-            color="from-blue-400 to-teal-500"
-            href="/tests/color"
-          />
-
-          <TestCard
-            title="Welcher Persönlichkeitstyp bist du?"
-            description="Basierend auf psychologischen Prinzipien - erfahre mehr über deine Stärken und Schwächen."
-            icon={<Brain className="h-8 w-8 text-purple-500" />}
-            color="from-purple-400 to-pink-500"
-            href="/tests/personality"
-          />
-
-          <TestCard
-            title="Welcher Filmheld bist du?"
-            description="Von Action bis Drama - finde heraus, welchem Filmhelden du am ähnlichsten bist."
-            icon={<Sparkles className="h-8 w-8 text-indigo-500" />}
-            color="from-indigo-400 to-purple-500"
-            href="/tests/movie-hero"
-          />
-
-          <TestCard
-            title="Welches Tier repräsentiert dich?"
-            description="Löwe, Adler oder vielleicht ein Delfin? Entdecke dein Tier-Alter-Ego."
-            icon={<Star className="h-8 w-8 text-green-500" />}
-            color="from-green-400 to-teal-500"
-            href="/tests/animal"
-          />
-
-          <TestCard
-            title="Welcher Beruf passt zu dir?"
-            description="Basierend auf deinen Interessen und Stärken - welcher Karriereweg könnte der richtige sein?"
-            icon={<Brain className="h-8 w-8 text-red-500" />}
-            color="from-red-400 to-pink-500"
-            href="/tests/career"
-          />
-        </div>
-      </section>
+      <FeaturedTests />
 
       {/* How It Works */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
@@ -212,42 +159,5 @@ export default function HomePage() {
         </div>
       </div>
     </div>
-  );
-}
-
-// Test Card Component
-function TestCard({
-  title,
-  description,
-  icon,
-  color,
-  href,
-}: {
-  title: string;
-  description: string;
-  icon: React.ReactNode;
-  color: string;
-  href: string;
-}) {
-  return (
-    <Link href={href} className="block group">
-      <div className="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-1">
-        <div className={`h-2 bg-gradient-to-r ${color}`}></div>
-        <div className="p-6">
-          <div className="flex items-center mb-4">
-            {icon}
-            <h3 className="text-xl font-semibold ml-3">{title}</h3>
-          </div>
-          <p className="text-gray-600 mb-4">{description}</p>
-          <div className="flex items-center text-purple-600 font-medium group-hover:text-purple-700">
-            Test starten{" "}
-            <ArrowRight
-              size={16}
-              className="ml-2 transition-transform group-hover:translate-x-1"
-            />
-          </div>
-        </div>
-      </div>
-    </Link>
   );
 }
