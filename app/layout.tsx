@@ -5,6 +5,7 @@ import Navbar from "@/components/navbar";
 import { AdBlockerModal } from "@/components/ui/adblocker-modal";
 import { Toaster } from "@/components/ui/sonner";
 import { Footer } from "@/components/footer";
+import { GoogleAdSenseScript } from "@/components/ui/adsense-script";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,6 +33,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Navbar />
         <AdBlockerModal />
+        <GoogleAdSenseScript />
         <main>{children}</main>
         <Footer />
         <Toaster />

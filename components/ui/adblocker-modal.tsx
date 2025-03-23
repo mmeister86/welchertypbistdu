@@ -28,32 +28,54 @@ const detectAdBlocker = async (): Promise<boolean> => {
     testElement.style.height = "1px";
     document.body.appendChild(testElement);
 
-    // Methode 2: Fake Ad Script
-    const testScript = document.createElement("script");
-    testScript.src =
-      "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
-    document.body.appendChild(testScript);
+    // Methode 2: Bait-URLs testen mit fetch
+    const testUrls = [
+      "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js",
+      "https://static.ads-twitter.com/uwt.js",
+      "https://www.googletagservices.com/tag/js/gpt.js",
+    ];
 
-    // Warten und mehrere Checks durchführen
+    // Wir führen einen schnellen HEAD request aus, um zu sehen, ob die Anfrage blockiert wird
+    const testFetch = async (url: string) => {
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 500);
+
+        const response = await fetch(url, {
+          method: "HEAD",
+          mode: "no-cors",
+          signal: controller.signal,
+          cache: "no-store",
+        });
+
+        clearTimeout(timeoutId);
+        return true; // Request durchgelassen
+      } catch (error) {
+        return false; // Request blockiert oder Timeout
+      }
+    };
+
+    // Mehrere Tests gleichzeitig ausführen
+    const fetchResults = await Promise.all(
+      testUrls.map((url) => testFetch(url))
+    );
+
+    // Warten und Tests auswerten
     await new Promise((resolve) => setTimeout(resolve, 100));
 
     // Verschiedene Erkennungsmethoden kombinieren
     const checks = [
       // Check 1: Test-Element Sichtbarkeit
       testElement.offsetHeight === 0,
-      // Check 2: Test-Element wurde entfernt
+      // Check 2: Test-Element wurde entfernt oder unsichtbar gemacht
       !document.body.contains(testElement),
-      // Check 3: Überprüfen ob bekannte Adblocker-Variablen existieren
-      typeof window.google_ad_status !== "undefined",
-      // Check 4: Prüfen ob das Script blockiert wurde
-      testScript.getAttribute("data-adsbygoogle-status") === "done",
+      // Check 3: Mindestens zwei der Fetch-Requests wurden blockiert
+      fetchResults.filter((result) => !result).length >= 2,
     ];
 
     // Aufräumen
     if (document.body.contains(testElement))
       document.body.removeChild(testElement);
-    if (document.body.contains(testScript))
-      document.body.removeChild(testScript);
 
     // Wenn mindestens zwei Checks positiv sind, ist wahrscheinlich ein Adblocker aktiv
     return checks.filter(Boolean).length >= 2;
