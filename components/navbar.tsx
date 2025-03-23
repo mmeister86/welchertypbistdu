@@ -49,32 +49,32 @@ export default function Navbar() {
   const testCards = [
     {
       title: "Star Wars Test",
-      image: "/images/landscape/star-wars-landscape.jpeg",
+      image: "/images/landscape/star-wars-landscape-min.jpeg",
       href: "/tests/star-wars",
     },
     {
       title: "Game of Thrones Test",
-      image: "/images/landscape/got-landscape.jpeg",
+      image: "/images/landscape/got-landscape-min.jpeg",
       href: "/tests/game-of-thrones",
     },
     {
       title: "Marvel Test",
-      image: "/images/landscape/marvel-landscape.jpeg",
+      image: "/images/landscape/marvel-landscape-min.jpeg",
       href: "/tests/marvel",
     },
     {
       title: "DC Test",
-      image: "/images/landscape/dceu-landscape.jpeg",
+      image: "/images/landscape/dceu-landscape-min.jpeg",
       href: "/tests/dc-universe",
     },
     {
       title: "Spongebob Test",
-      image: "/images/landscape/spongebob-landscape.jpeg",
+      image: "/images/landscape/spongebob-landscape-min.jpeg",
       href: "/tests/spongebob",
     },
     {
       title: "Pokémon Test",
-      image: "/images/landscape/pokemon-landscape.jpeg",
+      image: "/images/landscape/pokemon-landscape-min.jpeg",
       href: "/tests/pokemon",
     },
   ];
