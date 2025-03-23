@@ -3,16 +3,41 @@
 import { useReducer, useEffect } from "react";
 import { AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
-import type { CarBrand, TestState, TestResult, Answer } from "./types";
+import type { CarBrand, TestResult, Answer } from "./types";
 import { questions } from "./test-data";
 import { QuestionCard } from "./question-card";
-import { ResultCard } from "./result-card";
 import { IntroCard } from "./intro-card";
 import { AdBanner } from "./ad-banner";
 import { AutoBackground } from "./auto-background";
 
+// Definiere den Typ für die Action
+type TestAction =
+  | { type: "START_TEST" }
+  | { type: "ANSWER_QUESTION"; answerId: string }
+  | { type: "NAVIGATE_TO_QUESTION"; questionIndex: number };
+
+// Definiere den erweiterten TestState-Typ
+interface TestState {
+  currentQuestionIndex: number;
+  answers: Record<number, Answer>;
+  completed: boolean;
+  result: TestResult | undefined;
+  answerHistory: string[]; // Speichert die IDs der gegebenen Antworten
+  canNavigateBack: boolean; // Steuert, ob zurück navigiert werden kann
+}
+
+// Initialisiere den initialen State
+const initialState: TestState = {
+  currentQuestionIndex: -1, // -1 bedeutet, wir sind auf dem Intro-Bildschirm
+  answers: {},
+  completed: false,
+  result: undefined,
+  answerHistory: [],
+  canNavigateBack: false,
+};
+
 // Reducer for managing test state
-function testReducer(state: TestState, action: any): TestState {
+function testReducer(state: TestState, action: TestAction): TestState {
   switch (action.type) {
     case "START_TEST":
       return {
@@ -21,6 +46,8 @@ function testReducer(state: TestState, action: any): TestState {
         answers: {},
         completed: false,
         result: undefined,
+        answerHistory: [], // Setze den Antwortverlauf zurück
+        canNavigateBack: false, // Deaktiviere die Rückwärtsnavigation am Anfang
       };
     case "ANSWER_QUESTION":
       const answer = questions[state.currentQuestionIndex].answers.find(
@@ -36,21 +63,34 @@ function testReducer(state: TestState, action: any): TestState {
         [state.currentQuestionIndex]: answer,
       };
 
-      // If this was the last question, calculate the result
+      // Speichere die Antwort im Antwortverlauf
+      const newAnswerHistory = [...state.answerHistory];
+      newAnswerHistory[state.currentQuestionIndex] = action.answerId;
+
+      // Wenn dies die letzte Frage war, berechne das Ergebnis
       if (state.currentQuestionIndex === questions.length - 1) {
         return {
           ...state,
           answers: newAnswers,
           result: calculateResult(newAnswers),
           completed: true,
+          answerHistory: newAnswerHistory,
         };
       }
 
-      // Otherwise, move to the next question
+      // Ansonsten gehe zur nächsten Frage
       return {
         ...state,
         currentQuestionIndex: state.currentQuestionIndex + 1,
         answers: newAnswers,
+        answerHistory: newAnswerHistory,
+        canNavigateBack: true, // Aktiviere die Rückwärtsnavigation
+      };
+    // Füge den Fall für die Navigation zu einer bestimmten Frage hinzu
+    case "NAVIGATE_TO_QUESTION":
+      return {
+        ...state,
+        currentQuestionIndex: action.questionIndex,
       };
     default:
       return state;
@@ -123,12 +163,7 @@ function calculateResult(answers: Record<number, Answer>): TestResult {
 export function AutoTest() {
   const router = useRouter();
   // Initialize test state
-  const [state, dispatch] = useReducer(testReducer, {
-    currentQuestionIndex: -1, // -1 means we're at the intro screen
-    answers: {},
-    completed: false,
-    result: undefined,
-  });
+  const [state, dispatch] = useReducer(testReducer, initialState);
 
   const handleStart = () => {
     dispatch({ type: "START_TEST" });
@@ -144,6 +179,11 @@ export function AutoTest() {
   const handleRestart = () => {
     window.scrollTo(0, 0);
     dispatch({ type: "START_TEST" });
+  };
+
+  // Funktion zum Navigieren zu einer bestimmten Frage
+  const handleNavigate = (questionIndex: number) => {
+    dispatch({ type: "NAVIGATE_TO_QUESTION", questionIndex });
   };
 
   // Use useEffect to handle navigation after the component renders
@@ -190,6 +230,10 @@ export function AutoTest() {
                 onAnswer={handleAnswer}
                 currentIndex={state.currentQuestionIndex}
                 totalQuestions={questions.length}
+                onNavigate={handleNavigate} // Übergib die Navigationsfunktion
+                answeredQuestions={state.answerHistory
+                  .map((_, index) => index)
+                  .filter((index) => state.answerHistory[index] !== undefined)} // Übergib die beantworteten Fragen
               />
             )}
           </AnimatePresence>

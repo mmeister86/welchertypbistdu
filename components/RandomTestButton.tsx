@@ -1,12 +1,15 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 interface Test {
-  id: number;
-  slug: string;
+  id: string;
   title: string;
+  description: string;
+  image: string;
+  color: string;
+  path?: string;
 }
 
 interface RandomTestButtonProps {
@@ -14,47 +17,91 @@ interface RandomTestButtonProps {
   children?: React.ReactNode;
 }
 
+// Verfügbare Tests als statische Liste
+const availableTests: Test[] = [
+  {
+    id: "star-wars",
+    title: "Welcher Star Wars Charakter bist du?",
+    description:
+      "Finde heraus, ob du mehr wie Luke Skywalker, Darth Vader oder Yoda bist.",
+    image: "/images/landscape/star-wars-landscape.jpeg",
+    color: "from-yellow-400 to-orange-500",
+  },
+  {
+    id: "marvel",
+    title: "Welcher Marvel Charakter bist du?",
+    description:
+      "Entdecke, ob du mehr wie Iron Man, Captain America oder Spider-Man bist.",
+    image: "/images/landscape/marvel-landscape.jpeg",
+    color: "from-red-500 to-blue-500",
+  },
+  {
+    id: "spongebob",
+    title: "Welcher Spongebob Charakter bist du?",
+    description:
+      "Entdecke, ob du mehr wie Spongebob, Patrick oder Thaddäus bist.",
+    image: "/images/landscape/spongebob-landscape.jpeg",
+    color: "from-blue-400 to-yellow-400",
+  },
+  {
+    id: "game-of-thrones",
+    title: "Welcher Game of Thrones Charakter bist du?",
+    description:
+      "Finde heraus, ob du mehr wie Jon Snow, Daenerys Targaryen oder Tyrion Lannister bist.",
+    image: "/images/landscape/got-landscape.jpeg",
+    color: "from-gray-700 to-gray-900",
+  },
+  {
+    id: "pokemon",
+    title: "Welches Pokémon bist du?",
+    description:
+      "Finde heraus, welches Pokémon am besten zu deiner Persönlichkeit passt.",
+    image: "/images/landscape/pokemon-landscape.jpeg",
+    color: "from-blue-500 to-green-500",
+  },
+  {
+    id: "automarken",
+    title: "Welche Automarke passt zu dir?",
+    description:
+      "Finde heraus, welche Automarke am besten zu deiner Persönlichkeit und deinem Fahrstil passt.",
+    image: "/images/landscape/automarken-landscape.jpeg",
+    color: "from-gray-500 to-blue-500",
+  },
+];
+
+// Funktion, um einen zufälligen Test zu öffnen
+const openRandomTest = (router: any, setIsLoading: any) => {
+  setIsLoading(true);
+
+  try {
+    if (availableTests.length > 0) {
+      // Zufälligen Test aus der Liste auswählen
+      const randomTest =
+        availableTests[Math.floor(Math.random() * availableTests.length)];
+
+      // Überprüfen, ob ein spezifischer Pfad definiert ist, sonst Standard-Pfad verwenden
+      const testPath = randomTest.path || `/tests/${randomTest.id}`;
+
+      // Zur Testseite navigieren
+      router.push(testPath);
+    }
+  } catch (error) {
+    console.error("Failed to select random test:", error);
+    // Hier könntest du eine Fehlerbehandlung hinzufügen
+  } finally {
+    setIsLoading(false);
+  }
+};
+
 export default function RandomTestButton({
   className = "inline-flex items-center px-8 py-3 rounded-full bg-white text-purple-600 font-medium text-lg shadow-lg hover:shadow-xl transition-all duration-300 border border-purple-200",
   children = "Zufälliger Test",
 }: RandomTestButtonProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const [tests, setTests] = useState<Test[]>([]);
-
-  // Fetch available tests on component mount
-  useEffect(() => {
-    const fetchTests = async () => {
-      try {
-        // Replace with your actual API endpoint
-        const response = await fetch("/api/tests");
-        if (response.ok) {
-          const data = await response.json();
-          setTests(data);
-        }
-      } catch (error) {
-        console.error("Failed to fetch tests:", error);
-      }
-    };
-
-    fetchTests();
-  }, []);
 
   const handleRandomTest = () => {
-    setIsLoading(true);
-
-    // Use the fetched tests if available, otherwise fallback to defaults
-    if (tests.length > 0) {
-      const randomTest = tests[Math.floor(Math.random() * tests.length)];
-      router.push(`/test/${randomTest.id}/${randomTest.slug}`);
-    } else {
-      // Fallback logic if no tests are fetched
-      const randomId = Math.floor(Math.random() * 1000) + 1;
-      const fallbackSlugs = ["marvel-quiz", "personality-test", "iq-challenge"];
-      const randomSlug =
-        fallbackSlugs[Math.floor(Math.random() * fallbackSlugs.length)];
-      router.push(`/test/${randomId}/${randomSlug}`);
-    }
+    openRandomTest(router, setIsLoading);
   };
 
   return (

@@ -93,6 +93,14 @@ const availableTests = [
     image: "/images/landscape/youtube-landscape.jpeg", // Bildpfad für YouTuber
     color: "from-red-600 to-red-400", // YouTube-typische Farbgebung
   },
+  {
+    id: "automarken",
+    title: "Welche Automarke passt zu dir?",
+    description:
+      "Finde heraus, welche Automarke am besten zu deiner Persönlichkeit und deinem Fahrstil passt.",
+    image: "/images/landscape/automarken-landscape.jpeg", // Bildpfad für Automarken
+    color: "from-gray-500 to-blue-500",
+  },
 ];
 
 // Server Component

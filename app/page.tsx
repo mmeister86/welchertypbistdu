@@ -5,6 +5,7 @@ import { TestimonialsSlider } from "@/components/ui/testimonials-slider";
 import { Badge } from "@/components/ui/badge";
 import { SideAd } from "@/components/ui/side-ad";
 import { FeaturedTests } from "@/components/ui/featured-tests";
+import RandomTestButton from "@/components/RandomTestButton";
 
 export default function HomePage() {
   return (
@@ -35,12 +36,7 @@ export default function HomePage() {
                 >
                   Tests entdecken <ArrowRight className="w-4 h-4" />
                 </Link>
-                <Link
-                  href="/popular"
-                  className="inline-flex items-center px-8 py-3 rounded-full bg-white text-purple-600 font-medium text-lg shadow-lg hover:shadow-xl transition-all duration-300 border border-purple-200"
-                >
-                  Beliebteste Tests
-                </Link>
+                <RandomTestButton />
               </div>
             </div>
             <div className="grid grid-cols-2 gap-8">
