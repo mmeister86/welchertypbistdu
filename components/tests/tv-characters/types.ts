@@ -1,14 +1,14 @@
 export type Answer = {
-  id: string
-  text: string
-  character: Character
-}
+  id: string;
+  text: string;
+  character: Character;
+};
 
 export type Question = {
-  id: string
-  text: string
-  answers: Answer[]
-}
+  id: string;
+  text: string;
+  answers: Answer[];
+};
 
 export type Character =
   | "rachel"
@@ -28,21 +28,21 @@ export type Character =
   | "mandalorian"
   | "grogu"
   | "tyrion"
-  | "arya"
+  | "arya";
 
 export type CharacterResult = {
-  id: Character
-  name: string
-  description: string
-  image: string
-  show: string
-  color: string
-}
+  id: Character;
+  name: string;
+  description: string;
+  image: string;
+  show: string;
+  color: string;
+};
 
 export type TestState = {
-  currentQuestionIndex: number
-  answers: Record<string, Character>
-  result: Character | null
-  showResult: boolean
-}
-
+  currentQuestionIndex: number;
+  answers: Record<string, Character>;
+  answerHistory: number[];
+  result: Character | null;
+  showResult: boolean;
+};

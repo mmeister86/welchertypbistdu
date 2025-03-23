@@ -1,14 +1,14 @@
 export type Answer = {
-  id: string
-  text: string
-  points: Record<Pokemon, number>
-}
+  id: string;
+  text: string;
+  points: Record<Pokemon, number>;
+};
 
 export type Question = {
-  id: string
-  text: string
-  answers: Answer[]
-}
+  id: string;
+  text: string;
+  answers: Answer[];
+};
 
 export type Pokemon =
   | "pikachu"
@@ -25,21 +25,21 @@ export type Pokemon =
   | "arceus"
   | "dragoran"
   | "enton"
-  | "galoppa"
+  | "galoppa";
 
 export type PokemonResult = {
-  id: Pokemon
-  name: string
-  description: string
-  image: string
-  color: string
-  type: string
-}
+  id: Pokemon;
+  name: string;
+  description: string;
+  image: string;
+  color: string;
+  type: string;
+};
 
 export type TestState = {
-  currentQuestionIndex: number
-  answers: Record<string, string>
-  result: Pokemon | null
-  showResult: boolean
-}
-
+  currentQuestionIndex: number;
+  answers: Record<string, string>;
+  answerHistory: number[]; // Speichert Indizes der beantworteten Fragen
+  result: Pokemon | null;
+  showResult: boolean;
+};

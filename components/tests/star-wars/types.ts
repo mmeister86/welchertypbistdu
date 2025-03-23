@@ -1,14 +1,14 @@
 export type Answer = {
-  id: string
-  text: string
-  characterPoints: Record<Character, number>
-}
+  id: string;
+  text: string;
+  characterPoints: Record<Character, number>;
+};
 
 export type Question = {
-  id: string
-  text: string
-  answers: Answer[]
-}
+  id: string;
+  text: string;
+  answers: Answer[];
+};
 
 export type Character =
   | "luke"
@@ -24,19 +24,19 @@ export type Character =
   | "maul"
   | "obiwan"
   | "padme"
-  | "rey"
+  | "rey";
 
 export type CharacterResult = {
-  id: Character
-  name: string
-  description: string
-  image: string
-}
+  id: Character;
+  name: string;
+  description: string;
+  image: string;
+};
 
 export type TestState = {
-  currentQuestionIndex: number
-  answers: Record<string, string>
-  result: Character | null
-  showResult: boolean
-}
-
+  currentQuestionIndex: number;
+  answers: Record<string, string>;
+  answerHistory: number[];
+  result: Character | null;
+  showResult: boolean;
+};

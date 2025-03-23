@@ -1,28 +1,38 @@
-"use client"
+"use client";
 
-import type { Answer, Question, Youtuber } from "./types"
-import { useState } from "react"
-import { motion } from "framer-motion"
+import type { Answer, Question, Youtuber } from "./types";
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { QuestionPagination } from "../question-pagination";
 
 interface QuestionCardProps {
-  question: Question
-  onAnswer: (points: Record<Youtuber, number>) => void
-  currentIndex: number
-  totalQuestions: number
+  question: Question;
+  onAnswer: (points: Record<Youtuber, number>) => void;
+  currentIndex: number;
+  totalQuestions: number;
+  answeredQuestions: number[];
+  onNavigate: (index: number) => void;
 }
 
-export function QuestionCard({ question, onAnswer, currentIndex, totalQuestions }: QuestionCardProps) {
-  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null)
+export function QuestionCard({
+  question,
+  onAnswer,
+  currentIndex,
+  totalQuestions,
+  answeredQuestions,
+  onNavigate,
+}: QuestionCardProps) {
+  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
 
   const handleSelect = (answerId: string, points: Record<Youtuber, number>) => {
-    setSelectedAnswer(answerId)
+    setSelectedAnswer(answerId);
 
     // Add a small delay before moving to the next question for better UX
     setTimeout(() => {
-      onAnswer(points)
-      setSelectedAnswer(null)
-    }, 500)
-  }
+      onAnswer(points);
+      setSelectedAnswer(null);
+    }, 500);
+  };
 
   return (
     <motion.div
@@ -31,39 +41,51 @@ export function QuestionCard({ question, onAnswer, currentIndex, totalQuestions 
       exit={{ opacity: 0, y: -20 }}
       className="bg-black bg-opacity-75 backdrop-blur-sm rounded-lg p-6 shadow-lg max-w-3xl mx-auto border-2 border-red-600"
     >
-      <div className="mb-6">
-        <div className="flex justify-between items-center mb-4">
-          <span className="text-red-500 font-bold text-lg">
-            Frage {currentIndex + 1}/{totalQuestions}
-          </span>
-          <div className="h-3 bg-gray-900 rounded-full w-full max-w-xs ml-4">
-            <div
-              className="h-3 bg-gradient-to-r from-red-700 to-red-500 rounded-full"
-              style={{ width: `${((currentIndex + 1) / totalQuestions) * 100}%` }}
-            ></div>
+      <div className="space-y-6">
+        <QuestionPagination
+          currentIndex={currentIndex}
+          totalQuestions={totalQuestions}
+          answeredQuestions={answeredQuestions}
+          onNavigate={onNavigate}
+        />
+        <div className="mb-6">
+          <div className="flex justify-between items-center mb-4">
+            <span className="text-red-500 font-bold text-lg">
+              Frage {currentIndex + 1}/{totalQuestions}
+            </span>
+            <div className="h-3 bg-gray-900 rounded-full w-full max-w-xs ml-4">
+              <div
+                className="h-3 bg-gradient-to-r from-red-700 to-red-500 rounded-full"
+                style={{
+                  width: `${((currentIndex + 1) / totalQuestions) * 100}%`,
+                }}
+              ></div>
+            </div>
           </div>
+          <h3 className="text-xl md:text-2xl font-bold text-red-100 mb-2">
+            {question.text}
+          </h3>
         </div>
-        <h3 className="text-xl md:text-2xl font-bold text-red-100 mb-2">{question.text}</h3>
-      </div>
 
-      <div className="space-y-3">
-        {question.answers.map((answer) => (
-          <AnswerOption
-            key={answer.id}
-            answer={answer}
-            isSelected={selectedAnswer === answer.id}
-            onSelect={handleSelect}
-          />
-        ))}
+        <div className="space-y-3">
+          {question.answers.map((answer) => (
+            <AnswerOption
+              key={answer.id}
+              answer={answer}
+              isSelected={selectedAnswer === answer.id}
+              onSelect={handleSelect}
+            />
+          ))}
+        </div>
       </div>
     </motion.div>
-  )
+  );
 }
 
 interface AnswerOptionProps {
-  answer: Answer
-  isSelected: boolean
-  onSelect: (answerId: string, points: Record<Youtuber, number>) => void
+  answer: Answer;
+  isSelected: boolean;
+  onSelect: (answerId: string, points: Record<Youtuber, number>) => void;
 }
 
 function AnswerOption({ answer, isSelected, onSelect }: AnswerOptionProps) {
@@ -78,5 +100,5 @@ function AnswerOption({ answer, isSelected, onSelect }: AnswerOptionProps) {
     >
       {answer.text}
     </button>
-  )
+  );
 }

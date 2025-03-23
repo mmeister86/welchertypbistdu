@@ -42,6 +42,7 @@ export type DogBreedResult = {
 export type TestState = {
   currentQuestionIndex: number;
   answers: Record<string, string>;
+  answerHistory: number[];
   result: DogBreed | null;
   showResult: boolean;
 };

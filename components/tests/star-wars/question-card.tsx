@@ -1,28 +1,38 @@
-"use client"
+"use client";
 
-import type { Answer, Question } from "./types"
-import { useState } from "react"
-import { motion } from "framer-motion"
+import type { Answer, Question } from "./types";
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { QuestionPagination } from "../question-pagination";
 
 interface QuestionCardProps {
-  question: Question
-  onAnswer: (answerId: string) => void
-  currentIndex: number
-  totalQuestions: number
+  question: Question;
+  onAnswer: (answerId: string) => void;
+  currentIndex: number;
+  totalQuestions: number;
+  answeredQuestions: number[];
+  onNavigate: (index: number) => void;
 }
 
-export function QuestionCard({ question, onAnswer, currentIndex, totalQuestions }: QuestionCardProps) {
-  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null)
+export function QuestionCard({
+  question,
+  onAnswer,
+  currentIndex,
+  totalQuestions,
+  answeredQuestions,
+  onNavigate,
+}: QuestionCardProps) {
+  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
 
   const handleSelect = (answerId: string) => {
-    setSelectedAnswer(answerId)
+    setSelectedAnswer(answerId);
 
     // Add a small delay before moving to the next question for better UX
     setTimeout(() => {
-      onAnswer(answerId)
-      setSelectedAnswer(null)
-    }, 500)
-  }
+      onAnswer(answerId);
+      setSelectedAnswer(null);
+    }, 500);
+  };
 
   return (
     <motion.div
@@ -39,11 +49,15 @@ export function QuestionCard({ question, onAnswer, currentIndex, totalQuestions 
           <div className="h-2 bg-gray-800 rounded-full w-full max-w-xs ml-4">
             <div
               className="h-2 bg-yellow-400 rounded-full"
-              style={{ width: `${((currentIndex + 1) / totalQuestions) * 100}%` }}
+              style={{
+                width: `${((currentIndex + 1) / totalQuestions) * 100}%`,
+              }}
             ></div>
           </div>
         </div>
-        <h3 className="text-xl md:text-2xl font-bold text-white mb-2">{question.text}</h3>
+        <h3 className="text-xl md:text-2xl font-bold text-white mb-2">
+          {question.text}
+        </h3>
       </div>
 
       <div className="space-y-3">
@@ -56,14 +70,21 @@ export function QuestionCard({ question, onAnswer, currentIndex, totalQuestions 
           />
         ))}
       </div>
+
+      <QuestionPagination
+        totalQuestions={totalQuestions}
+        currentIndex={currentIndex}
+        answeredQuestions={answeredQuestions}
+        onNavigate={onNavigate}
+      />
     </motion.div>
-  )
+  );
 }
 
 interface AnswerOptionProps {
-  answer: Answer
-  isSelected: boolean
-  onSelect: (answerId: string) => void
+  answer: Answer;
+  isSelected: boolean;
+  onSelect: (answerId: string) => void;
 }
 
 function AnswerOption({ answer, isSelected, onSelect }: AnswerOptionProps) {
@@ -71,11 +92,12 @@ function AnswerOption({ answer, isSelected, onSelect }: AnswerOptionProps) {
     <button
       onClick={() => onSelect(answer.id)}
       className={`w-full text-left p-4 rounded-lg transition-all duration-200 ${
-        isSelected ? "bg-yellow-400 text-black" : "bg-gray-800 text-white hover:bg-gray-700"
+        isSelected
+          ? "bg-yellow-400 text-black"
+          : "bg-gray-800 text-white hover:bg-gray-700"
       }`}
     >
       {answer.text}
     </button>
-  )
+  );
 }
-

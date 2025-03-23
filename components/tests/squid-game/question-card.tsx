@@ -3,13 +3,16 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import type { Question } from "./types";
+import { QuestionPagination } from "../question-pagination";
 
-type QuestionCardProps = {
+interface QuestionCardProps {
   question: Question;
   onAnswer: (character: string) => void;
   currentIndex: number;
   totalQuestions: number;
-};
+  answeredQuestions: number[];
+  onNavigate: (index: number) => void;
+}
 
 // Komponente für die Anzeige der Fragen und Antwortmöglichkeiten
 export function QuestionCard({
@@ -17,6 +20,8 @@ export function QuestionCard({
   onAnswer,
   currentIndex,
   totalQuestions,
+  answeredQuestions,
+  onNavigate,
 }: QuestionCardProps) {
   // State für ausgewählte Antwort hinzufügen
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
@@ -82,6 +87,14 @@ export function QuestionCard({
           </motion.button>
         ))}
       </div>
+
+      {/* Add navigation component */}
+      <QuestionPagination
+        totalQuestions={totalQuestions}
+        currentIndex={currentIndex}
+        answeredQuestions={answeredQuestions}
+        onNavigate={onNavigate}
+      />
     </motion.div>
   );
 }

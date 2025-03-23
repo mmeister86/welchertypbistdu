@@ -1,20 +1,20 @@
-"use client"
+"use client";
 
-import { useReducer } from "react"
-import { useRouter } from "next/navigation"
-import { AnimatePresence } from "framer-motion"
-import type { Youtuber, TestState, YoutuberResult } from "./types"
-import { questions } from "./test-data"
-import { QuestionCard } from "./question-card"
-import { ResultCard } from "./result-card"
-import { IntroCard } from "./intro-card"
-import { YouTubeBackground } from "./youtube-background"
-import { trackTestStarted, trackTestCompleted } from "./analytics"
+import { useReducer } from "react";
+import { useRouter } from "next/navigation";
+import { AnimatePresence } from "framer-motion";
+import type { Youtuber, TestState, YoutuberResult } from "./types";
+import { questions } from "./test-data";
+import { QuestionCard } from "./question-card";
+import { ResultCard } from "./result-card";
+import { IntroCard } from "./intro-card";
+import { YouTubeBackground } from "./youtube-background";
+import { trackTestStarted, trackTestCompleted } from "./analytics";
 
 // Importiere die youtuberResults aus test-data.ts
-import { youtuberResults } from "./test-data"
+import { youtuberResults } from "./test-data";
 
-// Reducer für die Verwaltung des Test-Zustands
+// Reducer for managing test state
 function testReducer(state: TestState, action: any): TestState {
   switch (action.type) {
     case "START_TEST":
@@ -22,33 +22,47 @@ function testReducer(state: TestState, action: any): TestState {
         ...state,
         currentQuestionIndex: 0,
         answers: {},
+        answerHistory: [], // Reset answer history
         result: null,
         showResult: false,
-      }
+      };
     case "ANSWER_QUESTION":
       const newAnswers = {
         ...state.answers,
-        [questions[state.currentQuestionIndex].id]: action.youtuber,
+        [questions[state.currentQuestionIndex].id]: action.answerId,
+      };
+
+      // Update answer history
+      const newHistory = [...state.answerHistory];
+      if (!newHistory.includes(state.currentQuestionIndex)) {
+        newHistory.push(state.currentQuestionIndex);
       }
 
-      // Wenn dies die letzte Frage war, berechne das Ergebnis
+      // If this was the last question, calculate the result
       if (state.currentQuestionIndex === questions.length - 1) {
         return {
           ...state,
           answers: newAnswers,
+          answerHistory: newHistory,
           result: calculateResult(newAnswers),
           showResult: true,
-        }
+        };
       }
 
-      // Andernfalls gehe zur nächsten Frage
+      // Otherwise, move to the next question
       return {
         ...state,
         currentQuestionIndex: state.currentQuestionIndex + 1,
         answers: newAnswers,
-      }
+        answerHistory: newHistory,
+      };
+    case "NAVIGATE_TO_QUESTION":
+      return {
+        ...state,
+        currentQuestionIndex: action.questionIndex,
+      };
     default:
-      return state
+      return state;
   }
 }
 
@@ -76,62 +90,63 @@ function calculateResult(answers: Record<string, string>): Youtuber {
     markiplier: 0,
     shaneDawson: 0,
     jamesCharles: 0,
-  }
+  };
 
   // Zähle jedes YouTuber-Vorkommen
   Object.values(answers).forEach((youtuber) => {
     if (youtuber in youtuberCounts) {
-      youtuberCounts[youtuber as Youtuber]++
+      youtuberCounts[youtuber as Youtuber]++;
     }
-  })
+  });
 
   // Finde den YouTuber mit der höchsten Anzahl
-  let maxCount = 0
-  let result: Youtuber = "pewDiePie" // Standard
+  let maxCount = 0;
+  let result: Youtuber = "pewDiePie"; // Standard
 
   Object.entries(youtuberCounts).forEach(([youtuber, count]) => {
     if (count > maxCount) {
-      maxCount = count
-      result = youtuber as Youtuber
+      maxCount = count;
+      result = youtuber as Youtuber;
     }
-  })
+  });
 
-  return result
+  return result;
 }
 
 export function YouTuberTest() {
-  const router = useRouter()
+  const router = useRouter();
 
   // Initialisiere den Test-Zustand
   const [state, dispatch] = useReducer(testReducer, {
-    currentQuestionIndex: -1, // -1 bedeutet, dass wir auf dem Intro-Bildschirm sind
+    currentQuestionIndex: 0,
     answers: {},
+    answerHistory: [],
     result: null,
     showResult: false,
-  })
+  });
 
   const handleStart = () => {
-    trackTestStarted()
-    dispatch({ type: "START_TEST" })
-  }
+    trackTestStarted();
+    dispatch({ type: "START_TEST" });
+  };
 
   // Wir aktualisieren den Typ der handleAnswer-Funktion, um mit dem erwarteten Typ zu arbeiten
   const handleAnswer = (points: Record<Youtuber, number>) => {
     // Finde den Youtuber mit den höchsten Punkten
-    let maxPoints = 0
-    let selectedYoutuber: Youtuber = "pewDiePie" // Default-Wert
+    let maxPoints = 0;
+    let selectedYoutuber: Youtuber = "pewDiePie"; // Default-Wert
 
     Object.entries(points).forEach(([youtuber, point]) => {
       if (point > maxPoints) {
-        maxPoints = point
-        selectedYoutuber = youtuber as Youtuber
+        maxPoints = point;
+        selectedYoutuber = youtuber as Youtuber;
       }
-    })
+    });
 
     dispatch({
       type: "ANSWER_QUESTION",
-      youtuber: selectedYoutuber,
-    })
+      answerId: selectedYoutuber,
+    });
 
     // Prüfe, ob dies die letzte Frage ist
     if (state.currentQuestionIndex === questions.length - 1) {
@@ -139,11 +154,11 @@ export function YouTuberTest() {
       const newAnswers = {
         ...state.answers,
         [questions[state.currentQuestionIndex].id]: selectedYoutuber,
-      }
-      const result = calculateResult(newAnswers)
+      };
+      const result = calculateResult(newAnswers);
 
       // Verfolge das Ergebnis vor der Weiterleitung
-      trackTestCompleted(result)
+      trackTestCompleted(result);
 
       try {
         // Verfolge den Testabschluss mit dem Ergebnis
@@ -152,21 +167,29 @@ export function YouTuberTest() {
           window.gtag("event", "test_completed", {
             test_type: "youtuber",
             result_youtuber: result,
-          })
+          });
         }
       } catch (e) {
-        console.error("Analytics error:", e)
+        console.error("Analytics error:", e);
       }
 
       // Weiterleitung zur Ergebnisseite mit dem YouTuber
-      router.push(`/tests/youtube/ergebnis?youtuber=${result}`)
+      router.push(`/tests/youtube/ergebnis?youtuber=${result}`);
     }
-  }
+  };
 
   const handleRestart = () => {
-    window.scrollTo(0, 0)
-    dispatch({ type: "START_TEST" })
-  }
+    window.scrollTo(0, 0);
+    dispatch({ type: "START_TEST" });
+  };
+
+  // Add navigation handler
+  const handleNavigate = (questionIndex: number) => {
+    dispatch({
+      type: "NAVIGATE_TO_QUESTION",
+      questionIndex,
+    });
+  };
 
   return (
     <div className="min-h-screen py-12 px-4 relative">
@@ -187,7 +210,9 @@ export function YouTuberTest() {
         {/* Hauptinhalt */}
         <div className="my-8">
           <AnimatePresence mode="wait">
-            {state.currentQuestionIndex === -1 && <IntroCard onStart={handleStart} />}
+            {state.currentQuestionIndex === -1 && (
+              <IntroCard onStart={handleStart} />
+            )}
 
             {state.currentQuestionIndex >= 0 && !state.showResult && (
               <QuestionCard
@@ -195,6 +220,8 @@ export function YouTuberTest() {
                 onAnswer={handleAnswer}
                 currentIndex={state.currentQuestionIndex}
                 totalQuestions={questions.length}
+                answeredQuestions={state.answerHistory}
+                onNavigate={handleNavigate}
               />
             )}
 
@@ -208,5 +235,5 @@ export function YouTuberTest() {
         </div>
       </div>
     </div>
-  )
+  );
 }

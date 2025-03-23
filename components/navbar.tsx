@@ -148,7 +148,7 @@ export default function Navbar() {
             <Link
               href="/contact"
               className={`px-3 py-2 text-sm font-medium ${
-                isActive("/contact")
+                isActive("/kontakt")
                   ? "text-purple-600"
                   : "text-gray-700 hover:text-purple-600"
               } transition-colors duration-150`}

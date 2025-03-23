@@ -1,14 +1,14 @@
 export type Answer = {
-  id: string
-  text: string
-  youtuberPoints: Record<Youtuber, number>
-}
+  id: string;
+  text: string;
+  youtuberPoints: Record<Youtuber, number>;
+};
 
 export type Question = {
-  id: string
-  text: string
-  answers: Answer[]
-}
+  id: string;
+  text: string;
+  answers: Answer[];
+};
 
 export type Youtuber =
   | "bibisBeautypalace"
@@ -30,19 +30,20 @@ export type Youtuber =
   | "emmaChamberlain"
   | "markiplier"
   | "shaneDawson"
-  | "jamesCharles"
+  | "jamesCharles";
 
 export type YoutuberResult = {
-  id: Youtuber
-  name: string
-  description: string
-  image: string
-  color?: string
-}
+  id: Youtuber;
+  name: string;
+  description: string;
+  image: string;
+  color?: string;
+};
 
 export type TestState = {
-  currentQuestionIndex: number
-  answers: Record<string, string>
-  result: Youtuber | null
-  showResult: boolean
-}
+  currentQuestionIndex: number;
+  answers: Record<string, string>;
+  answerHistory: number[];
+  result: Youtuber | null;
+  showResult: boolean;
+};

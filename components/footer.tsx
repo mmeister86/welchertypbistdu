@@ -162,7 +162,7 @@ function Footer() {
             <a href="#" className="transition-colors hover:text-primary">
               Datenschutz
             </a>
-            <a href="#" className="transition-colors hover:text-primary">
+            <a href="/kontakt" className="transition-colors hover:text-primary">
               Impressum
             </a>
           </nav>

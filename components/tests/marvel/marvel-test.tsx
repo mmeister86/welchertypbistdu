@@ -20,6 +20,7 @@ function testReducer(state: TestState, action: any): TestState {
         ...state,
         currentQuestionIndex: 0,
         answers: {},
+        answerHistory: [],
         result: null,
         showResult: false,
       };
@@ -29,11 +30,18 @@ function testReducer(state: TestState, action: any): TestState {
         [questions[state.currentQuestionIndex].id]: action.answerId,
       };
 
+      // Update answer history
+      const newHistory = [...state.answerHistory];
+      if (!newHistory.includes(state.currentQuestionIndex)) {
+        newHistory.push(state.currentQuestionIndex);
+      }
+
       // If this was the last question, calculate the result
       if (state.currentQuestionIndex === questions.length - 1) {
         return {
           ...state,
           answers: newAnswers,
+          answerHistory: newHistory,
           result: calculateResult(newAnswers),
           showResult: true,
         };
@@ -44,6 +52,13 @@ function testReducer(state: TestState, action: any): TestState {
         ...state,
         currentQuestionIndex: state.currentQuestionIndex + 1,
         answers: newAnswers,
+        answerHistory: newHistory,
+      };
+    case "NAVIGATE_TO_QUESTION":
+      // Allow navigation to a specific question
+      return {
+        ...state,
+        currentQuestionIndex: action.questionIndex,
       };
     default:
       return state;
@@ -106,6 +121,7 @@ export function MarvelTest() {
   const [state, dispatch] = useReducer(testReducer, {
     currentQuestionIndex: -1, // -1 means we're at the intro screen
     answers: {},
+    answerHistory: [],
     result: null,
     showResult: false,
   });
@@ -155,6 +171,13 @@ export function MarvelTest() {
     }
   };
 
+  const handleNavigate = (questionIndex: number) => {
+    dispatch({
+      type: "NAVIGATE_TO_QUESTION",
+      questionIndex,
+    });
+  };
+
   const handleRestart = () => {
     window.scrollTo(0, 0);
     dispatch({ type: "START_TEST" });
@@ -190,6 +213,8 @@ export function MarvelTest() {
                 onAnswer={handleAnswer}
                 currentIndex={state.currentQuestionIndex}
                 totalQuestions={questions.length}
+                answeredQuestions={state.answerHistory}
+                onNavigate={handleNavigate}
               />
             )}
           </AnimatePresence>

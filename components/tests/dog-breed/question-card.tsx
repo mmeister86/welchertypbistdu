@@ -3,12 +3,15 @@
 import type { Answer, Question } from "./types";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { QuestionPagination } from "../question-pagination";
 
 interface QuestionCardProps {
   question: Question;
   onAnswer: (answerId: string) => void;
   currentIndex: number;
   totalQuestions: number;
+  answeredQuestions: number[];
+  onNavigate: (index: number) => void;
 }
 
 export function QuestionCard({
@@ -16,6 +19,8 @@ export function QuestionCard({
   onAnswer,
   currentIndex,
   totalQuestions,
+  answeredQuestions,
+  onNavigate,
 }: QuestionCardProps) {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
 
@@ -55,7 +60,15 @@ export function QuestionCard({
         </h3>
       </div>
 
-      <div className="space-y-3">
+      {/* Navigation-Punkte für Fragen */}
+      <QuestionPagination
+        totalQuestions={totalQuestions}
+        currentIndex={currentIndex}
+        answeredQuestions={answeredQuestions}
+        onNavigate={onNavigate}
+      />
+
+      <div className="space-y-3 mt-6">
         {question.answers.map((answer: Answer) => (
           <AnswerOption
             key={answer.id}

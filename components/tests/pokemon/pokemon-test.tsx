@@ -19,6 +19,7 @@ function testReducer(state: TestState, action: any): TestState {
         ...state,
         currentQuestionIndex: 0,
         answers: {},
+        answerHistory: [], // Reset answer history
         result: null,
         showResult: false,
       };
@@ -28,11 +29,18 @@ function testReducer(state: TestState, action: any): TestState {
         [questions[state.currentQuestionIndex].id]: action.answerId,
       };
 
+      // Update answer history
+      const newHistory = [...state.answerHistory];
+      if (!newHistory.includes(state.currentQuestionIndex)) {
+        newHistory.push(state.currentQuestionIndex);
+      }
+
       // If this was the last question, calculate the result
       if (state.currentQuestionIndex === questions.length - 1) {
         return {
           ...state,
           answers: newAnswers,
+          answerHistory: newHistory,
           result: calculateResult(newAnswers),
           showResult: true,
         };
@@ -43,6 +51,12 @@ function testReducer(state: TestState, action: any): TestState {
         ...state,
         currentQuestionIndex: state.currentQuestionIndex + 1,
         answers: newAnswers,
+        answerHistory: newHistory,
+      };
+    case "NAVIGATE_TO_QUESTION":
+      return {
+        ...state,
+        currentQuestionIndex: action.questionIndex,
       };
     default:
       return state;
@@ -114,8 +128,9 @@ export function PokemonTest() {
 
   // Initialize test state
   const [state, dispatch] = useReducer(testReducer, {
-    currentQuestionIndex: -1, // -1 means we're at the intro screen
+    currentQuestionIndex: -1,
     answers: {},
+    answerHistory: [], // Initialize empty answer history
     result: null,
     showResult: false,
   });
@@ -170,6 +185,14 @@ export function PokemonTest() {
     dispatch({ type: "START_TEST" });
   };
 
+  // Add navigation handler
+  const handleNavigate = (questionIndex: number) => {
+    dispatch({
+      type: "NAVIGATE_TO_QUESTION",
+      questionIndex,
+    });
+  };
+
   return (
     <div className="min-h-screen py-12 px-4 relative">
       <PokeballBackground />
@@ -196,6 +219,8 @@ export function PokemonTest() {
                 onAnswer={handleAnswer}
                 currentIndex={state.currentQuestionIndex}
                 totalQuestions={questions.length}
+                answeredQuestions={state.answerHistory}
+                onNavigate={handleNavigate}
               />
             )}
           </AnimatePresence>

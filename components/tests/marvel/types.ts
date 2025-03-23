@@ -1,14 +1,14 @@
 export type Answer = {
-  id: string
-  text: string
-  points: Record<MarvelCharacter, number>
-}
+  id: string;
+  text: string;
+  points: Record<MarvelCharacter, number>;
+};
 
 export type Question = {
-  id: string
-  text: string
-  answers: Answer[]
-}
+  id: string;
+  text: string;
+  answers: Answer[];
+};
 
 export type MarvelCharacter =
   | "ironMan"
@@ -25,22 +25,22 @@ export type MarvelCharacter =
   | "loki"
   | "thanos"
   | "ultron"
-  | "hela"
+  | "hela";
 
 export type MarvelCharacterResult = {
-  id: MarvelCharacter
-  name: string
-  description: string
-  image: string
-  color: string
-  type: "hero" | "villain"
-  traits: string[]
-}
+  id: MarvelCharacter;
+  name: string;
+  description: string;
+  image: string;
+  color: string;
+  type: "hero" | "villain";
+  traits: string[];
+};
 
 export type TestState = {
-  currentQuestionIndex: number
-  answers: Record<string, string>
-  result: MarvelCharacter | null
-  showResult: boolean
-}
-
+  currentQuestionIndex: number;
+  answers: Record<string, string>;
+  answerHistory: number[];
+  result: MarvelCharacter | null;
+  showResult: boolean;
+};

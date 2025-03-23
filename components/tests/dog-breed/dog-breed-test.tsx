@@ -10,7 +10,7 @@ import { IntroCard } from "./intro-card";
 import { AdBanner } from "./ad-banner";
 import { PawBackground } from "./paw-background";
 
-// Reducer for managing test state
+// Reducer für Verwaltung des Test-Zustands
 function testReducer(state: TestState, action: any): TestState {
   switch (action.type) {
     case "START_TEST":
@@ -18,6 +18,7 @@ function testReducer(state: TestState, action: any): TestState {
         ...state,
         currentQuestionIndex: 0,
         answers: {},
+        answerHistory: [], // Zurücksetzen des Verlaufs
         result: null,
         showResult: false,
       };
@@ -27,21 +28,35 @@ function testReducer(state: TestState, action: any): TestState {
         [questions[state.currentQuestionIndex].id]: action.answerId,
       };
 
-      // If this was the last question, calculate the result
+      // Antwortenverlauf aktualisieren
+      const newHistory = [...state.answerHistory];
+      if (!newHistory.includes(state.currentQuestionIndex)) {
+        newHistory.push(state.currentQuestionIndex);
+      }
+
+      // Wenn dies die letzte Frage war, Ergebnis berechnen
       if (state.currentQuestionIndex === questions.length - 1) {
         return {
           ...state,
           answers: newAnswers,
+          answerHistory: newHistory,
           result: calculateResult(newAnswers),
           showResult: true,
         };
       }
 
-      // Otherwise, move to the next question
+      // Ansonsten zur nächsten Frage
       return {
         ...state,
         currentQuestionIndex: state.currentQuestionIndex + 1,
         answers: newAnswers,
+        answerHistory: newHistory,
+      };
+    case "NAVIGATE_TO_QUESTION":
+      // Navigation zu einer bestimmten Frage ermöglichen
+      return {
+        ...state,
+        currentQuestionIndex: action.questionIndex,
       };
     default:
       return state;
@@ -112,10 +127,11 @@ function calculateResult(answers: Record<string, string>): DogBreed {
 }
 
 export function DogBreedTest() {
-  // Initialize test state
+  // Initialisierung des Test-Zustands
   const [state, dispatch] = useReducer(testReducer, {
-    currentQuestionIndex: -1, // -1 means we're at the intro screen
+    currentQuestionIndex: -1, // -1 bedeutet, wir sind auf dem Intro-Screen
     answers: {},
+    answerHistory: [], // Speichert Indizes der beantworteten Fragen
     result: null,
     showResult: false,
   });
@@ -128,6 +144,13 @@ export function DogBreedTest() {
     dispatch({
       type: "ANSWER_QUESTION",
       answerId,
+    });
+  };
+
+  const handleNavigate = (questionIndex: number) => {
+    dispatch({
+      type: "NAVIGATE_TO_QUESTION",
+      questionIndex,
     });
   };
 
@@ -162,6 +185,8 @@ export function DogBreedTest() {
                 onAnswer={handleAnswer}
                 currentIndex={state.currentQuestionIndex}
                 totalQuestions={questions.length}
+                answeredQuestions={state.answerHistory}
+                onNavigate={handleNavigate}
               />
             )}
 

@@ -1,16 +1,16 @@
-"use client"
+"use client";
 
-import { useReducer } from "react"
-import { AnimatePresence } from "framer-motion"
-import { useRouter } from "next/navigation"
-import type { DCCharacter, TestState, Trait } from "./types"
-import { questions, dcCharacterResults } from "./test-data"
-import { QuestionCard } from "./question-card"
-import { ResultCard } from "./result-card"
-import { IntroCard } from "./intro-card"
-import { AdBanner } from "./ad-banner"
-import { DCBackground } from "./dc-background"
-import { trackTestCompleted } from "./analytics"
+import { useReducer } from "react";
+import { AnimatePresence } from "framer-motion";
+import { useRouter } from "next/navigation";
+import type { DCCharacter, TestState, Trait } from "./types";
+import { questions, dcCharacterResults } from "./test-data";
+import { QuestionCard } from "./question-card";
+import { ResultCard } from "./result-card";
+import { IntroCard } from "./intro-card";
+import { AdBanner } from "./ad-banner";
+import { DCBackground } from "./dc-background";
+import { trackTestCompleted } from "./analytics";
 
 // Reducer for managing test state
 function testReducer(state: TestState, action: any): TestState {
@@ -20,13 +20,20 @@ function testReducer(state: TestState, action: any): TestState {
         ...state,
         currentQuestionIndex: 0,
         answers: {},
+        answerHistory: [], // Reset answer history
         result: null,
         showResult: false,
-      }
+      };
     case "ANSWER_QUESTION":
       const newAnswers = {
         ...state.answers,
         [questions[state.currentQuestionIndex].id]: action.answerId,
+      };
+
+      // Update answer history
+      const newHistory = [...state.answerHistory];
+      if (!newHistory.includes(state.currentQuestionIndex)) {
+        newHistory.push(state.currentQuestionIndex);
       }
 
       // If this was the last question, calculate the result
@@ -34,9 +41,10 @@ function testReducer(state: TestState, action: any): TestState {
         return {
           ...state,
           answers: newAnswers,
+          answerHistory: newHistory,
           result: calculateResult(newAnswers),
           showResult: true,
-        }
+        };
       }
 
       // Otherwise, move to the next question
@@ -44,9 +52,15 @@ function testReducer(state: TestState, action: any): TestState {
         ...state,
         currentQuestionIndex: state.currentQuestionIndex + 1,
         answers: newAnswers,
-      }
+        answerHistory: newHistory,
+      };
+    case "NAVIGATE_TO_QUESTION":
+      return {
+        ...state,
+        currentQuestionIndex: action.questionIndex,
+      };
     default:
-      return state
+      return state;
   }
 }
 
@@ -61,65 +75,66 @@ function calculateResult(answers: Record<string, string>): DCCharacter {
     leadership: 0,
     chaos: 0,
     justice: 0,
-  }
+  };
 
   // Calculate scores based on answers
   Object.entries(answers).forEach(([questionId, answerId]) => {
-    const question = questions.find((q) => q.id === questionId)
-    if (!question) return
+    const question = questions.find((q) => q.id === questionId);
+    if (!question) return;
 
-    const answer = question.answers.find((a) => a.id === answerId)
-    if (!answer) return
+    const answer = question.answers.find((a) => a.id === answerId);
+    if (!answer) return;
 
     // Add points for each trait
     Object.entries(answer.points).forEach(([trait, points]) => {
-      traitScores[trait as Trait] += points
-    })
-  })
+      traitScores[trait as Trait] += points;
+    });
+  });
 
   // Find the character with the closest match to the user's trait scores
-  let bestMatch: DCCharacter = "superman" // Default
-  let smallestDifference = Number.MAX_VALUE
+  let bestMatch: DCCharacter = "superman"; // Default
+  let smallestDifference = Number.MAX_VALUE;
 
   Object.entries(dcCharacterResults).forEach(([characterId, character]) => {
-    let totalDifference = 0
+    let totalDifference = 0;
 
     // Calculate the sum of squared differences for each trait
     Object.entries(traitScores).forEach(([trait, score]) => {
-      const characterScore = character.traits[trait as Trait]
-      const difference = characterScore - score
-      totalDifference += difference * difference
-    })
+      const characterScore = character.traits[trait as Trait];
+      const difference = characterScore - score;
+      totalDifference += difference * difference;
+    });
 
     // If this character is a closer match, update the best match
     if (totalDifference < smallestDifference) {
-      smallestDifference = totalDifference
-      bestMatch = characterId as DCCharacter
+      smallestDifference = totalDifference;
+      bestMatch = characterId as DCCharacter;
     }
-  })
+  });
 
-  return bestMatch
+  return bestMatch;
 }
 
 export function DCUniverseTest() {
   // Initialize test state and router
-  const router = useRouter()
+  const router = useRouter();
   const [state, dispatch] = useReducer(testReducer, {
-    currentQuestionIndex: -1, // -1 means we're at the intro screen
+    currentQuestionIndex: -1,
     answers: {},
+    answerHistory: [], // Initialize empty answer history
     result: null,
     showResult: false,
-  })
+  });
 
   const handleStart = () => {
-    dispatch({ type: "START_TEST" })
-  }
+    dispatch({ type: "START_TEST" });
+  };
 
   const handleAnswer = (answerId: string) => {
     dispatch({
       type: "ANSWER_QUESTION",
       answerId,
-    })
+    });
 
     // Prüfe, ob dies die letzte Frage ist
     if (state.currentQuestionIndex === questions.length - 1) {
@@ -127,26 +142,34 @@ export function DCUniverseTest() {
       const newAnswers = {
         ...state.answers,
         [questions[state.currentQuestionIndex].id]: answerId,
-      }
-      const result = calculateResult(newAnswers)
+      };
+      const result = calculateResult(newAnswers);
 
       // Verfolge das Ergebnis vor der Weiterleitung
       try {
         // Verfolge den Testabschluss mit dem Ergebnis
-        trackTestCompleted(result)
+        trackTestCompleted(result);
       } catch (e) {
-        console.error("Analytics error:", e)
+        console.error("Analytics error:", e);
       }
 
       // Weiterleitung zur Ergebnisseite mit dem Charakter
-      router.push(`/tests/dc-universe/ergebnis?character=${result}`)
+      router.push(`/tests/dc-universe/ergebnis?character=${result}`);
     }
-  }
+  };
 
   const handleRestart = () => {
-    window.scrollTo(0, 0)
-    dispatch({ type: "START_TEST" })
-  }
+    window.scrollTo(0, 0);
+    dispatch({ type: "START_TEST" });
+  };
+
+  // Add navigation handler
+  const handleNavigate = (questionIndex: number) => {
+    dispatch({
+      type: "NAVIGATE_TO_QUESTION",
+      questionIndex,
+    });
+  };
 
   return (
     <div className="min-h-screen py-12 px-4 relative">
@@ -168,7 +191,9 @@ export function DCUniverseTest() {
         {/* Main Content */}
         <div className="my-8">
           <AnimatePresence mode="wait">
-            {state.currentQuestionIndex === -1 && <IntroCard onStart={handleStart} />}
+            {state.currentQuestionIndex === -1 && (
+              <IntroCard onStart={handleStart} />
+            )}
 
             {state.currentQuestionIndex >= 0 && !state.showResult && (
               <QuestionCard
@@ -176,11 +201,16 @@ export function DCUniverseTest() {
                 onAnswer={handleAnswer}
                 currentIndex={state.currentQuestionIndex}
                 totalQuestions={questions.length}
+                answeredQuestions={state.answerHistory}
+                onNavigate={handleNavigate}
               />
             )}
 
             {state.showResult && state.result && (
-              <ResultCard result={dcCharacterResults[state.result]} onRestart={handleRestart} />
+              <ResultCard
+                result={dcCharacterResults[state.result]}
+                onRestart={handleRestart}
+              />
             )}
           </AnimatePresence>
         </div>
@@ -189,5 +219,5 @@ export function DCUniverseTest() {
         <AdBanner />
       </div>
     </div>
-  )
+  );
 }

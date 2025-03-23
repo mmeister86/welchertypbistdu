@@ -1,16 +1,16 @@
-"use client"
+"use client";
 
-import { useReducer } from "react"
-import { useRouter } from "next/navigation"
-import { AnimatePresence } from "framer-motion"
-import type { Character, TestState } from "./types"
-import { questions, characterResults } from "./test-data"
-import { QuestionCard } from "./question-card"
-import { ResultCard } from "./result-card"
-import { IntroCard } from "./intro-card"
-import { AdBanner } from "./ad-banner"
-import { TVStaticBackground } from "./tv-static-background"
-import { trackTestStarted, trackTestCompleted } from "./analytics"
+import { useReducer } from "react";
+import { useRouter } from "next/navigation";
+import { AnimatePresence } from "framer-motion";
+import type { Character, TestState } from "./types";
+import { questions, characterResults } from "./test-data";
+import { QuestionCard } from "./question-card";
+import { ResultCard } from "./result-card";
+import { IntroCard } from "./intro-card";
+import { AdBanner } from "./ad-banner";
+import { TVStaticBackground } from "./tv-static-background";
+import { trackTestStarted, trackTestCompleted } from "./analytics";
 
 // Reducer for managing test state
 function testReducer(state: TestState, action: any): TestState {
@@ -20,13 +20,20 @@ function testReducer(state: TestState, action: any): TestState {
         ...state,
         currentQuestionIndex: 0,
         answers: {},
+        answerHistory: [], // Reset answer history
         result: null,
         showResult: false,
-      }
+      };
     case "ANSWER_QUESTION":
       const newAnswers = {
         ...state.answers,
         [questions[state.currentQuestionIndex].id]: action.character,
+      };
+
+      // Update answer history
+      const newHistory = [...state.answerHistory];
+      if (!newHistory.includes(state.currentQuestionIndex)) {
+        newHistory.push(state.currentQuestionIndex);
       }
 
       // If this was the last question, calculate the result
@@ -34,9 +41,10 @@ function testReducer(state: TestState, action: any): TestState {
         return {
           ...state,
           answers: newAnswers,
+          answerHistory: newHistory,
           result: calculateResult(newAnswers),
           showResult: true,
-        }
+        };
       }
 
       // Otherwise, move to the next question
@@ -44,9 +52,15 @@ function testReducer(state: TestState, action: any): TestState {
         ...state,
         currentQuestionIndex: state.currentQuestionIndex + 1,
         answers: newAnswers,
-      }
+        answerHistory: newHistory,
+      };
+    case "NAVIGATE_TO_QUESTION":
+      return {
+        ...state,
+        currentQuestionIndex: action.questionIndex,
+      };
     default:
-      return state
+      return state;
   }
 }
 
@@ -72,48 +86,49 @@ function calculateResult(answers: Record<string, Character>): Character {
     grogu: 0,
     tyrion: 0,
     arya: 0,
-  }
+  };
 
   // Count each character occurrence
   Object.values(answers).forEach((character) => {
-    characterCounts[character]++
-  })
+    characterCounts[character]++;
+  });
 
   // Find the character with the highest count
-  let maxCount = 0
-  let result: Character = "chandler" // Default
+  let maxCount = 0;
+  let result: Character = "chandler"; // Default
 
   Object.entries(characterCounts).forEach(([character, count]) => {
     if (count > maxCount) {
-      maxCount = count
-      result = character as Character
+      maxCount = count;
+      result = character as Character;
     }
-  })
+  });
 
-  return result
+  return result;
 }
 
 export function TVCharactersTest() {
-  const router = useRouter()
+  const router = useRouter();
 
   // Initialize test state
   const [state, dispatch] = useReducer(testReducer, {
-    currentQuestionIndex: -1, // -1 means we're at the intro screen
+    currentQuestionIndex: -1,
     answers: {},
+    answerHistory: [], // Initialize empty answer history
     result: null,
     showResult: false,
-  })
+  });
 
   const handleStart = () => {
-    trackTestStarted()
-    dispatch({ type: "START_TEST" })
-  }
+    trackTestStarted();
+    dispatch({ type: "START_TEST" });
+  };
 
   const handleAnswer = (character: string) => {
     dispatch({
       type: "ANSWER_QUESTION",
       character,
-    })
+    });
 
     // Prüfe, ob dies die letzte Frage ist
     if (state.currentQuestionIndex === questions.length - 1) {
@@ -121,11 +136,11 @@ export function TVCharactersTest() {
       const newAnswers = {
         ...state.answers,
         [questions[state.currentQuestionIndex].id]: character as Character,
-      }
-      const result = calculateResult(newAnswers)
+      };
+      const result = calculateResult(newAnswers);
 
       // Verfolge das Ergebnis vor der Weiterleitung
-      trackTestCompleted(result)
+      trackTestCompleted(result);
 
       try {
         // Verfolge den Testabschluss mit dem Ergebnis
@@ -134,21 +149,29 @@ export function TVCharactersTest() {
           window.gtag("event", "test_completed", {
             test_type: "tv-characters",
             result_character: result,
-          })
+          });
         }
       } catch (e) {
-        console.error("Analytics error:", e)
+        console.error("Analytics error:", e);
       }
 
       // Weiterleitung zur Ergebnisseite mit dem Charakter
-      router.push(`/tests/tv-characters/ergebnis?character=${result}`)
+      router.push(`/tests/tv-characters/ergebnis?character=${result}`);
     }
-  }
+  };
 
   const handleRestart = () => {
-    window.scrollTo(0, 0)
-    dispatch({ type: "START_TEST" })
-  }
+    window.scrollTo(0, 0);
+    dispatch({ type: "START_TEST" });
+  };
+
+  // Add navigation handler
+  const handleNavigate = (questionIndex: number) => {
+    dispatch({
+      type: "NAVIGATE_TO_QUESTION",
+      questionIndex,
+    });
+  };
 
   return (
     <div className="min-h-screen py-12 px-4 relative">
@@ -172,7 +195,9 @@ export function TVCharactersTest() {
         {/* Main Content */}
         <div className="my-8">
           <AnimatePresence mode="wait">
-            {state.currentQuestionIndex === -1 && <IntroCard onStart={handleStart} />}
+            {state.currentQuestionIndex === -1 && (
+              <IntroCard onStart={handleStart} />
+            )}
 
             {state.currentQuestionIndex >= 0 && !state.showResult && (
               <QuestionCard
@@ -180,11 +205,16 @@ export function TVCharactersTest() {
                 onAnswer={handleAnswer}
                 currentIndex={state.currentQuestionIndex}
                 totalQuestions={questions.length}
+                answeredQuestions={state.answerHistory}
+                onNavigate={handleNavigate}
               />
             )}
 
             {state.showResult && state.result && (
-              <ResultCard result={characterResults[state.result]} onRestart={handleRestart} />
+              <ResultCard
+                result={characterResults[state.result]}
+                onRestart={handleRestart}
+              />
             )}
           </AnimatePresence>
         </div>
@@ -193,5 +223,5 @@ export function TVCharactersTest() {
         <AdBanner />
       </div>
     </div>
-  )
+  );
 }

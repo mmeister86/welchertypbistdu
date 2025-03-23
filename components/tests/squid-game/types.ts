@@ -33,6 +33,7 @@ export type CharacterResult = {
 export type TestState = {
   currentQuestionIndex: number;
   answers: Record<string, Character>;
+  answerHistory: number[];
   result: Character | null;
   showResult: boolean;
 };

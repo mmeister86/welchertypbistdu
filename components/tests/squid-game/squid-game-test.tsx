@@ -20,6 +20,7 @@ function testReducer(state: TestState, action: any): TestState {
         ...state,
         currentQuestionIndex: 0,
         answers: {},
+        answerHistory: [], // Reset answer history
         result: null,
         showResult: false,
       };
@@ -38,23 +39,36 @@ function testReducer(state: TestState, action: any): TestState {
         [currentQuestion.id]: action.character,
       };
 
-      // Wenn dies die letzte Frage war, berechne das Ergebnis
+      // Update answer history
+      const newHistory = [...state.answerHistory];
+      if (!newHistory.includes(state.currentQuestionIndex)) {
+        newHistory.push(state.currentQuestionIndex);
+      }
+
+      // If this was the last question, calculate the result
       if (state.currentQuestionIndex === questions.length - 1) {
         const result = calculateResult(newAnswers);
         trackResult(result);
         return {
           ...state,
           answers: newAnswers,
+          answerHistory: newHistory,
           result: result,
           showResult: true,
         };
       }
 
-      // Sonst gehe zur nächsten Frage
+      // Otherwise, move to the next question
       return {
         ...state,
         currentQuestionIndex: state.currentQuestionIndex + 1,
         answers: newAnswers,
+        answerHistory: newHistory,
+      };
+    case "NAVIGATE_TO_QUESTION":
+      return {
+        ...state,
+        currentQuestionIndex: action.questionIndex,
       };
     default:
       return state;
@@ -99,8 +113,9 @@ function calculateResult(answers: Record<string, Character>): Character {
 export function SquidGameTest() {
   // Initialisiere den Testzustand
   const [state, dispatch] = useReducer(testReducer, {
-    currentQuestionIndex: -1, // -1 bedeutet, wir sind auf dem Intro-Bildschirm
+    currentQuestionIndex: -1,
     answers: {},
+    answerHistory: [],
     result: null,
     showResult: false,
   });
@@ -119,6 +134,13 @@ export function SquidGameTest() {
   const handleRestart = () => {
     window.scrollTo(0, 0);
     dispatch({ type: "START_TEST" });
+  };
+
+  const handleNavigate = (questionIndex: number) => {
+    dispatch({
+      type: "NAVIGATE_TO_QUESTION",
+      questionIndex,
+    });
   };
 
   return (
@@ -148,6 +170,8 @@ export function SquidGameTest() {
                 onAnswer={handleAnswer}
                 currentIndex={state.currentQuestionIndex}
                 totalQuestions={questions.length}
+                answeredQuestions={state.answerHistory}
+                onNavigate={handleNavigate}
               />
             )}
 

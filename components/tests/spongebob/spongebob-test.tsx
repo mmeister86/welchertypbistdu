@@ -11,7 +11,7 @@ import { IntroCard } from "./intro-card";
 import { AdBanner } from "./ad-banner";
 import { BubbleBackground } from "./bubble-background";
 
-// Reducer für die Verwaltung des Testzustands
+// Reducer for managing test state
 function testReducer(state: TestState, action: any): TestState {
   switch (action.type) {
     case "START_TEST":
@@ -19,6 +19,7 @@ function testReducer(state: TestState, action: any): TestState {
         ...state,
         currentQuestionIndex: 0,
         answers: {},
+        answerHistory: [], // Reset answer history
         result: null,
         showResult: false,
       };
@@ -28,22 +29,34 @@ function testReducer(state: TestState, action: any): TestState {
         [questions[state.currentQuestionIndex].id]: action.character,
       };
 
-      // Wenn dies die letzte Frage war, berechne das Ergebnis
+      // Update answer history
+      const newHistory = [...state.answerHistory];
+      if (!newHistory.includes(state.currentQuestionIndex)) {
+        newHistory.push(state.currentQuestionIndex);
+      }
+
+      // If this was the last question, calculate the result
       if (state.currentQuestionIndex === questions.length - 1) {
-        const result = calculateResult(newAnswers);
         return {
           ...state,
           answers: newAnswers,
-          result: result,
+          answerHistory: newHistory,
+          result: calculateResult(newAnswers),
           showResult: true,
         };
       }
 
-      // Ansonsten zur nächsten Frage wechseln
+      // Otherwise, move to the next question
       return {
         ...state,
         currentQuestionIndex: state.currentQuestionIndex + 1,
         answers: newAnswers,
+        answerHistory: newHistory,
+      };
+    case "NAVIGATE_TO_QUESTION":
+      return {
+        ...state,
+        currentQuestionIndex: action.questionIndex,
       };
     default:
       return state;
@@ -90,8 +103,9 @@ export function SpongebobTest() {
 
   // Initialisiere den Testzustand
   const [state, dispatch] = useReducer(testReducer, {
-    currentQuestionIndex: -1, // -1 bedeutet, dass wir auf dem Intro-Bildschirm sind
+    currentQuestionIndex: -1,
     answers: {},
+    answerHistory: [],
     result: null,
     showResult: false,
   });
@@ -138,6 +152,14 @@ export function SpongebobTest() {
     dispatch({ type: "START_TEST" });
   };
 
+  // Add navigation handler
+  const handleNavigate = (questionIndex: number) => {
+    dispatch({
+      type: "NAVIGATE_TO_QUESTION",
+      questionIndex,
+    });
+  };
+
   return (
     <div className="min-h-screen py-12 px-4 bg-gradient-to-b from-blue-500 to-blue-700 relative">
       <BubbleBackground />
@@ -164,6 +186,8 @@ export function SpongebobTest() {
                 onAnswer={handleAnswer}
                 currentIndex={state.currentQuestionIndex}
                 totalQuestions={questions.length}
+                answeredQuestions={state.answerHistory}
+                onNavigate={handleNavigate}
               />
             )}
           </AnimatePresence>
