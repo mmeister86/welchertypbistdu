@@ -21,12 +21,14 @@ function TestCard({
   icon,
   color,
   href,
+  image,
 }: {
   title: string;
   description: string;
   icon: React.ReactNode;
   color: string;
   href: string;
+  image: string;
 }) {
   return (
     <Link href={href} className="block group">
@@ -66,6 +68,7 @@ export function FeaturedTests() {
           icon={<Star className="h-8 w-8 text-yellow-500" />}
           color="from-yellow-400 to-blue-500"
           href="/tests/spongebob"
+          image="/images/landscape/spongebob-landscape-min.jpeg"
         />
 
         <TestCard
@@ -74,6 +77,7 @@ export function FeaturedTests() {
           icon={<Sparkles className="h-8 w-8 text-red-500" />}
           color="from-red-400 to-yellow-400"
           href="/tests/pokemon"
+          image="/images/landscape/pokemon-landscape-min.jpeg"
         />
 
         <TestCard
@@ -82,6 +86,7 @@ export function FeaturedTests() {
           icon={<Film className="h-8 w-8 text-gray-700" />}
           color="from-gray-700 to-gray-900"
           href="/tests/game-of-thrones"
+          image="/images/landscape/got-landscape-min.jpeg"
         />
 
         <TestCard
@@ -90,6 +95,7 @@ export function FeaturedTests() {
           icon={<Palette className="h-8 w-8 text-red-600" />}
           color="from-red-600 to-blue-600"
           href="/tests/marvel"
+          image="/images/landscape/marvel-landscape-min.jpeg"
         />
 
         <TestCard
@@ -98,6 +104,7 @@ export function FeaturedTests() {
           icon={<Dog className="h-8 w-8 text-amber-600" />}
           color="from-amber-400 to-amber-700"
           href="/tests/dog-personality"
+          image="/images/landscape/dog-landscape-min.jpeg"
         />
 
         <TestCard
@@ -106,6 +113,7 @@ export function FeaturedTests() {
           icon={<Briefcase className="h-8 w-8 text-blue-600" />}
           color="from-blue-400 to-indigo-600"
           href="/tests/berufe"
+          image="/images/landscape/job-landscape-min.jpeg"
         />
       </div>
 

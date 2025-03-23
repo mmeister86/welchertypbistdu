@@ -188,7 +188,7 @@ function TestCard({
 }) {
   return (
     <Link href={href} className="block group">
-      <div className="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-1 h-full">
+      <div className="bg-white rounded-2xl shadow-md overflow-hidden transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-1 h-full">
         <div className={`h-2 bg-gradient-to-r ${color}`}></div>
         <div className="flex flex-col h-full w-full">
           {/* Landschaftsbild über der Beschreibung */}

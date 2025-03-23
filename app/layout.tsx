@@ -22,6 +22,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="de">
+      <script
+        defer
+        src="https://umami.matthias.lol/script.js"
+        data-website-id="17e002d4-b037-4b55-93e6-8491073abec1"
+      ></script>
       <body className={inter.className}>
         <Navbar />
         <AdBlockerModal />

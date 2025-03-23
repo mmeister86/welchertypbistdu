@@ -24,7 +24,7 @@ const availableTests: Test[] = [
     title: "Welcher Star Wars Charakter bist du?",
     description:
       "Finde heraus, ob du mehr wie Luke Skywalker, Darth Vader oder Yoda bist.",
-    image: "/images/landscape/star-wars-landscape.jpeg",
+    image: "/images/landscape/star-wars-landscape-min.jpeg",
     color: "from-yellow-400 to-orange-500",
   },
   {
@@ -32,7 +32,7 @@ const availableTests: Test[] = [
     title: "Welcher Marvel Charakter bist du?",
     description:
       "Entdecke, ob du mehr wie Iron Man, Captain America oder Spider-Man bist.",
-    image: "/images/landscape/marvel-landscape.jpeg",
+    image: "/images/landscape/marvel-landscape-min.jpeg",
     color: "from-red-500 to-blue-500",
   },
   {
@@ -40,7 +40,7 @@ const availableTests: Test[] = [
     title: "Welcher Spongebob Charakter bist du?",
     description:
       "Entdecke, ob du mehr wie Spongebob, Patrick oder Thaddäus bist.",
-    image: "/images/landscape/spongebob-landscape.jpeg",
+    image: "/images/landscape/spongebob-landscape-min.jpeg",
     color: "from-blue-400 to-yellow-400",
   },
   {
@@ -48,7 +48,7 @@ const availableTests: Test[] = [
     title: "Welcher Game of Thrones Charakter bist du?",
     description:
       "Finde heraus, ob du mehr wie Jon Snow, Daenerys Targaryen oder Tyrion Lannister bist.",
-    image: "/images/landscape/got-landscape.jpeg",
+    image: "/images/landscape/got-landscape-min.jpeg",
     color: "from-gray-700 to-gray-900",
   },
   {
@@ -56,7 +56,7 @@ const availableTests: Test[] = [
     title: "Welches Pokémon bist du?",
     description:
       "Finde heraus, welches Pokémon am besten zu deiner Persönlichkeit passt.",
-    image: "/images/landscape/pokemon-landscape.jpeg",
+    image: "/images/landscape/pokemon-landscape-min.jpeg",
     color: "from-blue-500 to-green-500",
   },
   {
@@ -64,7 +64,7 @@ const availableTests: Test[] = [
     title: "Welche Automarke passt zu dir?",
     description:
       "Finde heraus, welche Automarke am besten zu deiner Persönlichkeit und deinem Fahrstil passt.",
-    image: "/images/landscape/automarken-landscape.jpeg",
+    image: "/images/landscape/automarken-landscape-min.jpeg",
     color: "from-gray-500 to-blue-500",
   },
 ];
